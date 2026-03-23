@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // LISTA DE TABLAS TERMODINÁMICAS
     const tablesData = [
-        { name: "Tablas termodinámicas de ocon-tojo.pdf", url: "Apuntes/Tablas termodinámicas de ocon-tojo.pdf", size: "4.5 MB" }
-        { name: "Gráficas.pdf", url: "Apuntes/Gráficas.pdf", size: "4.5 MB" }
+        { name: "Tablas termodinámicas de ocon-tojo.pdf", url: "Apuntes/Tablas termodinámicas de ocon-tojo.pdf", size: "4.5 MB" },
+        { name: "Gráficas.pdf", url: "Apuntes/Gráficas.pdf", size: "2.1 MB" }
     ];
 
     function loadNotes() {
