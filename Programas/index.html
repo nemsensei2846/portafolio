@@ -1,1 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEMSENSEI | Activación Windows 10</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <canvas id="matrix-bg"></canvas>
 
+    <div class="container">
+        <a href="../index.html" class="back-nav"><i class="fas fa-arrow-left"></i> VOLVER_AL_NODO_CENTRAL</a>
+        
+        <div class="terminal-window">
+            <div class="window-header">
+                <span class="dot red"></span>
+                <span class="dot yellow"></span>
+                <span class="dot green"></span>
+                <span>WINDOWS_ACTIVATE.sh</span>
+            </div>
+            <div class="window-body">
+                <h1>💾 ACTIVAR WINDOWS 10 PRO & HOME (32/64 BITS)</h1>
+                
+                <div class="step">
+                    <span class="step-title">1) EJECUTAR COMO ADMINISTRADOR</span>
+                    <p>> Abre la terminal (CMD) con privilegios de administrador para iniciar el proceso.</p>
+                </div>
+
+                <div class="step">
+                    <span class="step-title">2) PROTOCOLO DE INYECCIÓN DE LICENCIA</span>
+                    <p>> Copia y pega estos comandos uno por uno. Verifica qué versión de Windows tienes para usar la licencia correcta abajo:</p>
+                    
+                    <div class="code-block" onclick="copyText(this)">slmgr /ipk TX9XD-98N7V-6WMQ6-BX7FG-H8Q99</div>
+                    <div class="code-block" onclick="copyText(this)">slmgr /skms kms.digiboy.ir</div>
+                    <div class="code-block" onclick="copyText(this)">slmgr /ato</div>
+                    <div class="code-block" onclick="copyText(this)">slmgr.vbs /ato</div>
+                </div>
+
+                <div class="step">
+                    <span class="step-title">3) DISFRUTA DEL ACCESO COMPLETO</span>
+                    <p>> El sistema debería estar activado satisfactoriamente.</p>
+                </div>
+
+                <div class="license-list">
+                    <p style="text-align: center; margin-bottom: 15px;">--- BASE DE DATOS DE LICENCIAS ---</p>
+                    
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Home:</span>
+                        <span class="license-key">TX9XD-98N7V-6WMQ6-BX7FG-H8Q99</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Home N:</span>
+                        <span class="license-key">3KHY7-WNT83-DGQKR-F7HPR-844BM</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Home Single Language:</span>
+                        <span class="license-key">7HNRX-D7KGG-3K4RQ-4WPJ4-YTDFH</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Home Country Specific:</span>
+                        <span class="license-key">PVMJN-6DFY6-9CCP6-7BKTT-D3WVR</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Professional:</span>
+                        <span class="license-key">W269N-WFGWX-YVC9B-4J6C9-T83GX</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Professional N:</span>
+                        <span class="license-key">MH37W-N47XK-V7XM9-C7227-GCQG9</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Enterprise:</span>
+                        <span class="license-key">NPPR9-FWDCX-D2C8J-H872K-2YT43</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Enterprise N:</span>
+                        <span class="license-key">DPH2V-TTNVB-4X9Q3-TJR4H-KHJW4</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Enterprise 2015 LTSB:</span>
+                        <span class="license-key">WNMTR-4C88C-JK8YV-HQ7T2-76DF9</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Education:</span>
+                        <span class="license-key">NW6C2-QMPVW-D7KKK-3GKT6-VCFB2</span>
+                    </div>
+                    <div class="license-item">
+                        <span class="license-name">Windows 10 Education N:</span>
+                        <span class="license-key">2WH4N-8QGBV-H22JP-CT43Q-MDWWJ</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
