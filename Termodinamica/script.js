@@ -30,7 +30,7 @@ document.addEventListener('DOMContentLoaded', () => {
     ];
 
     function loadNotes() {
-        // Cargar Apuntes (SIN BOTÓN DE IMPRESIÓN)
+        // Cargar Apuntes (CON CARRUSEL VERDE)
         notesList.innerHTML = '';
         if (notesData.length === 0) {
             notesList.innerHTML = '<p class="error">> No se han encontrado registros en el nodo Apuntes.</p>';
@@ -41,7 +41,7 @@ document.addEventListener('DOMContentLoaded', () => {
             addLog(`${notesData.length} archivos de apuntes cargados.`);
         }
 
-        // Cargar Tablas (CON BOTÓN DE IMPRESIÓN)
+        // Cargar Tablas (CON CARRUSEL CIAN)
         tablesList.innerHTML = '';
         if (tablesData.length === 0) {
             tablesList.innerHTML = '<p class="error">> No se han encontrado tablas de referencia.</p>';
