@@ -10,10 +10,16 @@ document.addEventListener('DOMContentLoaded', () => {
     // CARGAR APUNTES DINÁMICAMENTE
     function loadNotes() {
         fetch('get_notes.php')
-            .then(response => response.json())
+            .then(response => {
+                const contentType = response.headers.get("content-type");
+                if (!contentType || !contentType.includes("application/json")) {
+                    throw new Error("El servidor no devolvió JSON. Asegúrate de que XAMPP esté corriendo y estés accediendo vía http://localhost/...");
+                }
+                return response.json();
+            })
             .then(data => {
+                notesList.innerHTML = ''; // Limpiar cargador
                 if (data.status === 'success') {
-                    notesList.innerHTML = ''; // Limpiar cargador
                     if (data.notes.length === 0) {
                         notesList.innerHTML = '<p class="error">> No se han encontrado registros en el nodo Apuntes.</p>';
                     } else {
@@ -32,10 +38,12 @@ document.addEventListener('DOMContentLoaded', () => {
                         });
                         addLog(`${data.notes.length} archivos de apuntes cargados satisfactoriamente.`);
                     }
+                } else {
+                    notesList.innerHTML = `<p class="error">> ERROR_SISTEMA: ${data.message}</p>`;
                 }
             })
             .catch(err => {
-                notesList.innerHTML = '<p class="error">> FALLO EN LA RECUPERACIÓN DE DATOS.</p>';
+                notesList.innerHTML = `<p class="error">> FALLO_CRITICO: ${err.message}</p>`;
                 console.error(err);
             });
     }

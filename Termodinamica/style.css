@@ -206,6 +206,17 @@ body.hacker-theme {
     box-shadow: 0 0 20px var(--hacker-green);
 }
 
+.terminal-window.main-window {
+    min-height: 400px;
+    display: flex;
+    flex-direction: column;
+}
+
+.terminal-window.main-window .window-body {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
 /* NOTES SECTION */
 .notes-column {
     display: flex;
