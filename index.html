@@ -156,6 +156,31 @@
             opacity: 0.7;
         }
 
+        /* Sound Control */
+        .sound-control {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 1px solid var(--hacker-green);
+            color: var(--hacker-green);
+            padding: 10px;
+            cursor: pointer;
+            z-index: 100;
+            border-radius: 5px;
+            font-size: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .sound-control:hover {
+            box-shadow: 0 0 10px var(--hacker-green);
+            background: var(--hacker-green);
+            color: var(--hacker-bg);
+        }
+
         /* Scanline Effect */
         .container::before {
             content: " ";
@@ -167,40 +192,23 @@
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
         }
-
-        /* MOBILE OPTIMIZATIONS */
-        @media screen and (max-width: 480px) {
-            .container {
-                padding: 20px;
-                width: 95%;
-            }
-
-            h1 {
-                font-size: 1.5rem;
-                letter-spacing: 2px;
-            }
-
-            .profile-img {
-                width: 140px;
-                height: 140px;
-            }
-
-            .typing-text {
-                font-size: 0.85rem;
-                margin-bottom: 20px;
-            }
-
-            .social-btn {
-                padding: 10px;
-                font-size: 0.8rem;
-                letter-spacing: 1px;
-            }
-        }
     </style>
 </head>
 <body>
 
     <canvas id="matrix-bg"></canvas>
+
+    <!-- Audio Player -->
+    <audio id="bgAudio" loop>
+        <source src="HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3" type="audio/mpeg">
+        Tu navegador no soporta el elemento de audio.
+    </audio>
+
+    <!-- Sound Control Button -->
+    <button id="soundToggle" class="sound-control" onclick="toggleSound()">
+        <i id="soundIcon" class="fas fa-volume-mute"></i>
+        <span id="soundText">AUDIO_INIT</span>
+    </button>
 
     <div class="container">
         <div class="profile-container">
@@ -213,16 +221,16 @@
 
         <div class="social-links">
             <a href="https://tiktok.com/@tu_usuario" target="_blank" class="social-btn">
-                Matematica</a
+                Mi Portafolio
             </a>
             <a href="https://instagram.com/tu_usuario" target="_blank" class="social-btn">
-                Fisica</a
+                Fisica
             </a>
             <a href="https://wa.me/tu_numero" target="_blank" class="social-btn">
-                Quimica</a
+                Quimica
             </a>
             <a href="https://youtube.com/tu_canal" target="_blank" class="social-btn">
-                Preparacion Universitaria</a
+                Preparacion Universitaria
             </a>
         </div>
 
@@ -232,6 +240,29 @@
     </div>
 
     <script>
+        var audio = document.getElementById("bgAudio");
+        var isPlaying = false;
+
+        function toggleSound() {
+            if (!audio) return;
+
+            if (isPlaying) {
+                audio.pause();
+                document.getElementById('soundIcon').className = "fas fa-volume-mute";
+                document.getElementById('soundText').innerText = "AUDIO_OFF";
+                isPlaying = false;
+            } else {
+                audio.play().then(() => {
+                    document.getElementById('soundIcon').className = "fas fa-volume-up";
+                    document.getElementById('soundText').innerText = "AUDIO_ON";
+                    isPlaying = true;
+                }).catch(error => {
+                    console.log("Error al reproducir audio:", error);
+                    alert("Haz clic de nuevo para activar el audio (restricción del navegador).");
+                });
+            }
+        }
+
         const canvas = document.getElementById('matrix-bg');
         const ctx = canvas.getContext('2d');
 
