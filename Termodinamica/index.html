@@ -1,1 +1,65 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NEMSENSEI | Termodinámica Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="hacker-theme">
+    <div class="scanlines"></div>
+    <div class="overlay"></div>
 
+    <nav class="terminal-nav">
+        <div class="status-bar">
+            <span class="pulse"></span> SISTEMA_ACTIVO: TERMODINÁMICA_MODULE_V2.0
+        </div>
+        <a href="../index.html" class="back-btn"><i class="fas fa-arrow-left"></i> VOLVER_AL_NODO_CENTRAL</a>
+    </nav>
+
+    <main class="terminal-container">
+        <header class="hacker-header">
+            <h1 class="glitch" data-text="TERMODINÁMICA">TERMODINÁMICA</h1>
+            <p class="subtitle">> Módulo de Gestión de Documentos y Energía</p>
+        </header>
+
+        <section class="upload-zone">
+            <div class="terminal-window">
+                <div class="window-header">
+                    <span class="dot red"></span>
+                    <span class="dot yellow"></span>
+                    <span class="dot green"></span>
+                    <span class="window-title">UPLOAD_INTERFACE.exe</span>
+                </div>
+                <div class="window-body">
+                    <form id="hacker-upload-form" action="upload.php" method="POST" enctype="multipart/form-data">
+                        <div class="drop-area" id="drop-area">
+                            <i class="fas fa-cloud-upload-alt upload-icon"></i>
+                            <p>ARRASTRA TUS ARCHIVOS AQUÍ O HAZ CLIC</p>
+                            <input type="file" name="documento" id="file-input" hidden>
+                        </div>
+                        <div id="file-preview" class="file-preview hidden">
+                            <i class="fas fa-file-pdf"></i>
+                            <span id="file-name">archivo.pdf</span>
+                        </div>
+                        <button type="submit" class="cyber-btn">
+                            <span class="btn-text">INJECT_DATA_INTO_SERVER</span>
+                            <span class="btn-glitch"></span>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <section class="log-section">
+            <div class="terminal-log" id="terminal-log">
+                <p>> Inicializando protocolos de transferencia...</p>
+                <p>> Esperando entrada de datos...</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
