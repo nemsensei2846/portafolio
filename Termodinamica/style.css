@@ -206,6 +206,70 @@ body.hacker-theme {
     box-shadow: 0 0 20px var(--hacker-green);
 }
 
+/* NOTES SECTION */
+.notes-column {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.note-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    background: rgba(0, 255, 65, 0.05);
+    border-left: 3px solid var(--hacker-green);
+    transition: all 0.3s;
+}
+
+.note-item:hover {
+    background: rgba(0, 255, 65, 0.15);
+    box-shadow: 0 0 10px var(--hacker-glow);
+    transform: translateX(5px);
+}
+
+.note-item i {
+    font-size: 1.2rem;
+    margin-right: 15px;
+    color: var(--hacker-green);
+}
+
+.note-name {
+    flex-grow: 1;
+    font-size: 0.9rem;
+    font-weight: bold;
+    color: #fff;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.note-size {
+    font-size: 0.75rem;
+    color: var(--hacker-green);
+    margin: 0 15px;
+    opacity: 0.8;
+}
+
+.download-link {
+    background: transparent;
+    border: 1px solid var(--hacker-green);
+    color: var(--hacker-green);
+    padding: 6px 12px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+}
+
+.download-link:hover {
+    background: var(--hacker-green);
+    color: var(--hacker-bg);
+}
+
 /* TERMINAL LOG */
 .terminal-log {
     background: rgba(0, 0, 0, 0.8);
