@@ -11,7 +11,12 @@ document.addEventListener('DOMContentLoaded', () => {
     const notesData = [
         { name: "Semana 1 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 1 Operaciones Unitarias I.pdf", size: "1.2 MB" },
         { name: "Semana 2 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 2 Operaciones Unitarias I.pdf", size: "1.5 MB" },
-        { name: "Semana 3 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 3 Operaciones Unitarias I.pdf", size: "1.8 MB" }
+        { name: "Semana 3 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 3 Operaciones Unitarias I.pdf", size: "1.8 MB" },
+        { name: "Semana 4 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 4 Operaciones Unitarias I.pdf", size: "2.1 MB" },
+        { name: "Semana 5 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 5 Operaciones Unitarias I.pdf", size: "2.4 MB" },
+        { name: "Semana 6 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 6 Operaciones Unitarias I.pdf", size: "2.7 MB" },
+        { name: "Semana 7 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 7 Operaciones Unitarias I.pdf", size: "3.0 MB" },
+        { name: "Semana 8 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 8 Operaciones Unitarias I.pdf", size: "3.3 MB" }
     ];
 
     function loadNotes() {
