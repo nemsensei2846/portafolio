@@ -7,45 +7,34 @@ document.addEventListener('DOMContentLoaded', () => {
     const form = document.getElementById('hacker-upload-form');
     const notesList = document.getElementById('notes-list');
 
-    // CARGAR APUNTES DINÁMICAMENTE
+    // LISTA ESTÁTICA DE APUNTES (HTML/JS PURO)
+    const notesData = [
+        { name: "Semana 1 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 1 Operaciones Unitarias I.pdf", size: "1.2 MB" },
+        { name: "Semana 2 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 2 Operaciones Unitarias I.pdf", size: "1.5 MB" },
+        { name: "Semana 3 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 3 Operaciones Unitarias I.pdf", size: "1.8 MB" }
+    ];
+
     function loadNotes() {
-        fetch('get_notes.php')
-            .then(response => {
-                const contentType = response.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error("El servidor no devolvió JSON. Asegúrate de que XAMPP esté corriendo y estés accediendo vía http://localhost/...");
-                }
-                return response.json();
-            })
-            .then(data => {
-                notesList.innerHTML = ''; // Limpiar cargador
-                if (data.status === 'success') {
-                    if (data.notes.length === 0) {
-                        notesList.innerHTML = '<p class="error">> No se han encontrado registros en el nodo Apuntes.</p>';
-                    } else {
-                        data.notes.forEach(note => {
-                            const noteElement = document.createElement('div');
-                            noteElement.className = 'note-item';
-                            noteElement.innerHTML = `
-                                <i class="fas fa-file-pdf"></i>
-                                <span class="note-name">${note.name}</span>
-                                <span class="note-size">[${note.size}]</span>
-                                <a href="${note.url}" target="_blank" class="download-link">
-                                    <i class="fas fa-external-link-alt"></i> ACCESS_DATA
-                                </a>
-                            `;
-                            notesList.appendChild(noteElement);
-                        });
-                        addLog(`${data.notes.length} archivos de apuntes cargados satisfactoriamente.`);
-                    }
-                } else {
-                    notesList.innerHTML = `<p class="error">> ERROR_SISTEMA: ${data.message}</p>`;
-                }
-            })
-            .catch(err => {
-                notesList.innerHTML = `<p class="error">> FALLO_CRITICO: ${err.message}</p>`;
-                console.error(err);
+        notesList.innerHTML = ''; // Limpiar cargador
+        
+        if (notesData.length === 0) {
+            notesList.innerHTML = '<p class="error">> No se han encontrado registros en el nodo Apuntes.</p>';
+        } else {
+            notesData.forEach(note => {
+                const noteElement = document.createElement('div');
+                noteElement.className = 'note-item';
+                noteElement.innerHTML = `
+                    <i class="fas fa-file-pdf"></i>
+                    <span class="note-name">${note.name}</span>
+                    <span class="note-size">[${note.size}]</span>
+                    <a href="${note.url}" target="_blank" class="download-link">
+                        <i class="fas fa-external-link-alt"></i> ACCESS_DATA
+                    </a>
+                `;
+                notesList.appendChild(noteElement);
             });
+            addLog(`${notesData.length} archivos de apuntes cargados satisfactoriamente.`);
+        }
     }
 
     loadNotes(); // Inicializar carga
