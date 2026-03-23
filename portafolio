@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenido al server 001</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --hacker-green: #00ff41;
+            --hacker-bg: #0d0208;
+            --hacker-glow: rgba(0, 255, 65, 0.5);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: var(--hacker-bg);
+            color: var(--hacker-green);
+            font-family: 'Courier New', Courier, monospace;
+            overflow-x: hidden;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* Matrix Background */
+        #matrix-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            opacity: 0.2;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.85);
+            border: 2px solid var(--hacker-green);
+            box-shadow: 0 0 20px var(--hacker-glow);
+            padding: 40px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 500px;
+            text-align: center;
+            position: relative;
+        }
+
+        .profile-container {
+            position: relative;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+
+        .profile-img {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 3px solid var(--hacker-green);
+            object-fit: cover;
+            filter: grayscale(100%) contrast(150%) brightness(80%) sepia(100%) hue-rotate(80deg);
+            box-shadow: 0 0 15px var(--hacker-green);
+        }
+
+        /* Glitch Effect for Profile Container */
+        .profile-container::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 2px solid #ff003c;
+            opacity: 0.5;
+            animation: glitch 2s infinite linear alternate-reverse;
+            z-index: -1;
+        }
+
+        @keyframes glitch {
+            0% { transform: translate(2px, 2px); }
+            100% { transform: translate(-2px, -2px); }
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            text-transform: uppercase;
+            letter-spacing: 5px;
+            margin-bottom: 10px;
+            text-shadow: 0 0 10px var(--hacker-green);
+        }
+
+        .typing-text {
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+            border-right: 2px solid var(--hacker-green);
+            display: inline-block;
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(30, end), blink-caret 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--hacker-green); }
+        }
+
+        .social-links {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .social-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px;
+            border: 1px solid var(--hacker-green);
+            text-decoration: none;
+            color: var(--hacker-green);
+            font-weight: bold;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            gap: 10px;
+            background: transparent;
+        }
+
+        .social-btn:hover {
+            background-color: var(--hacker-green);
+            color: var(--hacker-bg);
+            box-shadow: 0 0 20px var(--hacker-green);
+            transform: scale(1.02);
+        }
+
+        .footer {
+            margin-top: 30px;
+            font-size: 0.8rem;
+            opacity: 0.7;
+        }
+
+        /* Scanline Effect */
+        .container::before {
+            content: " ";
+            display: block;
+            position: absolute;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 128, 0.06));
+            z-index: 2;
+            background-size: 100% 2px, 3px 100%;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="container">
+        <div class="profile-container">
+            <!-- Reemplaza con tu foto real -->
+            <img src="https://www.avast.com/hs-fs/hubfs/New_Avast_Academy/Hackers/Hacker-Hero-a1.png?width=1200&name=Hacker-Hero-a1.png" alt="Hacker Profile" class="profile-img">
+        </div>
+        
+        <h1>sensei</h1>
+        <div class="typing-text">> Sistema de Redes Sociales: Online...</div>
+
+        <div class="social-links">
+            <a href="https://lyonss.netlify.app/" target="_blank" class="social-btn">
+                 Academia l¥ØNS</a>
+            </a>
+            <a href="https://tiktok.com/@tu_usuario" target="_blank" class="social-btn">
+                Matematica</a
+            </a>
+            <a href="https://instagram.com/tu_usuario" target="_blank" class="social-btn">
+                Fisica</a
+            </a>
+            <a href="https://wa.me/tu_numero" target="_blank" class="social-btn">
+                Quimica</a
+            </a>
+            <a href="https://youtube.com/tu_canal" target="_blank" class="social-btn">
+                Preparacion Universitaria</a
+            </a>
+        </div>
+
+        <div class="footer">
+            [SERVIDOR PRIVADO] &copy; 2026 JServer001_OS v1.0
+        </div>
+    </div>
+
+    <script>
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+
+        const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789$+-*/=%"\'#&_(),.;:?!\\|{}<>[]^~';
+        const fontSize = 16;
+        const columns = canvas.width / fontSize;
+
+        const drops = [];
+        for (let i = 0; i < columns; i++) {
+            drops[i] = 1;
+        }
+
+        function draw() {
+            ctx.fillStyle = 'rgba(0, 0, 0, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+            ctx.fillStyle = '#0F0';
+            ctx.font = fontSize + 'px monospace';
+
+            for (let i = 0; i < drops.length; i++) {
+                const text = letters.charAt(Math.floor(Math.random() * letters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+
+                if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+
+        setInterval(draw, 33);
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+    </script>
+</body>
+</html>
