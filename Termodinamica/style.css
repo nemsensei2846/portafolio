@@ -281,6 +281,30 @@ body.hacker-theme {
     color: var(--hacker-bg);
 }
 
+.tables-section .note-item {
+    border-left-color: var(--hacker-cyan);
+    background: rgba(0, 243, 255, 0.05);
+}
+
+.tables-section .note-item:hover {
+    background: rgba(0, 243, 255, 0.15);
+    box-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+}
+
+.tables-section .note-item i, .tables-section .note-size {
+    color: var(--hacker-cyan);
+}
+
+.tables-section .download-link {
+    border-color: var(--hacker-cyan);
+    color: var(--hacker-cyan);
+}
+
+.tables-section .download-link:hover {
+    background: var(--hacker-cyan);
+    color: var(--hacker-bg);
+}
+
 /* TERMINAL LOG */
 .terminal-log {
     background: rgba(0, 0, 0, 0.8);

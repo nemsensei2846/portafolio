@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const terminalLog = document.getElementById('terminal-log');
     const form = document.getElementById('hacker-upload-form');
     const notesList = document.getElementById('notes-list');
+    const tablesList = document.getElementById('tables-list');
 
     // LISTA ESTÁTICA DE APUNTES (HTML/JS PURO)
     const notesData = [
@@ -19,27 +20,47 @@ document.addEventListener('DOMContentLoaded', () => {
         { name: "Semana 8 Operaciones Unitarias I.pdf", url: "Apuntes/Semana 8 Operaciones Unitarias I.pdf", size: "3.3 MB" }
     ];
 
+    // LISTA DE TABLAS TERMODINÁMICAS
+    const tablesData = [
+        { name: "Tablas termodinámicas de ocon-tojo.pdf", url: "Apuntes/Tablas termodinámicas de ocon-tojo.pdf", size: "4.5 MB" }
+    ];
+
     function loadNotes() {
-        notesList.innerHTML = ''; // Limpiar cargador
-        
+        // Cargar Apuntes
+        notesList.innerHTML = '';
         if (notesData.length === 0) {
             notesList.innerHTML = '<p class="error">> No se han encontrado registros en el nodo Apuntes.</p>';
         } else {
             notesData.forEach(note => {
-                const noteElement = document.createElement('div');
-                noteElement.className = 'note-item';
-                noteElement.innerHTML = `
-                    <i class="fas fa-file-pdf"></i>
-                    <span class="note-name">${note.name}</span>
-                    <span class="note-size">[${note.size}]</span>
-                    <a href="${note.url}" target="_blank" class="download-link">
-                        <i class="fas fa-external-link-alt"></i> ACCESS_DATA
-                    </a>
-                `;
-                notesList.appendChild(noteElement);
+                notesList.appendChild(createNoteElement(note));
             });
-            addLog(`${notesData.length} archivos de apuntes cargados satisfactoriamente.`);
+            addLog(`${notesData.length} archivos de apuntes cargados.`);
         }
+
+        // Cargar Tablas
+        tablesList.innerHTML = '';
+        if (tablesData.length === 0) {
+            tablesList.innerHTML = '<p class="error">> No se han encontrado tablas de referencia.</p>';
+        } else {
+            tablesData.forEach(table => {
+                tablesList.appendChild(createNoteElement(table, "fa-table"));
+            });
+            addLog(`${tablesData.length} tablas del sistema inicializadas.`);
+        }
+    }
+
+    function createNoteElement(item, icon = "fa-file-pdf") {
+        const noteElement = document.createElement('div');
+        noteElement.className = 'note-item';
+        noteElement.innerHTML = `
+            <i class="fas ${icon}"></i>
+            <span class="note-name">${item.name}</span>
+            <span class="note-size">[${item.size}]</span>
+            <a href="${item.url}" target="_blank" class="download-link">
+                <i class="fas fa-external-link-alt"></i> ACCESS_DATA
+            </a>
+        `;
+        return noteElement;
     }
 
     loadNotes(); // Inicializar carga
