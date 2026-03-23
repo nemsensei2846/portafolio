@@ -281,6 +281,43 @@ body.hacker-theme {
     color: var(--hacker-bg);
 }
 
+.action-btns {
+    display: flex;
+    gap: 8px;
+}
+
+.print-link {
+    background: transparent;
+    border: 1px solid var(--hacker-green);
+    color: var(--hacker-green);
+    padding: 6px 12px;
+    text-decoration: none;
+    font-size: 0.75rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    transition: all 0.3s;
+    cursor: pointer;
+}
+
+.print-link:hover {
+    background: #fff;
+    color: #000;
+    border-color: #fff;
+    box-shadow: 0 0 10px #fff;
+}
+
+.tables-section .print-link {
+    border-color: var(--hacker-cyan);
+    color: var(--hacker-cyan);
+}
+
+.tables-section .print-link:hover {
+    background: var(--hacker-cyan);
+    color: var(--hacker-bg);
+}
+
 .tables-section .note-item {
     border-left-color: var(--hacker-cyan);
     background: rgba(0, 243, 255, 0.05);

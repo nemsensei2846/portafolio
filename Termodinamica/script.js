@@ -23,45 +23,89 @@ document.addEventListener('DOMContentLoaded', () => {
     // LISTA DE TABLAS TERMODINÁMICAS
     const tablesData = [
         { name: "Tablas termodinámicas de ocon-tojo.pdf", url: "Apuntes/Tablas termodinámicas de ocon-tojo.pdf", size: "4.5 MB" },
-        { name: "Gráficas.pdf", url: "Apuntes/Gráficas.pdf", size: "2.1 MB" }
+        { name: "Gráficas.pdf", url: "Apuntes/Gráficas.pdf", size: "2.1 MB" },
+        { name: "Mecánica de Fluidos - Robert Mott (LIBRO BASE) .pdf", url: "Apuntes/Mecánica de Fluidos - Robert Mott (LIBRO BASE) .pdf", size: "15.4 MB" },
+        { name: "Mecánica de fluidos.pdf", url: "Apuntes/Mecánica de fluidos.pdf", size: "8.2 MB" },
+        { name: "Propiedades fisicas del agua.pdf", url: "Apuntes/Propiedades fisicas del agua.pdf", size: "1.1 MB" }
     ];
 
     function loadNotes() {
-        // Cargar Apuntes
+        // Cargar Apuntes (SIN BOTÓN DE IMPRESIÓN)
         notesList.innerHTML = '';
         if (notesData.length === 0) {
             notesList.innerHTML = '<p class="error">> No se han encontrado registros en el nodo Apuntes.</p>';
         } else {
             notesData.forEach(note => {
-                notesList.appendChild(createNoteElement(note));
+                notesList.appendChild(createNoteElement(note, "fa-file-pdf", false));
             });
             addLog(`${notesData.length} archivos de apuntes cargados.`);
         }
 
-        // Cargar Tablas
+        // Cargar Tablas (CON BOTÓN DE IMPRESIÓN)
         tablesList.innerHTML = '';
         if (tablesData.length === 0) {
             tablesList.innerHTML = '<p class="error">> No se han encontrado tablas de referencia.</p>';
         } else {
             tablesData.forEach(table => {
-                tablesList.appendChild(createNoteElement(table, "fa-table"));
+                tablesList.appendChild(createNoteElement(table, "fa-table", true));
             });
             addLog(`${tablesData.length} tablas del sistema inicializadas.`);
         }
     }
 
-    function createNoteElement(item, icon = "fa-file-pdf") {
+    function createNoteElement(item, icon = "fa-file-pdf", showPrint = false) {
         const noteElement = document.createElement('div');
         noteElement.className = 'note-item';
+        
+        // Botón de impresión solo si se solicita y es PDF
+        const isPdf = item.url.toLowerCase().endsWith('.pdf');
+        const printBtn = (showPrint && isPdf) ? `
+            <a onclick="printPdf('${item.url}')" class="print-link">
+                <i class="fas fa-print"></i> PRINT_DATA
+            </a>
+        ` : '';
+
         noteElement.innerHTML = `
             <i class="fas ${icon}"></i>
             <span class="note-name">${item.name}</span>
             <span class="note-size">[${item.size}]</span>
-            <a href="${item.url}" target="_blank" class="download-link">
-                <i class="fas fa-external-link-alt"></i> ACCESS_DATA
-            </a>
+            <div class="action-btns">
+                <a href="${item.url}" target="_blank" class="download-link">
+                    <i class="fas fa-external-link-alt"></i> ACCESS_DATA
+                </a>
+                ${printBtn}
+            </div>
         `;
         return noteElement;
+    }
+
+    // FUNCIÓN DE IMPRESIÓN HACKER
+    window.printPdf = function(url) {
+        addLog(`Preparando protocolo de impresión para: ${url}...`, 'success');
+        
+        // Crear un iframe invisible para imprimir
+        const iframe = document.createElement('iframe');
+        iframe.style.position = 'fixed';
+        iframe.style.right = '0';
+        iframe.style.bottom = '0';
+        iframe.style.width = '0';
+        iframe.style.height = '0';
+        iframe.style.border = '0';
+        iframe.src = url;
+        
+        iframe.onload = function() {
+            try {
+                iframe.contentWindow.print();
+                addLog('Comando de impresión enviado satisfactoriamente.', 'success');
+            } catch (e) {
+                addLog('ERROR_IMPRESION: Acceso denegado. Abriendo en nueva pestaña para imprimir manualmente.', 'error');
+                window.open(url, '_blank');
+            }
+            // Eliminar iframe después de un tiempo
+            setTimeout(() => document.body.removeChild(iframe), 2000);
+        };
+        
+        document.body.appendChild(iframe);
     }
 
     loadNotes(); // Inicializar carga
