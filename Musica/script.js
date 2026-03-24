@@ -25,257 +25,307 @@ const songs = [
     {
         title: "DEJAME_ENTRAR",
         artist: "Makano",
+        genre: "Regueton",
         src: "hacking/Makano - Dejame Entrar [Video Oficial].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "SU_NOMBRE_EN_MI_CUADERNO",
         artist: "Makano ft. Josenid",
+        genre: "Regueton",
         src: "hacking/Makano feat. Josenid - Su Nombre en mi Cuaderno [Video Oficial].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "LA_QUEMONA",
         artist: "Master Boys",
+        genre: "Regueton",
         src: "hacking/La Quemona Master Boys LetraLyrics.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/bc3z62HkFbs/maxresdefault.jpg"
     },
     {
         title: "VITAMINA",
         artist: "Jombriel, DFZM",
+        genre: "Regueton",
         src: "hacking/Jombriel, DFZM - Vitamina (LetraLyrics).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b2734b11635cbdec6917dd2c58b1"
     },
     {
         title: "SABES",
         artist: "Reik",
+        genre: "Romantica",
         src: "hacking/Reik - Sabes (Letra  Lyrics).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "ROSAS",
         artist: "La Oreja de Van Gogh",
+        genre: "Romantica",
         src: "hacking/La Oreja de Van Gogh - Rosas (Vídeo Oficial).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "DISFRUTO",
         artist: "Carla Morrison",
+        genre: "Romantica",
         src: "hacking/Carla Morrison - Disfruto (letra).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "HASTA_LA_RAIZ",
         artist: "Natalia Lafourcade",
+        genre: "Romantica",
         src: "hacking/Hasta la Raíz - Natalia Lafourcade   LETRA.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "FANTASMAS",
         artist: "Humbe",
+        genre: "Romantica",
         src: "hacking/Humbe - fantasmas (Letra).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://animesher.com/orig/1/147/1471/14717/animesher.com_gif-tristeza-series-1471752.gif"
     },
     {
         title: "QUITAME_ESE_HOMBRE",
         artist: "Pilar Montenegro",
+        genre: "Romantica",
         src: "hacking/Quítame Ese Hombre Del Corazón - Pilar Montenegro   Letra  Norteña.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://animesher.com/orig/0/60/603/6031/animesher.com_encierro-lluvia-tristeza-603198.jpg"
     },
     {
         title: "DOS_HOMBRES_Y_UN_DESTINO",
         artist: "David Bustamante y Axel",
+        genre: "Romantica",
         src: "hacking/Dos hombres y un destino- David Bustamante y Axel- (letra).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "NEVER_SAY_NEVER",
         artist: "Justin Bieber ft. Jaden",
+        genre: "Romantica",
         src: "hacking/Justin Bieber - Never Say Never ft. Jaden.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "JUST_THE_WAY_YOU_ARE",
         artist: "Bruno Mars",
+        genre: "Romantica",
         src: "hacking/Bruno Mars - Just The Way You Are (Lyrics).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "PAST_LIVES",
         artist: "sapientdream",
+        genre: "Romantica",
         src: "hacking/sapientdream - past lives (Subtitulada Español).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/10/a9/88/10a98827-ed7e-3077-6cd8-9cc96b764d74/cover.jpg/600x600cc.webp"
     },
     {
         title: "IN_THIS_SHIRT",
         artist: "The Irrepressibles",
+        genre: "Romantica",
         src: "hacking/The Irrepressibles - In This Shirt (Sub. Español).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i1.sndcdn.com/artworks-000663988471-2eooz2-t500x500.jpg"
     },
     {
         title: "EL_TREN_QUE_NOS_SEPARA",
         artist: "Original",
+        genre: "Romantica",
         src: "hacking/ORIGINAL El Tren Que Nos Separa (Letra) .....mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "ME_BEFORE_YOU",
         artist: "Louisa & Will",
+        genre: "Romantica",
         src: "hacking/Me Before You - Louisa and Will - Photograph and Letter.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "QUE_TIENE_ELLA",
         artist: "Unknown",
+        genre: "Romantica",
         src: "hacking/Qué tiene ella que no tenga yo_.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "LA_TORMENTA_DE_ARENA",
         artist: "Dorian",
+        genre: "Romantica",
         src: "hacking/La Tormenta De Arena - Dorian (letra).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "CORAZON",
         artist: "Moy Bobadilla - Grupo Firme",
+        genre: "Vallenato",
         src: "hacking/Moy Bobadilla - Grupo Firme - Corazón (LetraLyrics).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "LOVE_YOU_LIKE_A_LOVE_SONG",
         artist: "Selena Gomez",
+        genre: "Romantica",
         src: "hacking/Selena Gomez - Love You Like a Love Song (Lyrics) no one compares you stand alone.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "EN_CAMBIO_NO",
         artist: "Laura Pausini",
+        genre: "Romantica",
         src: "hacking/Laura Pausini - En Cambio No (Official Music Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "SALVAME",
         artist: "RBD",
+        genre: "Romantica",
         src: "hacking/RBD  Sálvame [Letra].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "EL_CIGARRILLO",
         artist: "Ana Gabriel",
+        genre: "Romantica",
         src: "hacking/El cigarrillo - Ana Gabriel (LetraLyrics).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "TE_VAS",
         artist: "Ozuna",
+        genre: "Regueton",
         src: "hacking/Ozuna - Te Vas (Video Oficial).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "SI_TU_LO_DEJAS",
         artist: "Rvssian ft. Bad Bunny",
+        genre: "Regueton",
         src: "hacking/Rvssian - Si Tu Lo Dejas FT Bad Bunny X Farruko X Nicky Jam X King Kosa.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "BELLAKEO",
         artist: "Peso Pluma ft. Anitta",
+        genre: "Regueton",
         src: "hacking/BELLAKEO (Video Oficial) - Peso Pluma, Anitta.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "AMORFODA",
         artist: "Bad Bunny",
+        genre: "Regueton",
         src: "hacking/BAD BUNNY - AMORFODA (Video Oficial).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/E6jIgT-38u8/maxresdefault.jpg"
     },
     {
         title: "SOY_PEOR",
         artist: "Bad Bunny",
+        genre: "Regueton",
         src: "hacking/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "TUSA",
         artist: "Karol G ft. Nicki Minaj",
+        genre: "Regueton",
         src: "hacking/KAROL G, Nicki Minaj - Tusa (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "NO_ME_ACUERDO",
         artist: "Thalia ft. Natti Natasha",
+        genre: "Regueton",
         src: "hacking/Thalia, NATTI NATASHA - No Me Acuerdo (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "SIN_PIJAMA",
         artist: "Becky G ft. Natti Natasha",
+        genre: "Regueton",
         src: "hacking/Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "MAYORES",
         artist: "Becky G ft. Bad Bunny",
+        genre: "Regueton",
         src: "hacking/Becky G, Bad Bunny - Mayores (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "CUANDO_TE_BESE",
         artist: "Becky G ft. Paulo Londra",
+        genre: "Regueton",
         src: "hacking/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "CUATRO_BABYS",
         artist: "Maluma ft. Noriel",
+        genre: "Regueton",
         src: "hacking/Maluma - Cuatro Babys (Official Video) ft. Trap Capos, Noriel, Bryant Myers, Juhn.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "FRONTEAMOS_PORQUE_PODEMOS",
         artist: "De La Ghetto ft. Daddy Yankee",
+        genre: "Regueton",
         src: "hacking/De La Ghetto - Fronteamos Porque Podemos ft. Daddy Yankee, Yandel & Ñengo Flow [Official Video].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "NACIMOS_PA_MORIR",
         artist: "Anuel ft. Jory",
+        genre: "Regueton",
         src: "hacking/Anuel - Nacimos Pa Morir (Official Video) ft. Jory.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "PA_TI",
         artist: "6ix9ine ft. Yailin",
+        genre: "Regueton",
         src: "hacking/6ix9ine - Pa Ti (feat. Yailin La Más Viral) (Official Music Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "HEROIC_EPIC_BEAT",
         artist: "Aidan x Maxxton",
+        genre: "Otros",
         src: "hacking/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     }
 ];
 
 const playlistItems = document.getElementById('playlist');
+const genreFilter = document.getElementById('genre-filter');
+const sortBtn = document.getElementById('sort-btn');
 
 let songIndex = 0;
+let currentSongs = [...songs];
+let isAscending = true;
 
 // Generar lista de reproducción
-function initPlaylist() {
+function initPlaylist(filteredSongs = currentSongs) {
     playlistItems.innerHTML = '';
-    songs.forEach((song, index) => {
+    filteredSongs.forEach((song, index) => {
         const li = document.createElement('li');
-        li.dataset.index = index;
+        // Encontrar el índice original en el array 'songs' para cargar la canción correcta
+        const originalIndex = songs.findIndex(s => s.src === song.src);
+        li.dataset.index = originalIndex;
         li.innerHTML = `
             <span class="track-id">${(index + 1).toString().padStart(2, '0')}</span>
-            <span class="track-name">${song.title}</span>
+            <div class="track-details">
+                <span class="track-name">${song.title}</span>
+                <span class="track-genre-label">${song.genre}</span>
+            </div>
         `;
-        if (index === songIndex) li.classList.add('active');
+        
+        // Si la canción actual es la que se está reproduciendo
+        if (originalIndex === songIndex) li.classList.add('active');
         
         li.addEventListener('click', () => {
-            songIndex = index;
+            songIndex = originalIndex;
             loadSong(songs[songIndex]);
             playSong();
         });
@@ -283,6 +333,38 @@ function initPlaylist() {
         playlistItems.appendChild(li);
     });
 }
+
+// Lógica de Filtrado por Género
+genreFilter.addEventListener('change', (e) => {
+    const genre = e.target.value;
+    if (genre === 'All') {
+        currentSongs = [...songs];
+    } else {
+        currentSongs = songs.filter(song => song.genre === genre);
+    }
+    applySort(); // Mantener el orden actual al filtrar
+    initPlaylist();
+});
+
+// Lógica de Ordenación
+function applySort() {
+    currentSongs.sort((a, b) => {
+        const titleA = a.title.toUpperCase();
+        const titleB = b.title.toUpperCase();
+        if (isAscending) {
+            return titleA < titleB ? -1 : (titleA > titleB ? 1 : 0);
+        } else {
+            return titleA > titleB ? -1 : (titleA < titleB ? 1 : 0);
+        }
+    });
+}
+
+sortBtn.addEventListener('click', () => {
+    isAscending = !isAscending;
+    sortBtn.innerHTML = isAscending ? '<i class="fas fa-sort-alpha-down"></i>' : '<i class="fas fa-sort-alpha-up"></i>';
+    applySort();
+    initPlaylist();
+});
 
 // Cargar canción
 function loadSong(song) {
@@ -298,8 +380,13 @@ function loadSong(song) {
     
     // Actualizar clase activa en la lista
     const items = playlistItems.querySelectorAll('li');
-    items.forEach(item => item.classList.remove('active'));
-    items[songIndex].classList.add('active');
+    items.forEach(item => {
+        if (parseInt(item.dataset.index) === songIndex) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
+    });
     
     // Configurar Media Session API (Para controles en pantalla de bloqueo)
     if ('mediaSession' in navigator) {
@@ -337,16 +424,58 @@ function pauseSong() {
 
 // Anterior
 function prevSong() {
-    songIndex--;
-    if (songIndex < 0) songIndex = songs.length - 1;
+    if (currentSongs.length === 0) return;
+    
+    // Encontrar la posición actual en la lista filtrada
+    let currentFilteredIndex = currentSongs.findIndex(s => s.src === songs[songIndex].src);
+    
+    // Si la canción actual no está en la lista filtrada (por cambio de género), empezar desde el final
+    if (currentFilteredIndex === -1) currentFilteredIndex = currentSongs.length - 1;
+    else {
+        currentFilteredIndex--;
+        if (currentFilteredIndex < 0) currentFilteredIndex = currentSongs.length - 1;
+    }
+    
+    // Obtener la canción de la lista filtrada
+    const nextSongObj = currentSongs[currentFilteredIndex];
+    // Actualizar el índice global
+    songIndex = songs.findIndex(s => s.src === nextSongObj.src);
+    
     loadSong(songs[songIndex]);
     if (isPlaying) playSong();
 }
 
 // Siguiente
 function nextSong() {
-    songIndex++;
-    if (songIndex > songs.length - 1) songIndex = 0;
+    if (currentSongs.length === 0) return;
+
+    // Lógica de Shuffle
+    if (isShuffle) {
+        let randomIndex = Math.floor(Math.random() * currentSongs.length);
+        // Evitar que se repita la misma canción si hay más de una
+        if (currentSongs.length > 1) {
+            let currentFilteredIndex = currentSongs.findIndex(s => s.src === songs[songIndex].src);
+            while (randomIndex === currentFilteredIndex) {
+                randomIndex = Math.floor(Math.random() * currentSongs.length);
+            }
+        }
+        const nextSongObj = currentSongs[randomIndex];
+        songIndex = songs.findIndex(s => s.src === nextSongObj.src);
+    } else {
+        // Encontrar la posición actual en la lista filtrada
+        let currentFilteredIndex = currentSongs.findIndex(s => s.src === songs[songIndex].src);
+        
+        // Si la canción actual no está en la lista filtrada, empezar desde el principio
+        if (currentFilteredIndex === -1) currentFilteredIndex = 0;
+        else {
+            currentFilteredIndex++;
+            if (currentFilteredIndex > currentSongs.length - 1) currentFilteredIndex = 0;
+        }
+        
+        const nextSongObj = currentSongs[currentFilteredIndex];
+        songIndex = songs.findIndex(s => s.src === nextSongObj.src);
+    }
+    
     loadSong(songs[songIndex]);
     if (isPlaying) playSong();
 }
@@ -402,6 +531,12 @@ repeatBtn.addEventListener('click', () => {
     isRepeat = !isRepeat;
     repeatBtn.classList.toggle('active');
     repeatBtn.style.color = isRepeat ? '#fff' : 'var(--sgc-cian)';
+});
+
+shuffleBtn.addEventListener('click', () => {
+    isShuffle = !isShuffle;
+    shuffleBtn.classList.toggle('active');
+    shuffleBtn.style.color = isShuffle ? '#fff' : 'var(--sgc-cian)';
 });
 
 // --- Visualizador de Audio (Canvas) ---

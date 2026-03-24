@@ -73,11 +73,65 @@ body.hacker-audio {
     flex-direction: column;
     overflow: hidden;
 }
-
 .playlist-header {
     padding: 15px;
     border-bottom: 1px solid var(--sgc-border);
     background: var(--sgc-dark-blue);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.filter-container {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+}
+
+.hacker-select {
+    flex: 1;
+    background: #000;
+    color: var(--sgc-cian);
+    border: 1px solid var(--sgc-border);
+    padding: 5px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.7rem;
+    outline: none;
+    cursor: pointer;
+}
+
+.hacker-select option {
+    background: #000;
+    color: var(--sgc-cian);
+}
+
+.sort-btn {
+    background: transparent;
+    border: 1px solid var(--sgc-border);
+    color: var(--sgc-cian);
+    padding: 5px 10px;
+    cursor: pointer;
+    transition: 0.3s;
+    font-size: 0.8rem;
+}
+
+.sort-btn:hover {
+    background: rgba(0, 204, 255, 0.1);
+    box-shadow: 0 0 5px var(--sgc-glow);
+}
+
+.track-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.track-genre-label {
+    font-size: 0.6rem;
+    opacity: 0.5;
+    text-transform: uppercase;
+    letter-spacing: 1px;
 }
 
 .playlist-header h3 {
@@ -85,6 +139,70 @@ body.hacker-audio {
     letter-spacing: 2px;
     color: #fff;
     text-shadow: 0 0 5px var(--sgc-cian);
+}
+
+/* Filtros y Ordenación */
+.filter-container {
+    display: flex;
+    gap: 10px;
+    width: 100%;
+}
+
+.hacker-select {
+    flex: 1;
+    background: #000;
+    color: var(--sgc-cian);
+    border: 1px solid var(--sgc-border);
+    padding: 5px 10px;
+    font-family: 'Consolas', monospace;
+    font-size: 0.7rem;
+    outline: none;
+    cursor: pointer;
+    border-radius: 4px;
+}
+
+.hacker-select:focus {
+    border-color: var(--sgc-cian);
+    box-shadow: 0 0 5px var(--sgc-glow);
+}
+
+.hacker-select option {
+    background: #001432;
+    color: var(--sgc-cian);
+}
+
+.sort-btn {
+    background: rgba(0, 204, 255, 0.1);
+    border: 1px solid var(--sgc-border);
+    color: var(--sgc-cian);
+    padding: 5px 10px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.sort-btn:hover {
+    background: rgba(0, 204, 255, 0.2);
+    border-color: var(--sgc-cian);
+    box-shadow: 0 0 5px var(--sgc-glow);
+}
+
+/* Detalles de la pista en la lista */
+.track-details {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    overflow: hidden;
+}
+
+.track-genre-label {
+    font-size: 0.6rem;
+    opacity: 0.4;
+    text-transform: uppercase;
+}
+
+.playlist-items li.active .track-genre-label {
+    opacity: 0.8;
 }
 
 .playlist-items {
