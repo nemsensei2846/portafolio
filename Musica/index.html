@@ -68,6 +68,20 @@
     <div class="playlist-container">
         <div class="playlist-header">
             <h3><i class="fas fa-list"></i> LIST MUSIC</h3>
+            <div class="filter-container">
+                <select id="genre-filter" class="hacker-select">
+                    <option value="All">TODOS_LOS_GENEROS</option>
+                    <option value="Regueton">REGUETON</option>
+                    <option value="Romantica">ROMANTICA</option>
+                    <option value="Salsas">SALSAS</option>
+                    <option value="Vallenato">VALLENATO</option>
+                    <option value="Bachata">BACHATA</option>
+                    <option value="Otros">OTROS</option>
+                </select>
+                <button id="sort-btn" class="sort-btn" title="Ordenar A-Z">
+                    <i class="fas fa-sort-alpha-down"></i>
+                </button>
+            </div>
         </div>
         <ul id="playlist" class="playlist-items">
             <!-- Las canciones se generarán dinámicamente en JS -->
