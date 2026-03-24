@@ -20,31 +20,73 @@ let isPlaying = false;
 let isRepeat = false;
 let isShuffle = false;
 
-// Datos de las canciones (Actualizado con carpeta hacking)
+// Datos de las canciones (Actualizado con todos los archivos de hacking - Versión Completa)
 const songs = [
     {
         title: "HEROIC_EPIC_BEAT",
         artist: "Aidan x Maxxton",
         src: "hacking/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxcaatvAyc/giphy.gif"
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "PA_TI",
         artist: "6ix9ine ft. Yailin",
         src: "hacking/6ix9ine - Pa Ti (feat. Yailin La Más Viral) (Official Music Video).mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxcaatvAyc/giphy.gif"
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "NACIMOS_PA_MORIR",
         artist: "Anuel ft. Jory",
         src: "hacking/Anuel - Nacimos Pa Morir (Official Video) ft. Jory.mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxcaatvAyc/giphy.gif"
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "MAYORES",
+        artist: "Becky G ft. Bad Bunny",
+        src: "hacking/Becky G, Bad Bunny - Mayores (Official Video).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SIN_PIJAMA",
+        artist: "Becky G ft. Natti Natasha",
+        src: "hacking/Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SOY_PEOR",
+        artist: "Bad Bunny",
+        src: "hacking/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "CUANDO_TE_BESE",
+        artist: "Becky G ft. Paulo Londra",
+        src: "hacking/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "FRONTEAMOS_PORQUE_PODEMOS",
         artist: "De La Ghetto ft. Daddy Yankee",
         src: "hacking/De La Ghetto - Fronteamos Porque Podemos ft. Daddy Yankee, Yandel & Ñengo Flow [Official Video].mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExbmZ6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxcaatvAyc/giphy.gif"
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "TUSA",
+        artist: "Karol G ft. Nicki Minaj",
+        src: "hacking/KAROL G, Nicki Minaj - Tusa (Official Video).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "CUATRO_BABYS",
+        artist: "Maluma ft. Noriel, Bryant Myers",
+        src: "hacking/Maluma - Cuatro Babys (Official Video) ft. Trap Capos, Noriel, Bryant Myers, Juhn.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NO_ME_ACUERDO",
+        artist: "Thalia ft. Natti Natasha",
+        src: "hacking/Thalia, NATTI NATASHA - No Me Acuerdo (Official Video).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     }
 ];
 
@@ -79,6 +121,12 @@ function loadSong(song) {
     titleEl.innerText = song.title;
     artistEl.innerText = song.artist;
     audio.src = song.src;
+    
+    // Actualizar imagen de portada con el GIF de la canción
+    const coverImg = document.getElementById('cover');
+    if (coverImg) {
+        coverImg.src = song.cover;
+    }
     
     // Actualizar clase activa en la lista
     const items = playlistItems.querySelectorAll('li');
