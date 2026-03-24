@@ -20,12 +20,30 @@ let isPlaying = false;
 let isRepeat = false;
 let isShuffle = false;
 
-// Datos de las canciones (Actualizado con todos los archivos de hacking - Versión Completa)
+// Datos de las canciones (Actualización Masiva - 18 Pistas Detectadas)
 const songs = [
     {
         title: "HEROIC_EPIC_BEAT",
         artist: "Aidan x Maxxton",
         src: "hacking/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "AMORFODA",
+        artist: "Bad Bunny",
+        src: "hacking/BAD BUNNY - AMORFODA (Video Oficial).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SOY_PEOR",
+        artist: "Bad Bunny",
+        src: "hacking/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "BELLAKEO",
+        artist: "Peso Pluma ft. Anitta",
+        src: "hacking/BELLAKEO (Video Oficial) - Peso Pluma, Anitta.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
@@ -53,12 +71,6 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "SOY_PEOR",
-        artist: "Bad Bunny",
-        src: "hacking/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
-    },
-    {
         title: "CUANDO_TE_BESE",
         artist: "Becky G ft. Paulo Londra",
         src: "hacking/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
@@ -71,15 +83,45 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "EL_CIGARRILLO",
+        artist: "Ana Gabriel",
+        src: "hacking/El cigarrillo - Ana Gabriel (LetraLyrics).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
         title: "TUSA",
         artist: "Karol G ft. Nicki Minaj",
         src: "hacking/KAROL G, Nicki Minaj - Tusa (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "EN_CAMBIO_NO",
+        artist: "Laura Pausini",
+        src: "hacking/Laura Pausini - En Cambio No (Official Music Video).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
         title: "CUATRO_BABYS",
         artist: "Maluma ft. Noriel, Bryant Myers",
         src: "hacking/Maluma - Cuatro Babys (Official Video) ft. Trap Capos, Noriel, Bryant Myers, Juhn.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "TE_VAS",
+        artist: "Ozuna",
+        src: "hacking/Ozuna - Te Vas (Video Oficial).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SALVAME",
+        artist: "RBD",
+        src: "hacking/RBD  Sálvame [Letra].mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SI_TU_LO_DEJAS",
+        artist: "Rvssian ft. Bad Bunny",
+        src: "hacking/Rvssian - Si Tu Lo Dejas FT Bad Bunny X Farruko X Nicky Jam X King Kosa.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
