@@ -92,5 +92,30 @@
     <audio id="audio-player"></audio>
 
     <script src="script.js"></script>
+
+    <!-- Firebase Analytics Tracking -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCmWzM41w0hWvDS0Yq4l2xjwzs2U43OxgI", 
+            authDomain: "sensei-bae7d.firebaseapp.com", 
+            projectId: "sensei-bae7d", 
+            storageBucket: "sensei-bae7d.firebasestorage.app", 
+            messagingSenderId: "188633348597", 
+            appId: "1:188633348597:web:d2ac93ec1e5bffa5af08bc", 
+            measurementId: "G-WW3RFRWM1H" 
+        }; 
+
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Registro de Visita a la sección de Música
+        logEvent(analytics, 'section_view_musica', {
+            page_title: "FBI_AUDIO_DECRYPTOR",
+            section: "Musica"
+        });
+    </script>
 </body>
 </html>
