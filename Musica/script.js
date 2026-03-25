@@ -519,6 +519,9 @@ function loadSong(song) {
     artistEl.innerText = song.artist;
     audio.src = song.src;
     
+    // Asegurar que la ruta de la portada sea absoluta para Media Session
+    const absoluteCover = new URL(song.cover, window.location.href).href;
+    
     // Actualizar imagen de portada con el GIF de la canción
     const coverImg = document.getElementById('cover');
     if (coverImg) {
@@ -540,15 +543,25 @@ function loadSong(song) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: song.title,
             artist: song.artist,
-            album: 'FBI_SURVEILLANCE_OS',
+            album: 'SENSEI_AUDIO_SYSTEM',
             artwork: [
-                { src: song.cover, sizes: '512x512', type: 'image/gif' }
+                { src: absoluteCover, sizes: '512x512', type: 'image/gif' },
+                { src: absoluteCover, sizes: '192x192', type: 'image/gif' }
             ]
         });
 
+        // Asegurar que el estado de reproducción esté sincronizado
+        navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
+
         // Manejadores de eventos de la sesión multimedia
-        navigator.mediaSession.setActionHandler('play', playSong);
-        navigator.mediaSession.setActionHandler('pause', pauseSong);
+        navigator.mediaSession.setActionHandler('play', () => {
+            playSong();
+            navigator.mediaSession.playbackState = "playing";
+        });
+        navigator.mediaSession.setActionHandler('pause', () => {
+            pauseSong();
+            navigator.mediaSession.playbackState = "paused";
+        });
         navigator.mediaSession.setActionHandler('previoustrack', prevSong);
         navigator.mediaSession.setActionHandler('nexttrack', nextSong);
 
@@ -579,11 +592,17 @@ function loadSong(song) {
 // Actualizar el estado de la posición para el sistema (Lock Screen)
 function updatePositionState() {
     if ('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession) {
-        navigator.mediaSession.setPositionState({
-            duration: audio.duration || 0,
-            playbackRate: audio.playbackRate,
-            position: audio.currentTime
-        });
+        if (!isNaN(audio.duration) && audio.duration > 0) {
+            try {
+                navigator.mediaSession.setPositionState({
+                    duration: audio.duration,
+                    playbackRate: audio.playbackRate,
+                    position: audio.currentTime
+                });
+            } catch (error) {
+                console.error("Error actualizando PositionState:", error);
+            }
+        }
     }
 }
 
@@ -591,9 +610,15 @@ function updatePositionState() {
 function playSong() {
     isPlaying = true;
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    audio.play();
-    startVisualizer();
-    updatePositionState(); // Sincronizar con el sistema
+    audio.play().then(() => {
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = "playing";
+        }
+        startVisualizer();
+        updatePositionState();
+    }).catch(error => {
+        console.error("Error al reproducir:", error);
+    });
 }
 
 // Pausar
@@ -601,7 +626,10 @@ function pauseSong() {
     isPlaying = false;
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     audio.pause();
-    updatePositionState(); // Sincronizar con el sistema
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = "paused";
+    }
+    updatePositionState();
 }
 
 // Anterior
