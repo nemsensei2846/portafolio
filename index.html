@@ -544,5 +544,50 @@
             });
         }
     </script>
+
+    <!-- Firebase Integration (Mejorado) -->
+    <script type="module">
+        // Importar las funciones necesarias desde los SDKs de Firebase (v10.8.0)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAnalytics, logEvent } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js";
+
+        // Tu configuración de Firebase
+        const firebaseConfig = { 
+            apiKey: "AIzaSyCmWzM41w0hWvDS0Yq4l2xjwzs2U43OxgI", 
+            authDomain: "sensei-bae7d.firebaseapp.com", 
+            projectId: "sensei-bae7d", 
+            storageBucket: "sensei-bae7d.firebasestorage.app", 
+            messagingSenderId: "188633348597", 
+            appId: "1:188633348597:web:d2ac93ec1e5bffa5af08bc", 
+            measurementId: "G-WW3RFRWM1H" 
+        }; 
+
+        // Inicializar Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+
+        // Registro de Visita (Evento Mejorado)
+        logEvent(analytics, 'page_view_sensei', {
+            page_title: document.title,
+            page_location: window.location.href,
+            page_path: window.location.pathname
+        });
+
+        // Registrar cuando se descarga/instala la App (PWA)
+        window.addEventListener('appinstalled', () => {
+            logEvent(analytics, 'pwa_install_success', {
+                app_name: 'SENSEI',
+                platform: navigator.platform
+            });
+            console.log('App SENSEI instalada con éxito en Firebase.');
+        });
+
+        // Registrar cuando se usa en modo standalone (App abierta)
+        if (window.matchMedia('(display-mode: standalone)').matches) {
+            logEvent(analytics, 'app_open_standalone', {
+                source: 'pwa'
+            });
+        }
+    </script>
 </body>
 </html>
