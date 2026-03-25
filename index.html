@@ -198,9 +198,61 @@
             background-size: 100% 2px, 3px 100%;
             pointer-events: none;
         }
+
+        /* PWA Install Banner */
+        #pwa-banner {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 255, 65, 0.9);
+            color: #000;
+            padding: 15px;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            font-weight: bold;
+            box-shadow: 0 2px 10px rgba(0, 255, 65, 0.5);
+            animation: slideDown 0.5s ease;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); }
+            to { transform: translateY(0); }
+        }
+
+        #pwa-banner button {
+            background: #000;
+            color: #00ff41;
+            border: 1px solid #000;
+            padding: 8px 15px;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            font-weight: bold;
+            text-transform: uppercase;
+        }
+
+        #pwa-banner .close-btn {
+            background: transparent;
+            color: #000;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            padding: 0 10px;
+        }
     </style>
 </head>
 <body>
+
+    <!-- PWA Install Banner -->
+    <div id="pwa-banner">
+        <span><i class="fas fa-download"></i> INSTALAR APP_SERVER_001</span>
+        <div>
+            <button id="install-btn">INSTALAR</button>
+            <button class="close-btn" onclick="hidePwaBanner()">×</button>
+        </div>
+    </div>
 
     <canvas id="matrix-bg"></canvas>
 
@@ -308,6 +360,45 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+
+        // --- Lógica de Instalación PWA ---
+        let deferredPrompt;
+        const pwaBanner = document.getElementById('pwa-banner');
+        const installBtn = document.getElementById('install-btn');
+
+        window.addEventListener('beforeinstallprompt', (e) => {
+            // Evitar que el navegador muestre el prompt automático
+            e.preventDefault();
+            // Guardar el evento para usarlo después
+            deferredPrompt = e;
+            // Mostrar nuestro banner personalizado
+            pwaBanner.style.display = 'flex';
+        });
+
+        installBtn.addEventListener('click', async () => {
+            if (deferredPrompt) {
+                // Mostrar el prompt de instalación del navegador
+                deferredPrompt.prompt();
+                // Esperar la respuesta del usuario
+                const { outcome } = await deferredPrompt.userChoice;
+                console.log(`Usuario eligió instalar: ${outcome}`);
+                // Limpiar el evento
+                deferredPrompt = null;
+                // Ocultar el banner
+                hidePwaBanner();
+            }
+        });
+
+        function hidePwaBanner() {
+            pwaBanner.style.display = 'none';
+        }
+
+        // Detección de iOS para mostrar mensaje manual si es necesario
+        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        if (isIOS && !window.navigator.standalone) {
+            // Podrías mostrar un mensaje diferente para iOS aquí
+            // "Para instalar: Toca Compartir y luego 'Agregar a inicio'"
+        }
     </script>
     <script>
 if ('serviceWorker' in navigator) {
