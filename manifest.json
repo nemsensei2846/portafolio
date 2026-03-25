@@ -1,6 +1,6 @@
 {
   "name": "Server 001 - Portal Hacker",
-  "short_name": "Server001",
+  "short_name": "SENSEI",
   "description": "Portal de acceso seguro para archivos y música.",
   "start_url": "index.html",
   "display": "standalone",
