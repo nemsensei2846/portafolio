@@ -551,6 +551,39 @@ function loadSong(song) {
         navigator.mediaSession.setActionHandler('pause', pauseSong);
         navigator.mediaSession.setActionHandler('previoustrack', prevSong);
         navigator.mediaSession.setActionHandler('nexttrack', nextSong);
+
+        // Soporte para barra de progreso en pantalla de bloqueo (Seek)
+        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
+            const skipTime = details.seekOffset || 10;
+            audio.currentTime = Math.max(audio.currentTime - skipTime, 0);
+            updatePositionState();
+        });
+
+        navigator.mediaSession.setActionHandler('seekforward', (details) => {
+            const skipTime = details.seekOffset || 10;
+            audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration);
+            updatePositionState();
+        });
+
+        navigator.mediaSession.setActionHandler('seekto', (details) => {
+            if (details.fastSeek && 'fastSeek' in audio) {
+                audio.fastSeek(details.seekTime);
+                return;
+            }
+            audio.currentTime = details.seekTime;
+            updatePositionState();
+        });
+    }
+}
+
+// Actualizar el estado de la posición para el sistema (Lock Screen)
+function updatePositionState() {
+    if ('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession) {
+        navigator.mediaSession.setPositionState({
+            duration: audio.duration || 0,
+            playbackRate: audio.playbackRate,
+            position: audio.currentTime
+        });
     }
 }
 
@@ -560,6 +593,7 @@ function playSong() {
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
     audio.play();
     startVisualizer();
+    updatePositionState(); // Sincronizar con el sistema
 }
 
 // Pausar
@@ -567,6 +601,7 @@ function pauseSong() {
     isPlaying = false;
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     audio.pause();
+    updatePositionState(); // Sincronizar con el sistema
 }
 
 // Anterior
@@ -590,6 +625,7 @@ function prevSong() {
     
     loadSong(songs[songIndex]);
     if (isPlaying) playSong();
+    updatePositionState(); // Sincronizar con el sistema
 }
 
 // Siguiente
@@ -625,6 +661,7 @@ function nextSong() {
     
     loadSong(songs[songIndex]);
     if (isPlaying) playSong();
+    updatePositionState(); // Sincronizar con el sistema
 }
 
 // Actualizar progreso
@@ -638,6 +675,11 @@ function updateProgress(e) {
     let currentSec = Math.floor(currentTime % 60);
     if (currentSec < 10) currentSec = `0${currentSec}`;
     currentTimeEl.innerText = `${currentMin}:${currentSec}`;
+
+    // Actualizar también la barra de progreso del sistema (lock screen) cada segundo
+    if (Math.floor(currentTime) % 1 === 0) {
+        updatePositionState();
+    }
 }
 
 // Configurar duración al cargar
