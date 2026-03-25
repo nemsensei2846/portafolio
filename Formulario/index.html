@@ -1,1 +1,78 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Fisica y Quimica - FBI Terminal</title>
+    <link rel="stylesheet" href="style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <canvas id="matrix"></canvas>
+    
+    <div class="fbi-container">
+        <div class="fbi-header">
+            <div class="fbi-logo">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Seal">
+            </div>
+            <h1>FEDERAL BUREAU OF INVESTIGATION</h1>
+            <p>DEPARTMENT OF JUSTICE</p>
+        </div>
 
+        <div class="content">
+            <!-- Bloque de Física -->
+            <div class="section-block">
+                <h2 class="main-title">Formulario de Fisica</h2>
+                <div class="terminal-box">
+                    <p class="status">>>> ACCESO CONCEDIDO: FISICA_DB_V1</p>
+                    <div class="document-list single-col">
+                        <a href="anexos/pdf-formulario-fisica.pdf" target="_blank" class="doc-item">
+                            <span class="doc-icon"><i class="fas fa-file-pdf"></i></span>
+                            <span class="doc-name">pdf-formulario-fisica.pdf</span>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque de Química -->
+            <div class="section-block">
+                <h2 class="main-title">Formulario de Quimica</h2>
+                <div class="terminal-box">
+                    <p class="status">>>> ACCESO CONCEDIDO: QUIMICA_DB_V2</p>
+                    <div class="carousel-container">
+                        <div class="document-carousel">
+                            <a href="anexos/conceptos basico de la quimica.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-flask"></i></div>
+                                <div class="card-name">conceptos basico de la quimica.pdf</div>
+                            </a>
+                            <a href="anexos/formulacion_quimica_inorganica.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-vial"></i></div>
+                                <div class="card-name">formulacion_quimica_inorganica.pdf</div>
+                            </a>
+                            <a href="anexos/Formulario 2do de bachillerato.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-microscope"></i></div>
+                                <div class="card-name">Formulario 2do de bachillerato.pdf</div>
+                            </a>
+                            <a href="anexos/FORMULARIO-QUIMICA-1-2022-07-23-15_08_00.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-atom"></i></div>
+                                <div class="card-name">FORMULARIO-QUIMICA-1-2022-07-23-15_08_00.pdf</div>
+                            </a>
+                            <a href="anexos/Nomenclatura_y_Formulacion_Quimica.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-dna"></i></div>
+                                <div class="card-name">Nomenclatura_y_Formulacion_Quimica.pdf</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="fbi-footer">
+            <p>WARNING: RESTRICTED ACCESS. UNAUTHORIZED USE IS PROHIBITED BY LAW.</p>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
