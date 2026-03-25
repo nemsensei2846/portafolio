@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v1';
+const CACHE_NAME = 'sensei-v2'; // Incrementamos la versión para forzar actualización
 const urlsToCache = [
   './',
   './index.html',
@@ -7,42 +7,48 @@ const urlsToCache = [
   './Musica/index.html',
   './Musica/script.js',
   './Musica/style.css',
-  './HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3'
+  './HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3',
+  './Formulario/index.html',
+  './Formulario/style.css',
+  './Formulario/script.js'
 ];
 
+// Evento de instalación: Forzamos a que el nuevo SW tome el control inmediatamente
 self.addEventListener('install', event => {
+  self.skipWaiting(); // Salta la fase de espera y activa el nuevo SW de inmediato
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Cache abierta');
+        console.log('Nueva cache v2 abierta');
         return cache.addAll(urlsToCache);
       })
   );
 });
 
-self.addEventListener('fetch', event => {
-  event.respondWith(
-    caches.match(event.request)
-      .then(response => {
-        if (response) {
-          return response;
-        }
-        return fetch(event.request);
+// Evento de activación: Limpiamos caches antiguos y tomamos el control de las pestañas abiertas
+self.addEventListener('activate', event => {
+  event.waitUntil(
+    Promise.all([
+      self.clients.claim(), // Toma el control de los clientes inmediatamente
+      caches.keys().then(cacheNames => {
+        return Promise.all(
+          cacheNames.map(cacheName => {
+            if (cacheName !== CACHE_NAME) {
+              console.log('Borrando cache antigua:', cacheName);
+              return caches.delete(cacheName);
+            }
+          })
+        );
       })
+    ])
   );
 });
 
-self.addEventListener('activate', event => {
-  const cacheWhitelist = [CACHE_NAME];
-  event.waitUntil(
-    caches.keys().then(cacheNames => {
-      return Promise.all(
-        cacheNames.map(cacheName => {
-          if (cacheWhitelist.indexOf(cacheName) === -1) {
-            return caches.delete(cacheName);
-          }
-        })
-      );
+// Estrategia de red primero, luego cache (para asegurar actualizaciones en vivo)
+self.addEventListener('fetch', event => {
+  event.respondWith(
+    fetch(event.request).catch(() => {
+      return caches.match(event.request);
     })
   );
 });
