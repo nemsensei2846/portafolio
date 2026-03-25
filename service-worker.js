@@ -1,4 +1,4 @@
-const CACHE_NAME = 'server-001-v1';
+const CACHE_NAME = 'SENSEI-v1';
 const urlsToCache = [
   '/',
   '/index.html',
