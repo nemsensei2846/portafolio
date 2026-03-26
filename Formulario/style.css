@@ -26,7 +26,7 @@ body {
     opacity: 0.3;
 }
 
-.fbi-container {
+.sensei-container {
     background: rgba(0, 0, 0, 0.9);
     border: 2px solid #0f0;
     padding: 2rem;
@@ -61,26 +61,26 @@ body {
     transform: scale(1.1);
 }
 
-.fbi-header {
+.sensei-header {
     margin-bottom: 2rem;
     border-bottom: 1px solid #0f0;
     padding-bottom: 1rem;
 }
 
-.fbi-logo img {
+.sensei-logo img {
     width: 100px;
     height: 100px;
     margin-bottom: 1rem;
     filter: drop-shadow(0 0 5px #0f0);
 }
 
-.fbi-header h1 {
+.sensei-header h1 {
     font-size: 1.2rem;
     letter-spacing: 5px;
     margin-bottom: 0.5rem;
 }
 
-.fbi-header p {
+.sensei-header p {
     font-size: 0.8rem;
     opacity: 0.8;
 }
@@ -198,7 +198,7 @@ body {
     word-wrap: break-word;
 }
 
-.fbi-footer {
+.sensei-footer {
     font-size: 0.6rem;
     margin-top: 2rem;
     opacity: 0.5;
@@ -210,6 +210,6 @@ body {
     100% { opacity: 0.9; }
 }
 
-.fbi-container {
+.sensei-container {
     animation: flicker 3s infinite ease-in-out;
 }

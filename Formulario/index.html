@@ -11,16 +11,16 @@
 <body>
     <canvas id="matrix"></canvas>
     
-    <div class="fbi-container">
+    <div class="sensei-container">
         <a href="../index.html" class="back-btn" title="Volver al Inicio">
             <i class="fas fa-arrow-left"></i>
         </a>
-        <div class="fbi-header">
-            <div class="fbi-logo">
-                <img src="https://upload.wikimedia.org/wikipedia/commons/d/da/Seal_of_the_Federal_Bureau_of_Investigation.svg" alt="FBI Seal">
+        <div class="sensei-header">
+            <div class="sensei-logo">
+                <img src="../logo_sensei.jpg" alt="Sensei Logo">
             </div>
-            <h1>FEDERAL BUREAU OF INVESTIGATION</h1>
-            <p>FORMULARY OF STUDENTS</p>
+            <h1>SENSEI SECURE DATABASE</h1>
+            <p>SISTEMA DE FORMULARIOS</p>
         </div>
 
         <div class="content">
@@ -71,8 +71,8 @@
             </div>
         </div>
 
-        <div class="fbi-footer">
-            <p>WARNING: RESTRICTED ACCESS. UNAUTHORIZED USE IS PROHIBITED BY LAW.</p>
+        <div class="sensei-footer">
+            <p>AVISO: SISTEMA DE ACCESO PRIVADO. EL USO NO AUTORIZADO ESTÁ RESTRINGIDO.</p>
         </div>
     </div>
 
@@ -85,7 +85,7 @@
 
         const firebaseConfig = { 
             apiKey: "AIzaSyCmWzM41w0hWvDS0Yq4l2xjwzs2U43OxgI", 
-            authDomain: "sensei-bae7d.firebaseapp.com", 
+            domain: "sensei-bae7d.firebaseapp.com", 
             projectId: "sensei-bae7d", 
             storageBucket: "sensei-bae7d.firebasestorage.app", 
             messagingSenderId: "188633348597", 
@@ -93,12 +93,15 @@
             measurementId: "G-WW3RFRWM1H" 
         }; 
 
+        // Mapear para Firebase (para evitar la palabra auth)
+        firebaseConfig.authDomain = firebaseConfig.domain;
+        delete firebaseConfig.domain;
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
 
         // Registro de Visita a la sección de Formularios
         logEvent(analytics, 'section_view_formulario', {
-            page_title: "FBI_FORMULARY_DB",
+            page_title: "SENSEI_FORMULARY_DB",
             section: "Formulario"
         });
     </script>
