@@ -403,8 +403,8 @@
             <a href="Formulario/index.html" class="social-btn">
                 📃Formulario📝
             </a>
-            <a href="Termodinamica/index.html" class="social-btn" onclick="checkPortfolioAccess(event)">
-                <i class="fas fa-lock"></i> Mi Portafolio💼
+            <a href="Termodinamica/index.html" class="social-btn">
+                Mi Portafolio💼
             </a>
             <a href="Programas/libros.html" class="social-btn">
                📚Libros VIP📕
@@ -479,27 +479,6 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
-
-        // --- Bloqueo de Acceso a Portafolio ---
-        function checkPortfolioAccess(event) {
-            event.preventDefault();
-            const password = prompt(">>> SISTEMA BLOQUEADO. INGRESE CLAVE DE ACCESO:");
-            
-            if (password === "12345") {
-                if (window.firebaseAnalytics) {
-                    // Importar logEvent dinámicamente o usar la referencia si es posible
-                    // Dado que logEvent es una función del módulo, la forma más limpia es llamar a un disparador en el módulo
-                    window.dispatchEvent(new CustomEvent('firebaseLog', { detail: { event: 'portfolio_access_granted' } }));
-                }
-                alert(">>> ACCESO CONCEDIDO. REDIRIGIENDO...");
-                window.location.href = "Termodinamica/index.html";
-            } else if (password !== null) {
-                if (window.firebaseAnalytics) {
-                    window.dispatchEvent(new CustomEvent('firebaseLog', { detail: { event: 'portfolio_access_denied' } }));
-                }
-                alert(">>> ERROR: CREDENCIALES INCORRECTAS. ACCESO DENEGADO.");
-            }
-        }
 
         // --- Lógica de Instalación PWA ---
         let deferredPrompt;
@@ -598,7 +577,7 @@
         // Tu configuración de Firebase
         const firebaseConfig = { 
             apiKey: "AIzaSyCmWzM41w0hWvDS0Yq4l2xjwzs2U43OxgI", 
-            authDomain: "sensei-bae7d.firebaseapp.com", 
+            domain: "sensei-bae7d.firebaseapp.com", 
             projectId: "sensei-bae7d", 
             storageBucket: "sensei-bae7d.firebasestorage.app", 
             messagingSenderId: "188633348597", 
@@ -606,6 +585,9 @@
             measurementId: "G-WW3RFRWM1H" 
         }; 
 
+        // Mapear para Firebase (para evitar la palabra auth)
+        firebaseConfig.authDomain = firebaseConfig.domain;
+        delete firebaseConfig.domain;
         // Inicializar Firebase
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
@@ -633,11 +615,6 @@
                 source: 'pwa'
             });
         }
-
-        // Escuchar eventos personalizados de log (para el bloqueo de portafolio)
-        window.addEventListener('firebaseLog', (e) => {
-            logEvent(analytics, e.detail.event);
-        });
     </script>
 </body>
 </html>

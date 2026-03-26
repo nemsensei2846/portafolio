@@ -1,9 +1,10 @@
-const CACHE_NAME = 'sensei-v5'; // Incrementamos la versión para forzar actualización
+const CACHE_NAME = 'sensei-v6'; // Incrementamos la versión para forzar actualización
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
   './logo_sensei.jpg',
+  './google495610aeff1281cc.html',
   './Musica/index.html',
   './Musica/script.js',
   './Musica/style.css',
@@ -19,7 +20,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Nueva cache v5 abierta');
+        console.log('Nueva cache v6 abierta');
         return cache.addAll(urlsToCache);
       })
   );
@@ -33,7 +34,7 @@ self.addEventListener('activate', event => {
       caches.keys().then(cacheNames => {
         return Promise.all(
           cacheNames.map(cacheName => {
-            if (cacheName !== CACHE_NAME) {
+            if (cacheName.startsWith('sensei-') && cacheName !== CACHE_NAME) {
               console.log('Borrando cache antigua:', cacheName);
               return caches.delete(cacheName);
             }
