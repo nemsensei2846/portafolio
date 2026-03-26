@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v8'; // Nueva versión para sincronizar Netlify/GitHub
+const CACHE_NAME = 'sensei-v9'; // Nueva versión para diseño carrusel y visor PDF
 const urlsToCache = [
   './',
   './index.html',
