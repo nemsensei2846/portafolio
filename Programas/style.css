@@ -88,22 +88,37 @@ body {
 
 /* Libros Page Specific */
 .books-container {
-    max-width: 1000px;
-    width: 90%;
-    padding: 40px;
+    max-width: 1200px;
+    width: 95%;
+    padding: 40px 20px;
     background: rgba(0, 20, 40, 0.95);
     border: 2px solid var(--sensei-green);
     position: relative;
+    overflow: hidden;
 }
 
 .books-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 20px;
-    margin-top: 30px;
+    display: flex;
+    overflow-x: auto;
+    gap: 25px;
+    padding: 20px 10px;
+    scroll-behavior: smooth;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sensei-green) transparent;
+    -webkit-overflow-scrolling: touch;
+}
+
+.books-grid::-webkit-scrollbar {
+    height: 6px;
+}
+
+.books-grid::-webkit-scrollbar-thumb {
+    background: var(--sensei-green);
+    border-radius: 10px;
 }
 
 .book-card {
+    flex: 0 0 250px;
     border: 1px solid var(--sensei-green);
     padding: 0;
     text-align: center;
@@ -112,27 +127,70 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    box-shadow: 0 0 10px rgba(0, 255, 65, 0.1);
 }
 
 .book-card:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px var(--sensei-green);
+    transform: translateY(-10px);
+    box-shadow: 0 0 20px var(--sensei-green);
 }
 
 .book-cover {
     width: 100%;
-    height: auto;
+    height: 350px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .book-info {
     padding: 15px;
+    background: rgba(0, 0, 0, 0.5);
 }
 
 .book-info h3 {
-    font-size: 1rem;
+    font-size: 0.9rem;
     margin-bottom: 15px;
     min-height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Estilos para el visor de PDF */
+.pdf-modal-content {
+    background: #000;
+    border: 2px solid var(--sensei-green);
+    width: 95%;
+    height: 90vh;
+    max-width: 1000px;
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 0 30px var(--sensei-green);
+}
+
+#pdf-viewer {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background: #333;
+}
+
+.pdf-header {
+    padding: 10px 20px;
+    background: var(--sensei-blue);
+    border-bottom: 1px solid var(--sensei-green);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.pdf-header h2 {
+    font-size: 1rem;
+    color: var(--sensei-green);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 /* Estilos para la ventana modal */
@@ -142,11 +200,11 @@ body {
     left: 0;
     width: 100%;
     height: 100%;
-    background: rgba(0, 0, 0, 0.85);
+    background: rgba(0, 0, 0, 0.9);
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1000;
+    z-index: 2000;
 }
 
 .modal-content {
@@ -154,36 +212,26 @@ body {
     border: 2px solid var(--sensei-green);
     padding: 30px;
     width: 90%;
-    max-width: 600px;
+    max-width: 500px;
     position: relative;
     box-shadow: 0 0 25px var(--sensei-green);
+    animation: zoomIn 0.3s ease;
 }
 
-.close-btn {
-    position: absolute;
-    top: 10px;
-    right: 20px;
-    font-size: 2rem;
-    color: var(--sensei-green);
-    cursor: pointer;
-    transition: color 0.3s ease;
+@keyframes zoomIn {
+    from { transform: scale(0.8); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
 }
 
-.close-btn:hover {
-    color: var(--error-red);
-}
-
-#modal-title {
-    border-bottom: 1px solid var(--sensei-green);
-    padding-bottom: 15px;
-    margin-bottom: 20px;
-}
-
-#modal-body p {
-    margin-bottom: 10px;
-    line-height: 1.6;
-}
-
-#modal-body strong {
-    color: var(--gold);
+@media (max-width: 768px) {
+    .book-card {
+        flex: 0 0 200px;
+    }
+    .book-cover {
+        height: 280px;
+    }
+    .pdf-modal-content {
+        height: 95vh;
+        width: 100%;
+    }
 }

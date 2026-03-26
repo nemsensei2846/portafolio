@@ -6,7 +6,41 @@
     <title>Libros | PROGRAMMING_BOOKS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#00ff41">
+    <link rel="apple-touch-icon" href="../logo_sensei.jpg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <script>
+        // --- Registro de Service Worker para Actualizaciones Agresivas ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js').then(reg => {
+                    reg.update(); // Revisar actualización al cargar
+
+                    reg.onupdatefound = () => {
+                        const installingWorker = reg.installing;
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    console.log('>>> ACTUALIZANDO LIBROS...');
+                                    window.location.reload();
+                                }
+                            }
+                        };
+                    };
+                }).catch(err => console.log('Error SW:', err));
+            });
+            
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    window.location.reload();
+                    refreshing = true;
+                }
+            });
+        }
+
         // --- Protección de Código Fuente ---
         document.addEventListener('contextmenu', event => event.preventDefault());
         document.onkeydown = function(e) {
@@ -32,40 +66,40 @@
             <p class="status-text">>>> ACCESO CONCEDIDO: NIVEL 1✅</p>
         </header>
 
-        <div class="books-grid">
+        <div class="books-grid" id="books-carousel">
             <!-- Libro 1: Programación Orientada a Objetos -->
             <div class="book-card">
-                <img src="fotos/Programacion Orientada a objectos.png" alt="Portada del libro Programación Orientada a Objetos" class="book-cover" onclick="openModal('poo')">
+                <img src="fotos/Programacion Orientada a objectos.png" alt="Programación Orientada a Objetos" class="book-cover" onclick="openModal('poo')">
                 <div class="book-info">
                     <h3>Programación Orientada a Objetos</h3>
-                    <a href="Libros/Programacion Orientada a objectos.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
+                    <button onclick="viewPDF('poo')" class="sensei-btn">VISUALIZAR</button>
                 </div>
             </div>
 
             <!-- Libro 2: Asincronismo en JavaScript -->
             <div class="book-card">
-                <img src="fotos/asincronismo-en-javascript-683x1024.webp" alt="Portada del libro Asincronismo en JavaScript" class="book-cover" onclick="openModal('async')">
+                <img src="fotos/asincronismo-en-javascript-683x1024.webp" alt="Asincronismo en JavaScript" class="book-cover" onclick="openModal('async')">
                 <div class="book-info">
                     <h3>Asincronismo en JavaScript</h3>
-                    <a href="Libros/Asincronismo-en-JavaScript-Charly-Cimino.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
+                    <button onclick="viewPDF('async')" class="sensei-btn">VISUALIZAR</button>
                 </div>
             </div>
 
             <!-- Libro 3: CSS3 y Javascript Avanzado -->
             <div class="book-card">
-                <img src="fotos/CSS3 y Javascript avanzado.png" alt="Portada del libro CSS3 y Javascript Avanzado" class="book-cover" onclick="openModal('cssjs')">
+                <img src="fotos/CSS3 y Javascript avanzado.png" alt="CSS3 y Javascript Avanzado" class="book-cover" onclick="openModal('cssjs')">
                 <div class="book-info">
                     <h3>CSS3 y Javascript Avanzado</h3>
-                    <a href="Libros/CSS3-y-Javascript-Avanzado-1.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
+                    <button onclick="viewPDF('cssjs')" class="sensei-btn">VISUALIZAR</button>
                 </div>
             </div>
 
             <!-- Libro 4: Doma de serpientes para niños -->
             <div class="book-card">
-                <img src="fotos/Snake Wrangling for Kids, Learning to Program with Python.png" alt="Portada del libro Doma de serpientes para niños" class="book-cover" onclick="openModal('snake')">
+                <img src="fotos/Snake Wrangling for Kids, Learning to Program with Python.png" alt="Doma de serpientes para niños" class="book-cover" onclick="openModal('snake')">
                 <div class="book-info">
                     <h3>Doma de serpientes para niños</h3>
-                    <a href="Libros/doma-de-serpientes-para-ninos_swfk-es-win-0.0.4.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
+                    <button onclick="viewPDF('snake')" class="sensei-btn">VISUALIZAR</button>
                 </div>
             </div>
         </div>
@@ -74,9 +108,20 @@
     <!-- Modal de Detalles del Libro -->
     <div id="book-modal" class="modal-overlay" style="display: none;">
         <div class="modal-content">
-            <span class="close-btn" onclick="closeModal()">&times;</span>
-            <h2 id="modal-title"></h2>
-            <div id="modal-body"></div>
+            <span class="close-btn" onclick="closeModal()" style="position: absolute; top: 10px; right: 20px; font-size: 2rem; color: var(--sensei-green); cursor: pointer;">&times;</span>
+            <h2 id="modal-title" style="border-bottom: 1px solid var(--sensei-green); padding-bottom: 15px; margin-bottom: 20px;"></h2>
+            <div id="modal-body" style="line-height: 1.6;"></div>
+        </div>
+    </div>
+
+    <!-- Visor de PDF Integrado -->
+    <div id="pdf-modal" class="modal-overlay" style="display: none;">
+        <div class="pdf-modal-content">
+            <div class="pdf-header">
+                <h2 id="pdf-title">SENSEI_PDF_VIEWER</h2>
+                <span class="close-btn" onclick="closePDF()" style="font-size: 2rem; color: var(--sensei-green); cursor: pointer;">&times;</span>
+            </div>
+            <iframe id="pdf-viewer" src=""></iframe>
         </div>
     </div>
 
@@ -85,45 +130,46 @@
         // Datos de los libros
         const bookData = {
             poo: {
-                title: "Datos del libro",
+                title: "Programación Orientada a Objetos",
+                path: "Libros/Programacion Orientada a objectos.pdf",
                 body: `
                     <p><strong>Título:</strong> Programación Orientada a Objetos</p>
                     <p><strong>Autores:</strong> Roberto Rodríguez Echeverría, Álvaro Prieto Ramos, Encarna Sosa Sánchez</p>
                     <p><strong>Categoría principal:</strong> Programación</p>
                     <p><strong>Idioma:</strong> Español</p>
-                    <p><strong>Licencia:</strong> Creative Commons Reconocimiento-NoComercial-CompartirIgual 3.0 Unported (CC BY-NC-SA 3.0)</p>
+                    <p><strong>Licencia:</strong> CC BY-NC-SA 3.0</p>
                 `
             },
             async: {
-                title: "Datos del libro",
+                title: "Asincronismo en JavaScript",
+                path: "Libros/Asincronismo-en-JavaScript-Charly-Cimino.pdf",
                 body: `
                     <p><strong>Título:</strong> Asincronismo en JavaScript</p>
                     <p><strong>Autor:</strong> Charly Cimino</p>
                     <p><strong>Categoría principal:</strong> Programación Web</p>
                     <p><strong>Idioma:</strong> Español</p>
-                    <p><strong>Licencia:</strong> Desconocida</p>
                 `
             },
             cssjs: {
-                title: "Datos del libro",
+                title: "CSS3 y Javascript Avanzado",
+                path: "Libros/CSS3-y-Javascript-Avanzado-1.pdf",
                 body: `
                     <p><strong>Título:</strong> CSS3 y Javascript Avanzado</p>
                     <p><strong>Autor:</strong> Jordi Collell Puig</p>
                     <p><strong>Categoría principal:</strong> Desarrollo web</p>
                     <p><strong>Subcategoría:</strong> Frontend</p>
                     <p><strong>Idioma:</strong> Español</p>
-                    <p><strong>Licencia:</strong> Creative Commons BY-SA 3.0 España</p>
                 `
             },
             snake: {
-                title: "Datos del libro",
+                title: "Doma de serpientes para niños",
+                path: "Libros/doma-de-serpientes-para-ninos_swfk-es-win-0.0.4.pdf",
                 body: `
                     <p><strong>Título:</strong> Doma de serpientes para niños</p>
                     <p><strong>Autor:</strong> Jason R. Briggs</p>
                     <p><strong>Categoría principal:</strong> Programación para niños</p>
                     <p><strong>Subcategoría:</strong> Python</p>
                     <p><strong>Idioma:</strong> Español</p>
-                    <p><strong>Licencia:</strong> Creative Commons BY-NC-SA 3.0</p>
                 `
             }
         };
@@ -135,7 +181,7 @@
             
             const data = bookData[bookId];
             if (data) {
-                titleEl.innerText = data.title;
+                titleEl.innerText = "Detalles del Libro";
                 bodyEl.innerHTML = data.body;
                 modal.style.display = 'flex';
             }
@@ -144,6 +190,31 @@
         window.closeModal = () => {
             const modal = document.getElementById('book-modal');
             modal.style.display = 'none';
+        };
+
+        // --- Lógica del Visor de PDF ---
+        window.viewPDF = (bookId) => {
+            const modal = document.getElementById('pdf-modal');
+            const viewer = document.getElementById('pdf-viewer');
+            const title = document.getElementById('pdf-title');
+            const data = bookData[bookId];
+
+            if (data) {
+                title.innerText = `VISUALIZANDO: ${data.title.toUpperCase()}`;
+                // Usamos Google Docs Viewer para asegurar visualización en móviles sin descargar
+                const pdfUrl = window.location.origin + window.location.pathname.replace('libros.html', '') + data.path;
+                viewer.src = data.path; // Intento directo primero
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden'; // Bloquear scroll de fondo
+            }
+        };
+
+        window.closePDF = () => {
+            const modal = document.getElementById('pdf-modal');
+            const viewer = document.getElementById('pdf-viewer');
+            viewer.src = "";
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto'; // Restaurar scroll
         };
 
         // Matrix Effect
