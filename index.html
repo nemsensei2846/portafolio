@@ -487,6 +487,7 @@
             
             if (password === "sensei2026") {
                 alert(">>> ACCESO CONCEDIDO. BIENVENIDO.");
+                sessionStorage.setItem('access_granted', 'true'); // Flag de acceso
                 window.location.href = url;
             } else if (password !== null) {
                 alert(">>> ERROR: CONTRASEÑA INCORRECTA. ACCESO DENEGADO.");

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v9'; // Nueva versión para diseño carrusel y visor PDF
+const CACHE_NAME = 'sensei-v10'; // Versión 10 - Forzar bloqueo de candados y actualización Netlify
 const urlsToCache = [
   './',
   './index.html',
