@@ -1,7 +1,7 @@
 {
-  "name": "SENSEI - Portal Personal",
+  "name": "SENSEI - Portal Seguro",
   "short_name": "SENSEI",
-  "description": "Portal personal de acceso a recursos.",
+  "description": "Portal personal de acceso a recursos multimedia.",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",
@@ -9,19 +9,19 @@
   "theme_color": "#00ff41",
   "icons": [
     {
-      "src": "logo%20hackers.jpg",
+      "src": "logo_sensei.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "logo%20hackers.jpg",
+      "src": "logo_sensei.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "logo%20hackers.jpg",
+      "src": "logo_sensei.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "maskable"

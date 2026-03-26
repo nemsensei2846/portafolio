@@ -1,13 +1,13 @@
-const CACHE_NAME = 'sensei-v3'; // Incrementamos la versión para forzar actualización
+const CACHE_NAME = 'sensei-v5'; // Incrementamos la versión para forzar actualización
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './logo%20hackers.jpg',
+  './logo_sensei.jpg',
   './Musica/index.html',
   './Musica/script.js',
   './Musica/style.css',
-  './HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3',
+  './audio_theme.mp3',
   './Formulario/index.html',
   './Formulario/style.css',
   './Formulario/script.js'
@@ -19,7 +19,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Nueva cache v2 abierta');
+        console.log('Nueva cache v5 abierta');
         return cache.addAll(urlsToCache);
       })
   );
