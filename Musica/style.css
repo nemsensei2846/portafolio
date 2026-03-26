@@ -13,7 +13,7 @@
     box-sizing: border-box;
 }
 
-body.hacker-audio {
+body.sensei-audio {
     background-color: var(--sgc-bg);
     color: var(--sgc-cian);
     font-family: 'Consolas', 'Courier New', monospace;
@@ -88,7 +88,7 @@ body.hacker-audio {
     align-items: center;
 }
 
-.hacker-select {
+.sensei-select {
     flex: 1;
     background: #000;
     color: var(--sgc-cian);
@@ -100,7 +100,7 @@ body.hacker-audio {
     cursor: pointer;
 }
 
-.hacker-select option {
+.sensei-select option {
     background: #000;
     color: var(--sgc-cian);
 }
@@ -148,7 +148,7 @@ body.hacker-audio {
     width: 100%;
 }
 
-.hacker-select {
+.sensei-select {
     flex: 1;
     background: #000;
     color: var(--sgc-cian);
@@ -161,12 +161,12 @@ body.hacker-audio {
     border-radius: 4px;
 }
 
-.hacker-select:focus {
+.sensei-select:focus {
     border-color: var(--sgc-cian);
     box-shadow: 0 0 5px var(--sgc-glow);
 }
 
-.hacker-select option {
+.sensei-select option {
     background: #001432;
     color: var(--sgc-cian);
 }
@@ -429,7 +429,7 @@ body.hacker-audio {
 
 /* Mobile Adjustments */
 @media (max-width: 1024px) {
-    body.hacker-audio {
+    body.sensei-audio {
         flex-direction: column;
         justify-content: flex-start;
         padding: 10px;

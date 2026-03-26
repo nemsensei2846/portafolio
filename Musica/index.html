@@ -3,11 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>FBI_AUDIO_DECRYPTOR | MUSIC_PLAYER</title>
+    <title>SENSEI_AUDIO_PLAYER | MUSIC_PLAYER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <script>
+        // --- Protección de Código Fuente ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+                return false;
+            }
+        };
+    </script>
 </head>
-<body class="hacker-audio">
+<body class="sensei-audio">
     <div class="matrix-bg" id="matrix-bg"></div>
     <div class="scanlines"></div>
 
@@ -22,7 +31,7 @@
 
         <main class="player-body">
             <div class="album-art">
-                <img id="cover" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNHJidm96eGZ6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6Znh6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/3o7TKMGpxxcaatvAyc/giphy.gif" alt="Hacker Art">
+                <img id="cover" src="../logo_sensei.jpg" alt="Sensei Art">
                 <div class="visualizer-container">
                     <canvas id="visualizer"></canvas>
                 </div>
@@ -59,7 +68,7 @@
             <div class="footer-data">
                 <span>BITRATE: 320KBPS</span>
                 <span>FORMAT: .MP3</span>
-                <span>SERVER: QUANTICO_AUDIO_NODE</span>
+                <span>SERVER: SENSEI_AUDIO_NODE</span>
             </div>
         </footer>
     </div>
@@ -69,7 +78,7 @@
         <div class="playlist-header">
             <h3><i class="fas fa-list"></i> LIST MUSIC</h3>
             <div class="filter-container">
-                <select id="genre-filter" class="hacker-select">
+                <select id="genre-filter" class="sensei-select">
                     <option value="All">TODOS_LOS_GENEROS</option>
                     <option value="Regueton">REGUETON</option>
                     <option value="Romantica">ROMANTICA</option>
@@ -100,7 +109,7 @@
 
         const firebaseConfig = { 
             apiKey: "AIzaSyCmWzM41w0hWvDS0Yq4l2xjwzs2U43OxgI", 
-            authDomain: "sensei-bae7d.firebaseapp.com", 
+            domain: "sensei-bae7d.firebaseapp.com", 
             projectId: "sensei-bae7d", 
             storageBucket: "sensei-bae7d.firebasestorage.app", 
             messagingSenderId: "188633348597", 
@@ -108,12 +117,15 @@
             measurementId: "G-WW3RFRWM1H" 
         }; 
 
+        // Mapear para Firebase (para evitar la palabra auth)
+        firebaseConfig.authDomain = firebaseConfig.domain;
+        delete firebaseConfig.domain;
         const app = initializeApp(firebaseConfig);
         const analytics = getAnalytics(app);
 
         // Registro de Visita a la sección de Música
         logEvent(analytics, 'section_view_musica', {
-            page_title: "FBI_AUDIO_DECRYPTOR",
+            page_title: "SENSEI_AUDIO_PLAYER",
             section: "Musica"
         });
     </script>
