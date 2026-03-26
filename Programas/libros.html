@@ -21,7 +21,10 @@
     <div class="scanlines"></div>
 
     <div class="books-container">
-        <header class="auth-header">
+        <a href="../index.html" class="back-btn" title="Volver al Inicio" style="position: absolute; top: 20px; left: 20px; color: var(--sensei-green); font-size: 1.5rem; text-decoration: none; z-index: 10;">
+            <i class="fas fa-arrow-left"></i>
+        </a>
+        <header class="sensei-header">
             <div class="sensei-shield">
                 <img src="../logo_sensei.jpg" alt="Sensei Logo">
             </div>
@@ -66,8 +69,6 @@
                 </div>
             </div>
         </div>
-
-        <button onclick="logout()" class="sensei-btn" style="margin-top: 40px; width: 200px;">CERRAR_SESION</button>
     </div>
 
     <!-- Modal de Detalles del Libro -->
@@ -81,16 +82,6 @@
 
     <!-- Firebase RTDB Logic -->
     <script type="module">
-        window.logout = () => {
-            localStorage.removeItem('sensei_session');
-            window.location.href = "index.html";
-        };
-
-        // Verificación de sesión local (ya incluida en auth.js, pero por seguridad)
-        if (!localStorage.getItem('sensei_session')) {
-            window.location.href = "index.html";
-        }
-
         // Datos de los libros
         const bookData = {
             poo: {
@@ -160,7 +151,7 @@
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        const letters = "0101010101010101SENSEI_SECURE_AUTH_";
+        const letters = "0101010101010101SENSEI_SECURE_NODE_";
         const fontSize = 14;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);
