@@ -1,27 +1,27 @@
 {
-  "name": "SENSEI - Portal Hacker",
+  "name": "SENSEI - Portal Personal",
   "short_name": "SENSEI",
-  "description": "Portal de acceso seguro para archivos y música.",
-  "start_url": ".",
+  "description": "Portal de acceso seguro para archivos y multimedia.",
+  "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0d0208",
   "theme_color": "#00ff41",
   "icons": [
     {
-      "src": "logo hackers.jpg",
+      "src": "logo%20hackers.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "logo hackers.jpg",
+      "src": "logo%20hackers.jpg",
       "sizes": "512x512",
       "type": "image/jpeg",
       "purpose": "any"
     },
     {
-      "src": "logo hackers.jpg",
+      "src": "logo%20hackers.jpg",
       "sizes": "192x192",
       "type": "image/jpeg",
       "purpose": "maskable"

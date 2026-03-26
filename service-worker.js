@@ -1,9 +1,9 @@
-const CACHE_NAME = 'sensei-v2'; // Incrementamos la versión para forzar actualización
+const CACHE_NAME = 'sensei-v3'; // Incrementamos la versión para forzar actualización
 const urlsToCache = [
   './',
   './index.html',
   './manifest.json',
-  './logo hackers.jpg',
+  './logo%20hackers.jpg',
   './Musica/index.html',
   './Musica/script.js',
   './Musica/style.css',
