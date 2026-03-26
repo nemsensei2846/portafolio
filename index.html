@@ -400,11 +400,11 @@
             <a href="Musica/index.html" class="social-btn">
                 🎧Musica🎵
             </a>
-            <a href="Formulario/index.html" class="social-btn">
-                📃Formulario📝
+            <a href="Formulario/index.html" class="social-btn" onclick="checkAccess(event, 'Formulario/index.html')">
+                <i class="fas fa-lock"></i> FORMULARIO📝
             </a>
-            <a href="Termodinamica/index.html" class="social-btn">
-                Mi Portafolio💼
+            <a href="Termodinamica/index.html" class="social-btn" onclick="checkAccess(event, 'Termodinamica/index.html')">
+                <i class="fas fa-lock"></i> MI PORTAFOLIO💼
             </a>
             <a href="Programas/libros.html" class="social-btn">
                📚Libros VIP📕
@@ -479,6 +479,19 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         });
+
+        // --- Bloqueo de Acceso con Contraseña ---
+        function checkAccess(event, url) {
+            event.preventDefault();
+            const password = prompt(">>> Cual es la contraseña para ingresar?");
+            
+            if (password === "sensei2026") {
+                alert(">>> ACCESO CONCEDIDO. BIENVENIDO.");
+                window.location.href = url;
+            } else if (password !== null) {
+                alert(">>> ERROR: CONTRASEÑA INCORRECTA. ACCESO DENEGADO.");
+            }
+        }
 
         // --- Lógica de Instalación PWA ---
         let deferredPrompt;

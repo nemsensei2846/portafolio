@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v7'; // Nueva versión para activar cambios
+const CACHE_NAME = 'sensei-v8'; // Nueva versión para sincronizar Netlify/GitHub
 const urlsToCache = [
   './',
   './index.html',
@@ -22,7 +22,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Nueva cache v7 abierta');
+        console.log('Nueva cache v8 abierta');
         return cache.addAll(urlsToCache);
       })
   );
