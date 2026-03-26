@@ -1,8 +1,8 @@
 :root {
+    --fbi-blue: #001a33;
     --hacker-green: #00ff41;
-    --hacker-bg: #0d0208;
-    --hacker-glow: rgba(0, 255, 65, 0.4);
-    --hacker-red: #ff003c;
+    --error-red: #ff003c;
+    --gold: #ffd700;
 }
 
 * {
@@ -12,136 +12,276 @@
 }
 
 body {
-    background-color: var(--hacker-bg);
+    background-color: #000;
     color: var(--hacker-green);
     font-family: 'Courier New', Courier, monospace;
-    overflow-x: hidden;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     min-height: 100vh;
 }
 
-#matrix-bg {
+#matrix-canvas {
     position: fixed;
-    top: 0; left: 0; width: 100%; height: 100%;
+    top: 0;
+    left: 0;
     z-index: -1;
-    opacity: 0.2;
+    opacity: 0.3;
 }
 
-.container {
-    max-width: 850px;
-    margin: 40px auto;
-    padding: 20px;
+.scanlines {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 128, 0.06));
+    z-index: 100;
+    background-size: 100% 2px, 3px 100%;
+    pointer-events: none;
+}
+
+.auth-container {
+    background: rgba(0, 20, 40, 0.9);
+    border: 2px solid var(--hacker-green);
+    padding: 40px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 0 30px rgba(0, 255, 65, 0.2);
     position: relative;
     z-index: 10;
+    text-align: center;
 }
 
-.terminal-window {
-    background: rgba(0, 0, 0, 0.9);
-    border: 2px solid var(--hacker-green);
-    box-shadow: 0 0 30px var(--hacker-glow);
-    border-radius: 10px;
-    overflow: hidden;
-    backdrop-filter: blur(5px);
+.fbi-shield {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    filter: drop-shadow(0 0 10px var(--hacker-green));
 }
 
-.window-header {
-    background: rgba(0, 255, 65, 0.15);
-    padding: 12px 20px;
+.fbi-shield img {
+    width: 100%;
+}
+
+.auth-header h1 {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+    margin-bottom: 5px;
+    color: var(--gold);
+}
+
+.status-text {
+    font-size: 0.8rem;
+    margin-bottom: 30px;
+    opacity: 0.8;
+}
+
+.auth-box {
+    animation: fadeIn 0.5s ease;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.form-title {
+    font-size: 1rem;
+    margin-bottom: 20px;
+    border-bottom: 1px solid var(--hacker-green);
+    padding-bottom: 10px;
+}
+
+.input-group {
+    position: relative;
+    margin-bottom: 20px;
+}
+
+.input-group i {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--hacker-green);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 12px 12px 12px 35px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid var(--hacker-green);
+    color: var(--hacker-green);
+    font-family: 'Courier New', Courier, monospace;
+    outline: none;
+}
+
+.input-group input::placeholder {
+    color: rgba(0, 255, 65, 0.5);
+    font-size: 0.8rem;
+}
+
+.terms-group {
     display: flex;
     align-items: center;
     gap: 10px;
-    border-bottom: 1px solid var(--hacker-green);
-}
-
-.dot { width: 12px; height: 12px; border-radius: 50%; }
-.red { background: #ff5f56; }
-.yellow { background: #ffbd2e; }
-.green { background: #27c93f; }
-
-.window-body {
-    padding: 30px;
-}
-
-h1 {
-    font-size: 1.8rem;
-    text-align: center;
-    margin-bottom: 30px;
-    text-shadow: 0 0 10px var(--hacker-green);
-    letter-spacing: 2px;
-}
-
-.step {
-    margin-bottom: 25px;
-    border-left: 3px solid var(--hacker-green);
-    padding-left: 20px;
-}
-
-.step-title {
-    font-weight: bold;
-    font-size: 1.2rem;
-    margin-bottom: 10px;
-    display: block;
-    color: #fff;
-}
-
-.code-block {
-    background: rgba(0, 255, 65, 0.05);
-    border: 1px dashed var(--hacker-green);
-    padding: 15px;
-    margin: 10px 0;
-    font-size: 1rem;
-    position: relative;
-    cursor: pointer;
-    transition: all 0.3s;
-}
-
-.code-block:hover {
-    background: rgba(0, 255, 65, 0.1);
-    box-shadow: 0 0 10px var(--hacker-glow);
-}
-
-.code-block::after {
-    content: 'COPY_CMD';
-    position: absolute;
-    right: 10px;
-    top: 5px;
     font-size: 0.7rem;
-    opacity: 0.5;
-}
-
-.license-list {
-    margin-top: 40px;
-    padding: 20px;
-    background: rgba(0, 0, 0, 0.8);
-    border: 1px solid var(--hacker-green);
-}
-
-.license-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 8px 0;
-    border-bottom: 1px solid rgba(0, 255, 65, 0.1);
-    font-size: 0.9rem;
-    flex-wrap: wrap;
-    gap: 10px;
-}
-
-.license-name { font-weight: bold; }
-.license-key { color: #fff; font-family: monospace; }
-
-.back-nav {
     margin-bottom: 20px;
-    display: inline-block;
-    color: var(--hacker-green);
-    text-decoration: none;
-    font-size: 0.9rem;
+    text-align: left;
 }
 
-.back-nav:hover { text-shadow: 0 0 10px var(--hacker-green); }
+.terms-group input {
+    cursor: pointer;
+}
 
-@media (max-width: 600px) {
-    h1 { font-size: 1.3rem; }
-    .step-title { font-size: 1rem; }
-    .code-block { font-size: 0.85rem; }
-    .license-item { font-size: 0.8rem; }
-    .license-key { width: 100%; text-align: left; }
+.hacker-btn {
+    width: 100%;
+    padding: 15px;
+    background: transparent;
+    border: 1px solid var(--hacker-green);
+    color: var(--hacker-green);
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    transition: all 0.3s ease;
+    margin-bottom: 20px;
+}
+
+.hacker-btn:hover {
+    background: var(--hacker-green);
+    color: #000;
+    box-shadow: 0 0 20px var(--hacker-green);
+}
+
+.switch-auth {
+    font-size: 0.7rem;
+    cursor: pointer;
+    opacity: 0.7;
+}
+
+.switch-auth span {
+    text-decoration: underline;
+    color: var(--gold);
+}
+
+.terminal-msg {
+    margin-top: 20px;
+    font-size: 0.8rem;
+    min-height: 20px;
+}
+
+.msg-error {
+    color: var(--error-red);
+}
+
+.msg-success {
+    color: var(--hacker-green);
+}
+
+/* Libros Page Specific */
+.books-container {
+    max-width: 1000px;
+    width: 90%;
+    padding: 40px;
+    background: rgba(0, 20, 40, 0.95);
+    border: 2px solid var(--hacker-green);
+}
+
+.books-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+    margin-top: 30px;
+}
+
+.book-card {
+    border: 1px solid var(--hacker-green);
+    padding: 0;
+    text-align: center;
+    transition: all 0.3s ease;
+    background: rgba(0, 20, 40, 0.8);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.book-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--hacker-green);
+}
+
+.book-cover {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+}
+
+.book-info {
+    padding: 15px;
+}
+
+.book-info h3 {
+    font-size: 1rem;
+    margin-bottom: 15px;
+    min-height: 40px; /* Para alinear títulos de varias líneas */
+}
+
+.book-icon {
+    font-size: 3rem;
+    margin-bottom: 15px;
+}
+
+/* Estilos para la ventana modal */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--fbi-blue);
+    border: 2px solid var(--hacker-green);
+    padding: 30px;
+    width: 90%;
+    max-width: 600px;
+    position: relative;
+    box-shadow: 0 0 25px var(--hacker-green);
+}
+
+.close-btn {
+    position: absolute;
+    top: 10px;
+    right: 20px;
+    font-size: 2rem;
+    color: var(--hacker-green);
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+
+.close-btn:hover {
+    color: var(--error-red);
+}
+
+#modal-title {
+    border-bottom: 1px solid var(--hacker-green);
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+}
+
+#modal-body p {
+    margin-bottom: 10px;
+    line-height: 1.6;
+}
+
+#modal-body strong {
+    color: var(--gold);
 }
