@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v6'; // Incrementamos la versión para forzar actualización
+const CACHE_NAME = 'sensei-v7'; // Nueva versión para activar cambios
 const urlsToCache = [
   './',
   './index.html',
@@ -11,7 +11,9 @@ const urlsToCache = [
   './audio_theme.mp3',
   './Formulario/index.html',
   './Formulario/style.css',
-  './Formulario/script.js'
+  './Formulario/script.js',
+  './Programas/libros.html',
+  './Programas/style.css'
 ];
 
 // Evento de instalación: Forzamos a que el nuevo SW tome el control inmediatamente
@@ -20,7 +22,7 @@ self.addEventListener('install', event => {
   event.waitUntil(
     caches.open(CACHE_NAME)
       .then(cache => {
-        console.log('Nueva cache v6 abierta');
+        console.log('Nueva cache v7 abierta');
         return cache.addAll(urlsToCache);
       })
   );
