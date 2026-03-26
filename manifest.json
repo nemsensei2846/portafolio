@@ -1,7 +1,7 @@
 {
   "name": "SENSEI - Portal Personal",
   "short_name": "SENSEI",
-  "description": "Portal de acceso seguro para archivos y multimedia.",
+  "description": "Portal personal de acceso a recursos.",
   "start_url": "index.html",
   "display": "standalone",
   "orientation": "portrait",

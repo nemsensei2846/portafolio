@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bienvenido al SENSEI</title>
+    <title>SENSEI OS - Portal Seguro</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="manifest" href="manifest.json"> 
     <meta name="theme-color" content="#00ff41">
@@ -11,6 +11,30 @@
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="SENSEI">
+    <script>
+        // --- Protección de Código Fuente ---
+        // Deshabilitar Clic Derecho
+        document.addEventListener('contextmenu', event => event.preventDefault());
+
+        // Deshabilitar atajos de teclado (F12, Ctrl+Shift+I, Ctrl+U, etc.)
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123) { // F12
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'I'.charCodeAt(0)) { // Ctrl+Shift+I
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'C'.charCodeAt(0)) { // Ctrl+Shift+C
+                return false;
+            }
+            if (e.ctrlKey && e.shiftKey && e.keyCode == 'J'.charCodeAt(0)) { // Ctrl+Shift+J
+                return false;
+            }
+            if (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0)) { // Ctrl+U (Ver código fuente)
+                return false;
+            }
+        };
+    </script>
     <style>
         :root {
             --hacker-green: #00ff41;
@@ -366,8 +390,7 @@
 
     <div class="container">
         <div class="profile-container">
-            <!-- Reemplaza con tu foto real -->
-            <img src="https://www.avast.com/hs-fs/hubfs/New_Avast_Academy/Hackers/Hacker-Hero-a1.png?width=1200&name=Hacker-Hero-a1.png" alt="Hacker Profile" class="profile-img">
+            <img src="https://www.avast.com/hs-fs/hubfs/New_Avast_Academy/Hackers/Hacker-Hero-a1.png?width=1200&name=Hacker-Hero-a1.png" alt="Profile" class="profile-img">
         </div>
         
         <h1>SENSEI</h1>
