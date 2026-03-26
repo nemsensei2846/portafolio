@@ -1,4 +1,4 @@
-// FBI_SECURE_AUTH - Lógica de Firebase (Realtime Database)
+// SENSEI_SECURE_AUTH - Lógica de Firebase (Realtime Database)
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
 import { 
     getDatabase, 
@@ -50,7 +50,7 @@ if (btnRegister) {
         }
 
         if (!terms) {
-            showMsg("ERROR: DEBE ACEPTAR TERMINOS FBI", "error");
+            showMsg("ERROR: DEBE ACEPTAR TERMINOS DE USO", "error");
             return;
         }
 
@@ -74,7 +74,7 @@ if (btnRegister) {
                 fecha_registro: new Date().toLocaleString()
             });
 
-            alert(`SISTEMA FBI: Registro exitoso\n----------------------------\nUSUARIO: ${username}\nPASSWORD: ${password}\n----------------------------\nYa puede ingresar al sistema.`);
+            alert(`SISTEMA SENSEI: Registro exitoso\n----------------------------\nUSUARIO: ${username}\nPASSWORD: ${password}\n----------------------------\nYa puede ingresar al sistema.`);
             
             showMsg("REGISTRO_EXITOSO. VOLVIENDO AL LOGIN...", "success");
 
@@ -120,7 +120,7 @@ if (btnLogin) {
                 const userData = snapshot.val();
                 if (userData.password === passwordInput) {
                     showMsg("SISTEMA: ACCESO_CONCEDIDO ✅", "success");
-                    localStorage.setItem('fbi_session', usernameInput); // Guardar sesión local
+                    localStorage.setItem('sensei_session', usernameInput); // Guardar sesión local
                     setTimeout(() => {
                         window.location.href = "libros.html";
                     }, 1000);
@@ -139,9 +139,9 @@ if (btnLogin) {
 
 // Verificación de Acceso para libros.html
 if (window.location.pathname.includes('libros.html')) {
-    const session = localStorage.getItem('fbi_session');
+    const session = localStorage.getItem('sensei_session');
     if (!session) {
-        alert("SISTEMA FBI: ACCESO DENEGADO. IDENTIFÍQUESE.");
+        alert("SISTEMA SENSEI: ACCESO DENEGADO. IDENTIFÍQUESE.");
         window.location.href = "index.html";
     }
 }

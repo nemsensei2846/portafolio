@@ -6,15 +6,24 @@
     <title>Libros | PROGRAMMING_BOOKS</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link rel="stylesheet" href="style.css">
+    <script>
+        // --- Protección de Código Fuente ---
+        document.addEventListener('contextmenu', event => event.preventDefault());
+        document.onkeydown = function(e) {
+            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+                return false;
+            }
+        };
+    </script>
 </head>
-<body class="fbi-theme">
+<body class="sensei-theme">
     <canvas id="matrix-canvas"></canvas>
     <div class="scanlines"></div>
 
     <div class="books-container">
         <header class="auth-header">
-            <div class="fbi-shield">
-                <img src="images.jfif" alt="FBI Seal">
+            <div class="sensei-shield">
+                <img src="../logo_sensei.jpg" alt="Sensei Logo">
             </div>
             <h1>BOOK PROGRAMMING DATABASE</h1>
             <p class="status-text">>>> ACCESO CONCEDIDO: NIVEL 1✅</p>
@@ -26,7 +35,7 @@
                 <img src="fotos/Programacion Orientada a objectos.png" alt="Portada del libro Programación Orientada a Objetos" class="book-cover" onclick="openModal('poo')">
                 <div class="book-info">
                     <h3>Programación Orientada a Objetos</h3>
-                    <a href="Libros/Programacion Orientada a objectos.pdf" target="_blank" class="hacker-btn">VISUALIZAR</a>
+                    <a href="Libros/Programacion Orientada a objectos.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
                 </div>
             </div>
 
@@ -35,7 +44,7 @@
                 <img src="fotos/asincronismo-en-javascript-683x1024.webp" alt="Portada del libro Asincronismo en JavaScript" class="book-cover" onclick="openModal('async')">
                 <div class="book-info">
                     <h3>Asincronismo en JavaScript</h3>
-                    <a href="Libros/Asincronismo-en-JavaScript-Charly-Cimino.pdf" target="_blank" class="hacker-btn">VISUALIZAR</a>
+                    <a href="Libros/Asincronismo-en-JavaScript-Charly-Cimino.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
                 </div>
             </div>
 
@@ -44,7 +53,7 @@
                 <img src="fotos/CSS3 y Javascript avanzado.png" alt="Portada del libro CSS3 y Javascript Avanzado" class="book-cover" onclick="openModal('cssjs')">
                 <div class="book-info">
                     <h3>CSS3 y Javascript Avanzado</h3>
-                    <a href="Libros/CSS3-y-Javascript-Avanzado-1.pdf" target="_blank" class="hacker-btn">VISUALIZAR</a>
+                    <a href="Libros/CSS3-y-Javascript-Avanzado-1.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
                 </div>
             </div>
 
@@ -53,12 +62,12 @@
                 <img src="fotos/Snake Wrangling for Kids, Learning to Program with Python.png" alt="Portada del libro Doma de serpientes para niños" class="book-cover" onclick="openModal('snake')">
                 <div class="book-info">
                     <h3>Doma de serpientes para niños</h3>
-                    <a href="Libros/doma-de-serpientes-para-ninos_swfk-es-win-0.0.4.pdf" target="_blank" class="hacker-btn">VISUALIZAR</a>
+                    <a href="Libros/doma-de-serpientes-para-ninos_swfk-es-win-0.0.4.pdf" target="_blank" class="sensei-btn">VISUALIZAR</a>
                 </div>
             </div>
         </div>
 
-        <button onclick="logout()" class="hacker-btn" style="margin-top: 40px; width: 200px;">CERRAR_SESION</button>
+        <button onclick="logout()" class="sensei-btn" style="margin-top: 40px; width: 200px;">CERRAR_SESION</button>
     </div>
 
     <!-- Modal de Detalles del Libro -->
@@ -73,12 +82,12 @@
     <!-- Firebase RTDB Logic -->
     <script type="module">
         window.logout = () => {
-            localStorage.removeItem('fbi_session');
+            localStorage.removeItem('sensei_session');
             window.location.href = "index.html";
         };
 
         // Verificación de sesión local (ya incluida en auth.js, pero por seguridad)
-        if (!localStorage.getItem('fbi_session')) {
+        if (!localStorage.getItem('sensei_session')) {
             window.location.href = "index.html";
         }
 
@@ -151,7 +160,7 @@
         const ctx = canvas.getContext('2d');
         canvas.width = window.innerWidth;
         canvas.height = window.innerHeight;
-        const letters = "0101010101010101FBI_ACCESS_GRANTED_";
+        const letters = "0101010101010101SENSEI_SECURE_AUTH_";
         const fontSize = 14;
         const columns = canvas.width / fontSize;
         const drops = Array(Math.floor(columns)).fill(1);

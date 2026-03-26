@@ -1,6 +1,6 @@
 :root {
-    --fbi-blue: #001a33;
-    --hacker-green: #00ff41;
+    --sensei-blue: #001a33;
+    --sensei-green: #00ff41;
     --error-red: #ff003c;
     --gold: #ffd700;
 }
@@ -13,7 +13,7 @@
 
 body {
     background-color: #000;
-    color: var(--hacker-green);
+    color: var(--sensei-green);
     font-family: 'Courier New', Courier, monospace;
     overflow: hidden;
     display: flex;
@@ -44,7 +44,7 @@ body {
 
 .auth-container {
     background: rgba(0, 20, 40, 0.9);
-    border: 2px solid var(--hacker-green);
+    border: 2px solid var(--sensei-green);
     padding: 40px;
     width: 100%;
     max-width: 450px;
@@ -54,14 +54,14 @@ body {
     text-align: center;
 }
 
-.fbi-shield {
+.sensei-shield {
     width: 100px;
     height: 100px;
     margin: 0 auto 20px;
-    filter: drop-shadow(0 0 10px var(--hacker-green));
+    filter: drop-shadow(0 0 10px var(--sensei-green));
 }
 
-.fbi-shield img {
+.sensei-shield img {
     width: 100%;
 }
 
@@ -90,7 +90,7 @@ body {
 .form-title {
     font-size: 1rem;
     margin-bottom: 20px;
-    border-bottom: 1px solid var(--hacker-green);
+    border-bottom: 1px solid var(--sensei-green);
     padding-bottom: 10px;
 }
 
@@ -104,15 +104,15 @@ body {
     left: 10px;
     top: 50%;
     transform: translateY(-50%);
-    color: var(--hacker-green);
+    color: var(--sensei-green);
 }
 
 .input-group input {
     width: 100%;
     padding: 12px 12px 12px 35px;
     background: rgba(0, 0, 0, 0.5);
-    border: 1px solid var(--hacker-green);
-    color: var(--hacker-green);
+    border: 1px solid var(--sensei-green);
+    color: var(--sensei-green);
     font-family: 'Courier New', Courier, monospace;
     outline: none;
 }
@@ -135,12 +135,12 @@ body {
     cursor: pointer;
 }
 
-.hacker-btn {
+.sensei-btn {
     width: 100%;
     padding: 15px;
     background: transparent;
-    border: 1px solid var(--hacker-green);
-    color: var(--hacker-green);
+    border: 1px solid var(--sensei-green);
+    color: var(--sensei-green);
     font-weight: bold;
     cursor: pointer;
     text-transform: uppercase;
@@ -149,10 +149,10 @@ body {
     margin-bottom: 20px;
 }
 
-.hacker-btn:hover {
-    background: var(--hacker-green);
+.sensei-btn:hover {
+    background: var(--sensei-green);
     color: #000;
-    box-shadow: 0 0 20px var(--hacker-green);
+    box-shadow: 0 0 20px var(--sensei-green);
 }
 
 .switch-auth {
@@ -177,7 +177,7 @@ body {
 }
 
 .msg-success {
-    color: var(--hacker-green);
+    color: var(--sensei-green);
 }
 
 /* Libros Page Specific */
@@ -186,7 +186,7 @@ body {
     width: 90%;
     padding: 40px;
     background: rgba(0, 20, 40, 0.95);
-    border: 2px solid var(--hacker-green);
+    border: 2px solid var(--sensei-green);
 }
 
 .books-grid {
@@ -197,7 +197,7 @@ body {
 }
 
 .book-card {
-    border: 1px solid var(--hacker-green);
+    border: 1px solid var(--sensei-green);
     padding: 0;
     text-align: center;
     transition: all 0.3s ease;
@@ -209,7 +209,7 @@ body {
 
 .book-card:hover {
     transform: scale(1.05);
-    box-shadow: 0 0 15px var(--hacker-green);
+    box-shadow: 0 0 15px var(--sensei-green);
 }
 
 .book-cover {
@@ -248,13 +248,13 @@ body {
 }
 
 .modal-content {
-    background: var(--fbi-blue);
-    border: 2px solid var(--hacker-green);
+    background: var(--sensei-blue);
+    border: 2px solid var(--sensei-green);
     padding: 30px;
     width: 90%;
     max-width: 600px;
     position: relative;
-    box-shadow: 0 0 25px var(--hacker-green);
+    box-shadow: 0 0 25px var(--sensei-green);
 }
 
 .close-btn {
@@ -262,7 +262,7 @@ body {
     top: 10px;
     right: 20px;
     font-size: 2rem;
-    color: var(--hacker-green);
+    color: var(--sensei-green);
     cursor: pointer;
     transition: color 0.3s ease;
 }
@@ -272,7 +272,7 @@ body {
 }
 
 #modal-title {
-    border-bottom: 1px solid var(--hacker-green);
+    border-bottom: 1px solid var(--sensei-green);
     padding-bottom: 15px;
     margin-bottom: 20px;
 }
