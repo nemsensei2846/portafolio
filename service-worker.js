@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v28'; // Versión 28 - Final Profile & Banner Logic Update
+const CACHE_NAME = 'sensei-v29'; // Versión 29 - Options Menu & Downloads Profile logic
 const urlsToCacheEssential = [
   './',
   './index.html',
