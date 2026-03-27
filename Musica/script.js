@@ -113,6 +113,7 @@ const miniCover = document.getElementById('mini-cover');
 const fullPlayer = document.getElementById('full-player');
 const closeFullPlayerBtn = document.getElementById('close-full-player');
 const miniPlayerBar = document.getElementById('mini-player');
+const miniPlayerInfo = document.querySelector('.player-left');
 const fpTitle = document.getElementById('fp-title');
 const fpArtist = document.getElementById('fp-artist');
 const fpCover = document.getElementById('fp-cover');
@@ -977,12 +978,9 @@ fullPlayer.addEventListener('touchend', (e) => {
     }
 });
 
-miniPlayerBar.addEventListener('click', (e) => {
-    // Evitar que el click en los botones del mini player abra el full player
-    if (!e.target.closest('.mini-btn')) {
-        openFullPlayer();
-    }
-});
+if (miniPlayerInfo) {
+    miniPlayerInfo.addEventListener('click', openFullPlayer);
+}
 
 closeFullPlayerBtn.addEventListener('click', closeFullPlayer);
 
