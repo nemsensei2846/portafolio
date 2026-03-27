@@ -86,15 +86,28 @@ body {
     box-shadow: 0 0 20px var(--sensei-green);
 }
 
-/* Libros Page Specific */
-.books-container {
-    max-width: 1200px;
-    width: 95%;
-    padding: 40px 20px;
-    background: rgba(0, 20, 40, 0.95);
-    border: 2px solid var(--sensei-green);
+/* Categorías y Bloques */
+.category-block {
+    margin-bottom: 50px;
     position: relative;
-    overflow: hidden;
+}
+
+.category-title {
+    font-size: 1.1rem;
+    color: var(--gold);
+    margin-bottom: 15px;
+    padding-left: 10px;
+    border-left: 4px solid var(--sensei-green);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.category-title i {
+    color: var(--sensei-green);
+    font-size: 1.2rem;
 }
 
 .books-grid {
@@ -106,19 +119,56 @@ body {
     scrollbar-width: thin;
     scrollbar-color: var(--sensei-green) transparent;
     -webkit-overflow-scrolling: touch;
+    scroll-snap-type: x mandatory;
+}
+
+/* Ajuste del contenedor principal para permitir scroll vertical si hay muchos bloques */
+body {
+    background-color: #000;
+    color: var(--sensei-green);
+    font-family: 'Courier New', Courier, monospace;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.books-container {
+    max-width: 1200px;
+    width: 95%;
+    max-height: 90vh; /* Limitar altura para permitir scroll interno */
+    overflow-y: auto; /* Permitir scroll vertical interno */
+    padding: 40px 20px;
+    background: rgba(0, 20, 40, 0.95);
+    border: 2px solid var(--sensei-green);
+    position: relative;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sensei-green) transparent;
+}
+
+.books-container::-webkit-scrollbar {
+    width: 6px;
+}
+
+.books-container::-webkit-scrollbar-thumb {
+    background: var(--sensei-green);
+    border-radius: 10px;
 }
 
 .books-grid::-webkit-scrollbar {
-    height: 6px;
+    height: 8px; /* Un poco más grueso para facilitar el scroll en PC */
 }
 
 .books-grid::-webkit-scrollbar-thumb {
     background: var(--sensei-green);
     border-radius: 10px;
+    box-shadow: 0 0 5px var(--sensei-green);
 }
 
 .book-card {
-    flex: 0 0 250px;
+    flex: 0 0 280px; /* Ancho fijo para las tarjetas */
+    scroll-snap-align: center; /* Centrar la tarjeta al deslizar */
     border: 1px solid var(--sensei-green);
     padding: 0;
     text-align: center;
@@ -131,15 +181,33 @@ body {
 }
 
 .book-card:hover {
-    transform: translateY(-10px);
-    box-shadow: 0 0 20px var(--sensei-green);
+    transform: translateY(-10px) scale(1.02);
+    box-shadow: 0 0 25px var(--sensei-green);
+    z-index: 10;
 }
 
 .book-cover {
     width: 100%;
-    height: 350px;
+    height: 380px;
     object-fit: cover;
     cursor: pointer;
+    border-bottom: 1px solid var(--sensei-green);
+}
+
+/* Indicador de deslizamiento */
+.carousel-hint {
+    text-align: center;
+    font-size: 0.7rem;
+    margin-top: 10px;
+    opacity: 0.6;
+    letter-spacing: 1px;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+    100% { opacity: 0.3; }
 }
 
 .book-info {
@@ -225,13 +293,12 @@ body {
 
 @media (max-width: 768px) {
     .book-card {
-        flex: 0 0 200px;
+        flex: 0 0 85%; /* En móviles, la tarjeta ocupa casi todo el ancho */
     }
     .book-cover {
-        height: 280px;
+        height: 420px;
     }
-    .pdf-modal-content {
-        height: 95vh;
-        width: 100%;
+    .books-container {
+        padding: 20px 10px;
     }
 }

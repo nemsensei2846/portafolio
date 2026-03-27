@@ -66,42 +66,121 @@
             <p class="status-text">>>> ACCESO CONCEDIDO: NIVEL 1✅</p>
         </header>
 
-        <div class="books-grid" id="books-carousel">
-            <!-- Libro 1: Programación Orientada a Objetos -->
-            <div class="book-card">
-                <img src="fotos/Programacion Orientada a objectos.png" alt="Programación Orientada a Objetos" class="book-cover" onclick="openModal('poo')">
-                <div class="book-info">
-                    <h3>Programación Orientada a Objetos</h3>
-                    <button onclick="viewPDF('poo')" class="sensei-btn">VISUALIZAR</button>
+        <!-- BLOQUE: BASES DE DATOS Y ESTRUCTURAS -->
+        <div class="category-block">
+            <h2 class="category-title"><i class="fas fa-database"></i> BASES DE DATOS Y ESTRUCTURAS</h2>
+            <div class="books-grid carousel-container">
+                <!-- Libro: Bases de Datos (db_main) -->
+                <div class="book-card">
+                    <img src="fotos/bases-de-datos-683x1024.webp" alt="Bases de Datos" class="book-cover" onclick="openModal('db_main')">
+                    <div class="book-info">
+                        <h3>Bases de Datos</h3>
+                        <button onclick="viewPDF('db_main')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+                <!-- Libro: Bases de Datos (NUEVO) -->
+                <div class="book-card">
+                    <img src="fotos/bases-de-datos-768x1152.webp" alt="Bases de Datos" class="book-cover" onclick="openModal('db_new')">
+                    <div class="book-info">
+                        <h3>Bases de Datos</h3>
+                        <button onclick="viewPDF('db_new')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+                <!-- Libro: Introducción a las Bases de Datos (SEGUNDO) -->
+                <div class="book-card">
+                    <img src="fotos/introduccion-a-las-bases-de-datos-683x1024.webp" alt="Introducción a las Bases de Datos" class="book-cover" onclick="openModal('content')">
+                    <div class="book-info">
+                        <h3>Introducción a las Bases de Datos</h3>
+                        <button onclick="viewPDF('content')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+                <!-- Libro: Estructuras de Datos -->
+                <div class="book-card">
+                    <img src="fotos/estructuras-de-datos-683x1024.webp" alt="Estructuras de Datos" class="book-cover" onclick="openModal('structures')">
+                    <div class="book-info">
+                        <h3>Estructuras de Datos</h3>
+                        <button onclick="viewPDF('structures')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+                <!-- Libro: Bases de Datos Avanzadas -->
+                <div class="book-card">
+                    <img src="fotos/bases-de-datos-avanzadas-683x1024.webp" alt="Bases de Datos Avanzadas" class="book-cover" onclick="openModal('adv_db')">
+                    <div class="book-info">
+                        <h3>Bases de Datos Avanzadas</h3>
+                        <button onclick="viewPDF('adv_db')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+                <!-- Libro: MongoDB para informáticos de SQL Server -->
+                <div class="book-card">
+                    <img src="fotos/mongodb-para-informaticos-de-sql-server-guia-de-transicion--768x1152.webp" alt="MongoDB para informáticos de SQL Server" class="book-cover" onclick="openModal('mongodb')">
+                    <div class="book-info">
+                        <h3>MongoDB para informáticos de SQL Server</h3>
+                        <button onclick="viewPDF('mongodb')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
                 </div>
             </div>
+        </div>
 
-            <!-- Libro 2: Asincronismo en JavaScript -->
-            <div class="book-card">
-                <img src="fotos/asincronismo-en-javascript-683x1024.webp" alt="Asincronismo en JavaScript" class="book-cover" onclick="openModal('async')">
-                <div class="book-info">
-                    <h3>Asincronismo en JavaScript</h3>
-                    <button onclick="viewPDF('async')" class="sensei-btn">VISUALIZAR</button>
+        <!-- BLOQUE: JAVA -->
+        <div class="category-block">
+            <h2 class="category-title"><i class="fab fa-java"></i> LIBROS DE JAVA</h2>
+            <div class="books-grid carousel-container">
+                <!-- Libro: Apuntes Básicos Java -->
+                <div class="book-card">
+                    <img src="fotos/java-apuntes-basicos-683x1024.webp" alt="Apuntes Básicos Java" class="book-cover" onclick="openModal('java')">
+                    <div class="book-info">
+                        <h3>Java Apuntes Básicos</h3>
+                        <button onclick="viewPDF('java')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
                 </div>
+                <!-- Aquí puedes añadir más libros de Java en el futuro -->
             </div>
+        </div>
 
-            <!-- Libro 3: CSS3 y Javascript Avanzado -->
-            <div class="book-card">
-                <img src="fotos/CSS3 y Javascript avanzado.png" alt="CSS3 y Javascript Avanzado" class="book-cover" onclick="openModal('cssjs')">
-                <div class="book-info">
-                    <h3>CSS3 y Javascript Avanzado</h3>
-                    <button onclick="viewPDF('cssjs')" class="sensei-btn">VISUALIZAR</button>
+        <!-- BLOQUE: PROGRAMACIÓN WEB & OTROS -->
+        <div class="category-block">
+            <h2 class="category-title"><i class="fas fa-code"></i> DESARROLLO WEB Y OTROS</h2>
+            <div class="books-grid carousel-container">
+                <!-- Libro 1: Programación Orientada a Objetos -->
+                <div class="book-card">
+                    <img src="fotos/Programacion Orientada a objectos.png" alt="Programación Orientada a Objetos" class="book-cover" onclick="openModal('poo')">
+                    <div class="book-info">
+                        <h3>Programación Orientada a Objetos</h3>
+                        <button onclick="viewPDF('poo')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
                 </div>
-            </div>
 
-            <!-- Libro 4: Doma de serpientes para niños -->
-            <div class="book-card">
-                <img src="fotos/Snake Wrangling for Kids, Learning to Program with Python.png" alt="Doma de serpientes para niños" class="book-cover" onclick="openModal('snake')">
-                <div class="book-info">
-                    <h3>Doma de serpientes para niños</h3>
-                    <button onclick="viewPDF('snake')" class="sensei-btn">VISUALIZAR</button>
+                <!-- Libro 2: Asincronismo en JavaScript -->
+                <div class="book-card">
+                    <img src="fotos/asincronismo-en-javascript-683x1024.webp" alt="Asincronismo en JavaScript" class="book-cover" onclick="openModal('async')">
+                    <div class="book-info">
+                        <h3>Asincronismo en JavaScript</h3>
+                        <button onclick="viewPDF('async')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+
+                <!-- Libro 3: CSS3 y Javascript Avanzado -->
+                <div class="book-card">
+                    <img src="fotos/CSS3 y Javascript avanzado.png" alt="CSS3 y Javascript Avanzado" class="book-cover" onclick="openModal('cssjs')">
+                    <div class="book-info">
+                        <h3>CSS3 y Javascript Avanzado</h3>
+                        <button onclick="viewPDF('cssjs')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
+                </div>
+
+                <!-- Libro 4: Doma de serpientes para niños -->
+                <div class="book-card">
+                    <img src="fotos/Snake Wrangling for Kids, Learning to Program with Python.png" alt="Doma de serpientes para niños" class="book-cover" onclick="openModal('snake')">
+                    <div class="book-info">
+                        <h3>Doma de serpientes para niños</h3>
+                        <button onclick="viewPDF('snake')" class="sensei-btn">VISUALIZAR</button>
+                    </div>
                 </div>
             </div>
+        </div>
+
+        <div class="carousel-hint">
+            <i class="fas fa-arrows-alt-h"></i> DESLIZA LATERALMENTE EN CADA CATEGORÍA <i class="fas fa-arrows-alt-h"></i>
         </div>
     </div>
 
@@ -129,6 +208,30 @@
     <script type="module">
         // Datos de los libros
         const bookData = {
+            db_main: {
+                title: "Bases de Datos",
+                path: "Libros/Bases-de-Datos.pdf",
+                body: `
+                    <p><strong>Título:</strong> Bases de Datos</p>
+                    <p><strong>Autor:</strong> Mercedes Marqués</p>
+                    <p><strong>Categoría principal:</strong> Bases de datos</p>
+                    <p><strong>Subcategoría:</strong> SQL</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>Año:</strong> Creative Commons Reconocimiento-NoComercial-CompartirIgual 2.5 (CC BY-NC-SA 2.5)</p>
+                `
+            },
+            db_new: {
+                title: "Bases de Datos",
+                path: "Libros/913.pdf",
+                body: `
+                    <p><strong>Título:</strong> Bases de Datos</p>
+                    <p><strong>Autor:</strong> Rafael Camps Paré; Luis Alberto Casillas Santillán; Dolors Costal Costa; Marc Gibert Ginestà; Carme Martín Escofet; Oscar Pérez Mora</p>
+                    <p><strong>Categoría principal:</strong> Bases de datos</p>
+                    <p><strong>Subcategoría:</strong> SQL</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>Año:</strong> GNU Free Documentation License (GFDL), versión 1.2 o posterior</p>
+                `
+            },
             poo: {
                 title: "Programación Orientada a Objetos",
                 path: "Libros/Programacion Orientada a objectos.pdf",
@@ -170,6 +273,66 @@
                     <p><strong>Categoría principal:</strong> Programación para niños</p>
                     <p><strong>Subcategoría:</strong> Python</p>
                     <p><strong>Idioma:</strong> Español</p>
+                `
+            },
+            java: {
+                title: "Apuntes Básicos Java",
+                path: "Libros/java_apuntes_basicos_pdf.pdf",
+                body: `
+                    <p><strong>Título:</strong> Apuntes Básicos Java</p>
+                    <p><strong>Autor:</strong> Jorge A. López Vargas</p>
+                    <p><strong>Categoría principal:</strong> Programación</p>
+                    <p><strong>Subcategoría:</strong> Java</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>Licencia:</strong> Creative Commons Reconocimiento-NoComercial-CompartirIgual 4.0 Internacional (CC BY-NC-SA 4.0)</p>
+                `
+            },
+            structures: {
+                title: "Estructuras de Datos",
+                path: "Libros/estructura_datos-2016.pdf",
+                body: `
+                    <p><strong>Título:</strong> Estructuras de Datos</p>
+                    <p><strong>Autor:</strong> Luis Fernando Zapata Alvarez</p>
+                    <p><strong>Categoría principal:</strong> Programación</p>
+                    <p><strong>Subcategoría:</strong> Algoritmos y Estructuras</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>licencia:</strong> Creative Commons Reconocimiento – No Comercial – Compartir Igual 2.5 Colombia</p>
+                `
+            },
+            adv_db: {
+                title: "Bases de Datos Avanzadas",
+                path: "Libros/2013_bases-de-datos-avanzadas.pdf",
+                body: `
+                    <p><strong>Título:</strong> Bases de Datos Avanzadas</p>
+                    <p><strong>Autor:</strong> María José Aramburu Cabo, Ismael Sanz Blasco</p>
+                    <p><strong>Categoría principal:</strong> Bases de datos</p>
+                    <p><strong>Subcategoría:</strong> Modelado de datos</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>Año:</strong> Creative Commons Reconocimiento-CompartirIgual (CC BY-SA)</p>
+                `
+            },
+            mongodb: {
+                title: "MongoDB para informáticos de SQL Server",
+                path: "Libros/mongodb-para-informaticos-de-sql-server.pdf",
+                body: `
+                    <p><strong>Título:</strong> MongoDB para informáticos de SQL Server (Guía de Transición)</p>
+                    <p><strong>Autor:</strong> Óscar de la Cuesta Campillo</p>
+                    <p><strong>Categoría principal:</strong> Bases de datos</p>
+                    <p><strong>Subcategoría:</strong> NoSQL</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>Licencia:</strong> Creative Commons Attribution 4.0 International (CC BY 4.0)</p>
+                `
+            },
+            content: {
+                title: "Introducción a las Bases de Datos",
+                path: "Libros/content.pdf",
+                body: `
+                    <p><strong>Título:</strong> Introducción a las Bases de Datos</p>
+                    <p><strong>Autor:</strong> Antonio Carrillo Ledesma y Karla Ivonne González Rosas</p>
+                    <p><strong>Categoría principal:</strong> Bases de datos</p>
+                    <p><strong>Subcategoría:</strong> SQL</p>
+                    <p><strong>Idioma:</strong> Español</p>
+                    <p><strong>Licencia:</strong> Creative Commons Atribución CompartirIgual (CC-BY-SA) 4.0 Internacional</p>
                 `
             }
         };
