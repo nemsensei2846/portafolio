@@ -124,8 +124,8 @@ body.sensei-audio {
 /* Promo Banner VIP Premium */
 .promo-banner {
     position: relative;
-    padding: 15px 20px; /* Reducido */
-    border-radius: 15px; /* Reducido */
+    padding: 20px;
+    border-radius: 15px;
     background: linear-gradient(-45deg, #0d1520, #1a2535, #00ccff, #0055ff);
     background-size: 400% 400%;
     animation: gradientBG 10s ease infinite;
@@ -133,8 +133,35 @@ body.sensei-audio {
     border: 1px solid rgba(0, 204, 255, 0.3);
     box-shadow: 0 0 15px rgba(0, 204, 255, 0.2);
     margin-bottom: 20px;
-    transition: all 0.5s ease;
-    max-height: 200px;
+    transition: transform 1.5s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s, max-height 0.8s 1s, margin 0.8s 1s;
+    min-height: 120px;
+    display: flex;
+    align-items: center;
+    z-index: 10;
+}
+
+.promo-banner.banner-exit {
+    animation: bannerExitPath 2s cubic-bezier(0.5, 0, 0.5, 1) forwards;
+}
+
+@keyframes bannerExitPath {
+    0% {
+        transform: translateX(0) rotate(0deg);
+        opacity: 1;
+    }
+    100% {
+        transform: translateX(150vw);
+        opacity: 0;
+    }
+}
+
+.promo-banner.banner-exit-final {
+    max-height: 0;
+    margin-bottom: 0;
+    padding-top: 0;
+    padding-bottom: 0;
+    pointer-events: none;
+    transition: all 0.8s ease;
 }
 
 .promo-banner.hidden {
@@ -174,7 +201,7 @@ body.sensei-audio {
 }
 
 .promo-content h2 {
-    font-size: 1.2rem; /* Reducido */
+    font-size: 1.2rem;
     font-weight: 800;
     color: #fff;
     text-shadow: 0 0 8px var(--sgc-glow);
@@ -406,17 +433,27 @@ body.sensei-audio {
 
 /* Profile Section */
 .profile-container {
+    background: var(--sgc-surface);
+    border-radius: 20px;
+    padding: 30px;
     text-align: center;
-    padding: 40px 0;
+    border: 1px solid var(--sgc-border);
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 30px;
 }
 
 .profile-avatar {
-    width: 120px;
-    height: 120px;
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    border: 3px solid var(--sgc-cian);
-    margin: 0 auto 20px;
     overflow: hidden;
+    border: 3px solid var(--sgc-cian);
     box-shadow: 0 0 20px var(--sgc-glow);
 }
 
@@ -424,6 +461,94 @@ body.sensei-audio {
     width: 100%;
     height: 100%;
     object-fit: cover;
+}
+
+.profile-info-edit {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+}
+
+.profile-input {
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--sgc-border);
+    color: #fff;
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-align: center;
+    padding: 5px 10px;
+    border-radius: 10px;
+    width: 80%;
+    outline: none;
+    transition: 0.3s;
+}
+
+.profile-input:focus {
+    border-color: var(--sgc-cian);
+    background: rgba(0, 204, 255, 0.1);
+    box-shadow: 0 0 10px var(--sgc-glow);
+}
+
+.user-name-static {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #fff;
+    margin: 5px 0;
+}
+
+.save-success-msg {
+    background: rgba(0, 255, 102, 0.15);
+    color: #00ff66;
+    border: 1px solid #00ff66;
+    padding: 8px 15px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin: 10px 0;
+    font-size: 0.9rem;
+    box-shadow: 0 0 15px rgba(0, 255, 102, 0.3);
+    animation: bounceIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.5); opacity: 0; }
+    100% { transform: scale(1); opacity: 1; }
+}
+
+.hidden {
+    display: none !important;
+}
+
+.user-badge {
+    color: var(--sgc-cian);
+    font-weight: bold;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+}
+
+.save-btn {
+    background: var(--sgc-cian);
+    color: #000;
+    border: none;
+    padding: 10px 25px;
+    border-radius: 50px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 10px;
+}
+
+.save-btn:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px var(--sgc-glow);
+}
+
+.save-btn:active {
+    transform: scale(0.95);
 }
 
 .profile-stats {

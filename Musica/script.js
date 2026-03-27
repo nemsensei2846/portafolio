@@ -2,6 +2,8 @@
  * SENSEI_AUDIO_PLAYER - MODERN APP LOGIC
  */
 
+let userName = localStorage.getItem('sensei_user_name') || 'Usuario Sensei';
+
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
     AOS.init({
@@ -17,13 +19,22 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFavCount();
     loadSong(songs[songIndex]);
 
-    // Ocultar banner VIP después de 10 segundos
+    // Ocultar banner VIP después de 10 segundos con animación de "jalado"
     const vipBanner = document.querySelector('.promo-banner');
     if (vipBanner) {
         setTimeout(() => {
-            vipBanner.classList.add('hidden');
-            // Refrescar AOS para que las secciones suban suavemente
-            setTimeout(() => AOS.refresh(), 500);
+            // Fase 1: El perro jala el banner hacia la derecha
+            vipBanner.classList.add('banner-exit');
+            
+            // Fase 2: Colapsar el espacio una vez que el banner está fuera de vista
+            setTimeout(() => {
+                vipBanner.classList.add('banner-exit-final');
+                // Refrescar AOS para que las secciones suban suavemente
+                setTimeout(() => {
+                    vipBanner.style.display = 'none';
+                    AOS.refresh();
+                }, 800);
+            }, 2000); // Esperar a que termine la animación de 2 segundos de salida
         }, 10000);
     }
 
@@ -31,7 +42,46 @@ document.addEventListener('DOMContentLoaded', () => {
     document.querySelector('.app-main').addEventListener('scroll', () => {
         AOS.refresh();
     });
+
+    const nameInput = document.getElementById('user-name-input');
+    if (nameInput) nameInput.value = userName;
 });
+
+// Perfil Logic
+ const saveProfileBtn = document.getElementById('save-profile-btn');
+ const userNameInput = document.getElementById('user-name-input');
+ const userNameDisplay = document.getElementById('user-name-display');
+ const saveSuccessMsg = document.getElementById('save-success-msg');
+ 
+ if (saveProfileBtn) {
+     saveProfileBtn.addEventListener('click', () => {
+         userName = userNameInput.value.trim() || 'Usuario Sensei';
+         localStorage.setItem('sensei_user_name', userName);
+         
+         // Actualizar texto estático
+         if (userNameDisplay) {
+             userNameDisplay.innerText = userName;
+             userNameDisplay.classList.remove('hidden');
+         }
+
+         // Ocultar input y botón PERMANENTEMENTE en esta sesión
+         userNameInput.classList.add('hidden');
+         saveProfileBtn.classList.add('hidden');
+         
+         // Mostrar mensaje de éxito
+         saveSuccessMsg.classList.remove('hidden');
+
+         // Animación con GSAP para el mensaje
+         gsap.from(saveSuccessMsg, { scale: 0.8, opacity: 0, duration: 0.5, ease: "back.out(1.7)" });
+
+         // Ocultar solo el mensaje de éxito después de 3 segundos, pero NO el botón/input
+         setTimeout(() => {
+             saveSuccessMsg.classList.add('hidden');
+             // Al ocultar el mensaje, las estadísticas subirán automáticamente en el DOM
+             AOS.refresh();
+         }, 3000);
+     });
+ }
 
 const audio = document.getElementById('audio-player');
 const playPauseBtn = document.getElementById('play-pause');
@@ -55,6 +105,7 @@ const fpPlayPauseBtn = document.getElementById('fp-play-pause');
 const fpPrevBtn = document.getElementById('fp-prev');
 const fpNextBtn = document.getElementById('fp-next');
 const fpRepeatBtn = document.getElementById('fp-repeat');
+const fpShuffleBtn = document.getElementById('fp-shuffle');
 const fpProgressFill = document.getElementById('fp-progress-fill');
 const fpProgressBar = document.getElementById('fp-progress-bar');
 const fpCurrentTime = document.getElementById('fp-current-time');
@@ -62,6 +113,7 @@ const fpDuration = document.getElementById('fp-duration');
 
 let isPlaying = false;
 let isRepeatOne = false;
+let isShuffle = false;
 let favorites = JSON.parse(localStorage.getItem('sensei_favs')) || [];
 
 // Datos de las canciones (90 Pistas Sincronizadas)
@@ -699,12 +751,14 @@ const songs = [
 ];
 
 let songIndex = 0;
+let originalSongs = [...songs]; // Guardar el orden original para cuando se desactive shuffle
 let currentSongs = [...songs];
 
 // --- Core UI Functions ---
 
 function initPlaylist(filteredSongs = currentSongs) {
     const playlistContainer = document.getElementById('playlist');
+    if (!playlistContainer) return; // Seguridad
     playlistContainer.innerHTML = '';
     renderGrid(filteredSongs, playlistContainer);
     setTimeout(() => AOS.refresh(), 100);
@@ -995,12 +1049,42 @@ fpPrevBtn.addEventListener('click', prevSong);
 
 fpRepeatBtn.addEventListener('click', () => {
     isRepeatOne = !isRepeatOne;
-    if (isRepeatOne) {
-        fpRepeatBtn.classList.add('active-repeat');
-    } else {
-        fpRepeatBtn.classList.remove('active-repeat');
-    }
+    fpRepeatBtn.classList.toggle('active-repeat', isRepeatOne);
+    // Desactivar shuffle si se activa repeat one (opcional, según preferencia)
+    // if (isRepeatOne && isShuffle) toggleShuffle();
 });
+
+if (fpShuffleBtn) {
+    fpShuffleBtn.addEventListener('click', toggleShuffle);
+}
+
+function toggleShuffle() {
+    isShuffle = !isShuffle;
+    fpShuffleBtn.classList.toggle('active-repeat', isShuffle); // Usamos la misma clase de brillo
+    
+    if (isShuffle) {
+        // Mezclar canciones manteniendo la actual en su posición si es posible
+        const currentSong = songs[songIndex];
+        let remainingSongs = songs.filter((_, i) => i !== songIndex);
+        
+        // Fisher-Yates shuffle
+        for (let i = remainingSongs.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [remainingSongs[i], remainingSongs[j]] = [remainingSongs[j], remainingSongs[i]];
+        }
+        
+        // Re-ensamblar: canción actual primero, luego el resto mezclado
+        // Esto evita que la música se detenga o salte bruscamente
+        const shuffled = [currentSong, ...remainingSongs];
+        songs.splice(0, songs.length, ...shuffled);
+        songIndex = 0;
+    } else {
+        // Restaurar orden original
+        const currentSong = songs[songIndex];
+        songs.splice(0, songs.length, ...originalSongs);
+        songIndex = songs.findIndex(s => s.src === currentSong.src);
+    }
+}
 
 audio.addEventListener('timeupdate', () => {
     const { duration, currentTime } = audio;
