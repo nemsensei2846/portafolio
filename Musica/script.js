@@ -247,11 +247,25 @@ const songs = [
         cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrs7H13nkBXTAENpqSw5rIRgzOERlJAKdL0g&s"
     },
     {
+        title: "Éveillez-vous",
+        artist: "avec Valerie Broussard",
+        genre: "Otros",
+        src: "tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3",
+        cover: "https://i.ytimg.com/vi/zF5Ddo9JdpY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDKL44ewCHdZXSQt-v7OtbFQZSeyA"
+    },
+    {
+        title: "Warriors",
+        artist: "ft. 2WEI y Edda Hayes",
+        genre: "Otros",
+        src: "tracks/Warriors  Season 2020 Cinematic - League of Legends (ft. 2WEI and Edda Hayes).mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273f8fa082806184fcb032d8e0a"
+    },
+    {
         title: "HASTA_LA_RAIZ",
         artist: "Natalia Lafourcade",
         genre: "Romantica",
         src: "tracks/Hasta la Raíz - Natalia Lafourcade   LETRA.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://images.genius.com/5e53b7463b9983373c956d77959b6711.600x600x1.png"
     },
     {
         title: "FANTASMAS",
