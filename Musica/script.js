@@ -27,21 +27,21 @@ const songs = [
         artist: "6ix9ine ft. Yailin",
         genre: "Regueton",
         src: "tracks/6ix9ine - Pa Ti (feat. Yailin La Más Viral) (Official Music Video).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://m.media-amazon.com/images/M/MV5BZmJlN2I3MGItZDg1ZC00MWJlLWE3OTktZDE1MmEyY2QyMTkxXkEyXkFqcGc@._V1_.jpg"
     },
     {
         title: "A_LA_ANTIGÜITA",
         artist: "Calibre 50",
         genre: "Otros",
         src: "tracks/A La Antigüita - Calibre 50 (LETRA).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273efa9a3ceaf25e2c4fdb76d26"
     },
     {
         title: "NACIMOS_PA_MORIR",
         artist: "Anuel ft. Jory",
         genre: "Regueton",
         src: "tracks/Anuel - Nacimos Pa Morir (Official Video) ft. Jory.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273a16fd43991f51ee4312b7519"
     },
     {
         title: "AMORFODA",
