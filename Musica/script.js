@@ -137,7 +137,69 @@ let isRepeatOne = false;
 let isShuffle = false;
 let favorites = JSON.parse(localStorage.getItem('sensei_favs')) || [];
 
-// Datos de las canciones (90 Pistas Sincronizadas)
+// --- IndexedDB Setup for Offline Audio ---
+const DB_NAME = 'SenseiMusicDB';
+const DB_VERSION = 1;
+const STORE_NAME = 'offline_tracks';
+
+function getDB() {
+    return new Promise((resolve, reject) => {
+        const request = indexedDB.open(DB_NAME, DB_VERSION);
+        request.onupgradeneeded = (e) => {
+            const db = e.target.result;
+            if (!db.objectStoreNames.contains(STORE_NAME)) {
+                db.createObjectStore(STORE_NAME, { keyPath: 'src' });
+            }
+        };
+        request.onsuccess = (e) => resolve(e.target.result);
+        request.onerror = (e) => reject(e.target.error);
+    });
+}
+
+async function saveTrackToOffline(song) {
+    try {
+        const response = await fetch(song.src);
+        const blob = await response.blob();
+        const db = await getDB();
+        const tx = db.transaction(STORE_NAME, 'readwrite');
+        const store = tx.objectStore(STORE_NAME);
+        
+        await new Promise((resolve, reject) => {
+            const putReq = store.put({ 
+                src: song.src, 
+                blob: blob,
+                title: song.title,
+                artist: song.artist,
+                cover: song.cover,
+                timestamp: Date.now()
+            });
+            putReq.onsuccess = resolve;
+            putReq.onerror = reject;
+        });
+        return true;
+    } catch (err) {
+        console.error('Error saving to IndexedDB:', err);
+        return false;
+    }
+}
+
+async function getOfflineBlob(src) {
+    try {
+        const db = await getDB();
+        const tx = db.transaction(STORE_NAME, 'readonly');
+        const store = tx.objectStore(STORE_NAME);
+        const track = await new Promise((resolve, reject) => {
+            const getReq = store.get(src);
+            getReq.onsuccess = () => resolve(getReq.result);
+            getReq.onerror = reject;
+        });
+        return track ? track.blob : null;
+    } catch (err) {
+        return null;
+    }
+}
+
+// Datos de las canciones (102 Pistas Sincronizadas)
 const songs = [
     {
         title: "BEBE",
@@ -180,13 +242,6 @@ const songs = [
         genre: "Electronica",
         src: "tracks/kaim-tiktok.mp3",
         cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdgpRWwk84LvKmPK5COlz2meF0EdlV0nTEvw&s"
-    },
-    {
-        title: "КАМИН",
-        artist: "EMIN feat. JONY",
-        genre: "Electronica",
-        src: "tracks/EMIN feat. JONY - КАМИН.mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b273870c1c64b1d77eb4456e4283"
     },
     {
         title: "Solo",
@@ -257,76 +312,6 @@ const songs = [
         genre: "Regueton",
         src: "tracks/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
-    },
-    {
-        title: "Lo Aprendí de Ti",
-        artist: "HA-ASH",
-        genre: "Romantica",
-        src: "tracks/Ha-Ash - Lo Aprendí de Ti.mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f"
-    },
-    {
-        title: "Perdón, Perdón",
-        artist: "HA-ASH",
-        genre: "Romantica",
-        src: "tracks/HA-ASH - Perdón, Perdón.mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f"
-    },
-    {
-        title: "Te Dejo En Libertad",
-        artist: "HA-ASH",
-        genre: "Romantica",
-        src: "tracks/HA-ASH - Te Dejo En Libertad.mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f"
-    },
-    {
-        title: "Todo No Fue Suficiente",
-        artist: "HA-ASH",
-        genre: "Romantica",
-        src: "tracks/HA-ASH - Todo No Fue Suficiente (Letra).mp3",
-        cover: "https://i.ytimg.com/vi/5AaQ3RWlJuQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAzRA22WZ8cobpz-LTA2mjR_J_2Rg"
-    },
-    {
-        title: "Un Ángel Llora",
-        artist: "Annette Moreno",
-        genre: "Otros",
-        src: "tracks/Annette Moreno - Un Ángel Llora (Video Oficial).mp3",
-        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
-    },
-    {
-        title: "Guardian De Mi Corazón",
-        artist: "Annette Moreno",
-        genre: "Otros",
-        src: "tracks/Annette Moreno - Guardian De Mi Corazón (Video Oficial).mp3",
-        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
-    },
-    {
-        title: "Devuélveme El Corazón",
-        artist: "Sebastián Yatra",
-        genre: "Otros",
-        src: "tracks/Sebastián Yatra - Devuélveme El Corazón.mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b2732ee91833ee0b20ad2554256f"
-    },
-    {
-        title: "Cómo Mirarte",
-        artist: "Sebastián Yatra",
-        genre: "Otros",
-        src: "tracks/Sebastián Yatra - Cómo Mirarte.mp3",
-        cover: "https://i.ytimg.com/vi/fp6TuMZOyj4/maxresdefault.jpg"
-    },
-    {
-        title: "Hasta el fin del mundo",
-        artist: "Jennifer Peña",
-        genre: "Romantica",
-        src: "tracks/Hasta el fin del mundo - Jennifer Peña.mp3",
-        cover: "https://i1.sndcdn.com/artworks-NFecCvyAwuBh0mxd-qzDskg-t1080x1080.jpg"
-    },
-    {
-        title: "Simplemente Amigos",
-        artist: "Ana Gabriel",
-        genre: "Romantica",
-        src: "tracks/Ana Gabriel Simplemente Amigos.mp3",
-        cover: "https://i1.sndcdn.com/artworks-FNE3Y5vDbevyc7Ev-LrNGBQ-t1080x1080.jpg"
     },
     {
         title: "JUST_THE_WAY_YOU_ARE",
@@ -852,6 +837,90 @@ const songs = [
         genre: "Otros",
         src: "tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3",
         cover: "https://i.ytimg.com/vi/zF5Ddo9JdpY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDKL44ewCHdZXSQt-v7OtbFQZSeyA"
+    },
+    { 
+        title: "Kamin cover", 
+        artist: "Cover Tiktok", 
+        genre: "Electronica", 
+        src: "tracks/kaim-tiktok.mp3", 
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdgpRWwk84LvKmPK5COlz2meF0EdlV0nTEvw&s" 
+    }, 
+    { 
+        title: "КАМИН", 
+        artist: "EMIN feat. JONY", 
+        genre: "Electronica", 
+        src: "tracks/EMIN feat. JONY - КАМИН.mp3", 
+        cover: "https://i.scdn.co/image/ab67616d0000b273870c1c64b1d77eb4456e4283" 
+    }, 
+    { 
+        title: "Lo Aprendí de Ti", 
+        artist: "HA-ASH", 
+        genre: "Romantica", 
+        src: "tracks/Ha-Ash - Lo Aprendí de Ti.mp3", 
+        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f" 
+    }, 
+    { 
+        title: "Perdón, Perdón", 
+        artist: "HA-ASH", 
+        genre: "Romantica", 
+        src: "tracks/HA-ASH - Perdón, Perdón.mp3", 
+        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f" 
+    }, 
+    { 
+        title: "Te Dejo En Libertad", 
+        artist: "HA-ASH", 
+        genre: "Romantica", 
+        src: "tracks/HA-ASH - Te Dejo En Libertad.mp3", 
+        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f" 
+    }, 
+    { 
+        title: "Todo No Fue Suficiente", 
+        artist: "HA-ASH", 
+        genre: "Romantica", 
+        src: "tracks/HA-ASH - Todo No Fue Suficiente (Letra).mp3", 
+        cover: "https://i.ytimg.com/vi/5AaQ3RWlJuQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAzRA22WZ8cobpz-LTA2mjR_J_2Rg" 
+    }, 
+    { 
+        title: "Un Ángel Llora", 
+        artist: "Annette Moreno", 
+        genre: "Otros", 
+        src: "tracks/Annette Moreno - Un Ángel Llora (Video Oficial).mp3", 
+        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg" 
+    }, 
+    { 
+        title: "Guardian De Mi Corazón", 
+        artist: "Annette Moreno", 
+        genre: "Otros", 
+        src: "tracks/Annette Moreno - Guardian De Mi Corazón (Video Oficial).mp3", 
+        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg" 
+    }, 
+    { 
+        title: "Devuélveme El Corazón", 
+        artist: "Sebastián Yatra", 
+        genre: "Otros", 
+        src: "tracks/Sebastián Yatra - Devuélveme El Corazón.mp3", 
+        cover: "https://i.scdn.co/image/ab67616d0000b2732ee91833ee0b20ad2554256f" 
+    }, 
+    { 
+        title: "Cómo Mirarte", 
+        artist: "Sebastián Yatra", 
+        genre: "Otros", 
+        src: "tracks/Sebastián Yatra - Cómo Mirarte.mp3", 
+        cover: "https://i.ytimg.com/vi/fp6TuMZOyj4/maxresdefault.jpg" 
+    }, 
+    { 
+        title: "Hasta el fin del mundo", 
+        artist: "Jennifer Peña", 
+        genre: "Romantica", 
+        src: "tracks/Hasta el fin del mundo - Jennifer Peña.mp3", 
+        cover: "https://i1.sndcdn.com/artworks-NFecCvyAwuBh0mxd-qzDskg-t1080x1080.jpg" 
+    }, 
+    { 
+        title: "Simplemente Amigos", 
+        artist: "Ana Gabriel", 
+        genre: "Romantica", 
+        src: "tracks/Ana Gabriel Simplemente Amigos.mp3", 
+        cover: "https://i1.sndcdn.com/artworks-FNE3Y5vDbevyc7Ev-LrNGBQ-t1080x1080.jpg" 
     }
 ];
 
@@ -1061,7 +1130,7 @@ if (miniPlayerInfo) {
 
 closeFullPlayerBtn.addEventListener('click', closeFullPlayer);
 
-function loadSong(song) {
+async function loadSong(song) {
     miniTitle.innerText = song.title;
     miniArtist.innerText = song.artist;
     miniCover.src = song.cover;
@@ -1074,7 +1143,14 @@ function loadSong(song) {
     fpBg.style.backgroundImage = `url('${song.cover}')`;
     fpCover.onerror = () => fpCover.src = '../logo_sensei.jpg';
     
-    audio.src = song.src;
+    // Intentar cargar desde IndexedDB si está descargada
+    const offlineBlob = await getOfflineBlob(song.src);
+    if (offlineBlob) {
+        audio.src = URL.createObjectURL(offlineBlob);
+        console.log(`Cargando audio offline para: ${song.title}`);
+    } else {
+        audio.src = song.src;
+    }
     
     if ('mediaSession' in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
@@ -1233,15 +1309,33 @@ function toggleFavoriteManual(src) {
     initPlaylist(); // Refrescar iconos en la lista principal
 }
 
-function downloadSong(song) {
+async function downloadSong(song) {
     if (!downloads.some(d => d.src === song.src)) {
-        downloads.push(song);
-        localStorage.setItem('sensei_downloads', JSON.stringify(downloads));
-        updateDownloadCount();
-        alert(`"${song.title}" se ha añadido a tus descargas en el Perfil.`);
+        // Mostrar aviso de descarga iniciada
+        updateDownloadStatus(song.src, 'descargando');
+        
+        const success = await saveTrackToOffline(song);
+        
+        if (success) {
+            downloads.push(song);
+            localStorage.setItem('sensei_downloads', JSON.stringify(downloads));
+            updateDownloadCount();
+            if (document.getElementById('section-profile').classList.contains('active')) renderDownloads();
+            alert(`"${song.title}" se ha descargado y está disponible offline.`);
+        } else {
+            alert(`Error al descargar "${song.title}". Inténtalo de nuevo.`);
+        }
     } else {
         alert("Esta canción ya está en tus descargas.");
     }
+}
+
+function updateDownloadStatus(src, status) {
+    // Buscar si la card está visible en el perfil y actualizar el badge
+    const downloadCards = document.querySelectorAll('#downloads-grid .card');
+    downloadCards.forEach(card => {
+        // Esta es una ayuda visual, la lógica principal es el almacenamiento
+    });
 }
 
 function updateDownloadCount() {
