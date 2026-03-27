@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v19'; // Versión 19 - Mejora de carga de imágenes y AOS
+const CACHE_NAME = 'sensei-v28'; // Versión 28 - Final Profile & Banner Logic Update
 const urlsToCacheEssential = [
   './',
   './index.html',
@@ -19,6 +19,7 @@ const urlsToCacheEssential = [
   'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
   'https://unpkg.com/aos@2.3.1/dist/aos.css',
   'https://unpkg.com/aos@2.3.1/dist/aos.js',
+  'https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js',
   'https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js',
   'https://www.gstatic.com/firebasejs/10.8.0/firebase-analytics.js'
 ];
