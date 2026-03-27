@@ -23,11 +23,74 @@ let isShuffle = false;
 // Datos de las canciones (Actualización Final - 65 Pistas Detectadas)
 const songs = [
     {
+        title: "GIMME_GIMME_GIMME",
+        artist: "ABBA",
+        genre: "70 and 80",
+        src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
+        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/guDFS72vG0r9U7nS7R/giphy.gif"
+    },
+    {
+        title: "BARBIE_GIRL",
+        artist: "Aqua",
+        genre: "70 and 80",
+        src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "LAMBADA",
+        artist: "Kaoma",
+        genre: "70 and 80",
+        src: "tracks/Kaoma - Lambada (Official Video) 1989 HD.mp3",
+        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
+    },
+    {
+        title: "MACARENA",
+        artist: "Los Del Rio",
+        genre: "70 and 80",
+        src: "tracks/Los Del Rio - Macarena (Bayside Boys Remix).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "ME_MUERO_POR_ESTAR_CONTIGO",
+        artist: "Silvana Di Lorenzo",
+        genre: "Romantica",
+        src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
         title: "BILLIE_JEAN",
         artist: "Michael Jackson",
         genre: "70 and 80",
         src: "tracks/Michael Jackson - Billie Jean (Official Video).mp3",
-        cover: "https://www.eloriente.net/home/wp-content/uploads/2014/06/michael-jackson-billie-jean.jpg"
+        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/guDFS72vG0r9U7nS7R/giphy.gif"
+    },
+    {
+        title: "AMIGA",
+        artist: "Miguel Bosé",
+        genre: "70 and 80",
+        src: "tracks/Miguel Bose - Amiga.mp3",
+        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
+    },
+    {
+        title: "ANIMALS",
+        artist: "Martin Garrix",
+        genre: "Electronica",
+        src: "tracks/Martin Garrix - Animals (Official Video).mp3",
+        cover: "https://i.ytimg.com/vi/LvJdIYhC3Ck/maxresdefault.jpg"
+    },
+    {
+        title: "TREMOR",
+        artist: "Dimitri Vegas, Martin Garrix, Like Mike",
+        genre: "Electronica",
+        src: "tracks/Dimitri Vegas, Martin Garrix, Like Mike - Tremor (Official Music Video).mp3",
+        cover: "https://i1.sndcdn.com/artworks-000338799858-lprzob-t500x500.jpg"
+    },
+    {
+        title: "BAD",
+        artist: "David Guetta & Showtek ft. Vassy",
+        genre: "Electronica",
+        src: "tracks/David Guetta & Showtek - Bad ft.Vassy (Lyrics Video).mp3",
+        cover: "https://i.ytimg.com/vi/4tFktcmLl5M/maxresdefault.jpg"
     },
     {
         title: "PA_TI",
@@ -39,7 +102,7 @@ const songs = [
     {
         title: "A_LA_ANTIGÜITA",
         artist: "Calibre 50",
-        genre: "Vallenato",
+        genre: "Otros",
         src: "tracks/A La Antigüita - Calibre 50 (LETRA).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
@@ -107,41 +170,6 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "Me muero por estar contigo",
-        artist: "Silvana Di Lorenzo",
-        genre: "70 and 80",
-        src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
-    },
-    {
-        title: "Lambada",
-        artist: "Kaoma",
-        genre: "70 and 80",
-        src: "tracks/Kaoma - Lambada (Official Video) 1989 HD.mp3",
-        cover: "https://m.media-amazon.com/images/M/MV5BZWNiNjBiM2UtNDZmMi00YjA2LWIzODMtNWJlNDg1OTg0OWQ3XkEyXkFqcGc@._V1_.jpg"
-    },
-    {
-        title: "Gimme! Gimme! Gimme!",
-        artist: "ABBA",
-        genre: "70 and 80",
-        src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
-        cover: "https://m.media-amazon.com/images/M/MV5BOWIzM2FmNGMtOTQ5NC00M2RiLTk3MzgtMGI2ZmIwZDljMGUzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-    },
-    {
-        title: "Macarena",
-        artist: "Los del Rio",
-        genre: "70 and 80",
-        src: "tracks/Los Del Rio - Macarena (Bayside Boys Remix).mp3",
-        cover: "https://i.ytimg.com/vi/2zvd1JQ0EKY/maxresdefault.jpg"
-    },
-    {
-        title: "BARBIE GIRL ",
-        artist: "Aqua",
-        genre: "70 and 80",
-        src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
-        cover: "https://m.media-amazon.com/images/M/MV5BNDYwNzY4MzktYmEyZi00NzM4LTllNzMtZmY0ZDI2ODQ0OGZjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
-    },
-    {
         title: "DISFRUTO",
         artist: "Carla Morrison",
         genre: "Romantica",
@@ -198,10 +226,10 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "Amiga",
-        artist: "Miguel Bose",
-        genre: "70 and 80",
-        src: "tracks/Miguel Bose - Amiga.mp3",
+        title: "HEROIC_EPIC_BEAT",
+        artist: "Aidan x Maxxton",
+        genre: "Otros",
+        src: "tracks/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
@@ -518,27 +546,6 @@ const songs = [
         genre: "Romantica",
         src: "tracks/sapientdream - past lives (Subtitulada Español).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/10/a9/88/10a98827-ed7e-3077-6cd8-9cc96b764d74/cover.jpg/600x600cc.webp"
-    },
-    {
-        title: "Animals ",
-        artist: "Martin Garrix",
-        genre: "Electronica",
-        src: "tracks/Martin Garrix - Animals (Official Video).mp3",
-        cover: "https://i.ytimg.com/vi/LvJdIYhC3Ck/maxresdefault.jpg"
-    },
-    {
-        title: "Tremor  ",
-        artist: "Dimitri Vegas, Martin Garrix, Like Mike",
-        genre: "Electronica",
-        src: "tracks/Dimitri Vegas, Martin Garrix, Like Mike - Tremor (Official Music Video).mp3",
-        cover: "https://i1.sndcdn.com/artworks-000338799858-lprzob-t500x500.jpg"
-    },
-    {
-        title: "David Guetta & Showtek",
-        artist: "Bad ft.Vassy",
-        genre: "Electronica",
-        src: "tracks/David Guetta & Showtek - Bad ft.Vassy (Lyrics Video).mp3",
-        cover: "https://i.ytimg.com/vi/4tFktcmLl5M/maxresdefault.jpg"
     }
 ];
 
