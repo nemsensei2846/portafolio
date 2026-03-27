@@ -27,7 +27,7 @@ const songs = [
         artist: "Michael Jackson",
         genre: "70 and 80",
         src: "tracks/Michael Jackson - Billie Jean (Official Video).mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/guDFS72vG0r9U7nS7R/giphy.gif"
+        cover: "https://www.eloriente.net/home/wp-content/uploads/2014/06/michael-jackson-billie-jean.jpg"
     },
     {
         title: "PA_TI",
