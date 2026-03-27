@@ -30,6 +30,13 @@ const songs = [
         cover: "https://m.media-amazon.com/images/M/MV5BNzg4ZDE2NDAtMTA4Ni00NzUyLTk3NjUtZWU2ZTVkZWI0OTgwXkEyXkFqcGc@._V1_QL75_UY190_CR74,0,190,190_.jpg"
     },
     {
+        title: "Solo",
+        artist: "Amenazzy ft. Lary Over",
+        genre: "Regueton",
+        src: "tracks/Amenazzy ft. Lary Over - Solo (Video Oficial).mp3",
+        cover: "https://s.mxmcdn.net/images-storage/albums2/1/0/9/0/7/0/40070901_350_350.jpg"
+    },
+    {
         title: "Me acuerdo",
         artist: "Vico C",
         genre: "Romantica",
