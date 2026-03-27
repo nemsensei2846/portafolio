@@ -174,6 +174,13 @@ const songs = [
         cover: "https://static.wikia.nocookie.net/electropedia/images/3/36/Faded_Alan_Walker_%28logo%29.jpg/revision/latest?cb=20170513171308&path-prefix=es"
     },
     {
+        title: "Kamin cover",
+        artist: "Cover Tiktok",
+        genre: "Electronica",
+        src: "tracks/kaim-tiktok.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdgpRWwk84LvKmPK5COlz2meF0EdlV0nTEvw&s"
+    },
+    {
         title: "Solo",
         artist: "Amenazzy ft. Lary Over",
         genre: "Regueton",
