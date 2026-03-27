@@ -259,6 +259,27 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "Lo Aprendí de Ti",
+        artist: "HA-ASH",
+        genre: "Romantica",
+        src: "tracks/Ha-Ash - Lo Aprendí de Ti.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f"
+    },
+    {
+        title: "Perdón, Perdón",
+        artist: "HA-ASH",
+        genre: "Romantica",
+        src: "tracks/HA-ASH - Perdón, Perdón.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f"
+    },
+    {
+        title: "Te Dejo En Libertad",
+        artist: "HA-ASH",
+        genre: "Romantica",
+        src: "tracks/HA-ASH - Te Dejo En Libertad.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f"
+    },
+    {
         title: "Todo No Fue Suficiente",
         artist: "HA-ASH",
         genre: "Romantica",
