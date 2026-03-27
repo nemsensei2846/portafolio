@@ -58,6 +58,13 @@ const songs = [
         cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/6/b/1/7/310471728900626.jpg"
     },
     {
+        title: "Te Quiero",
+        artist: "Nigga",
+        genre: "Romantica",
+        src: "tracks/Flex Te quiero.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2739f92d222a80a9bea9805a8eb"
+    },
+    {
         title: "Faded",
         artist: "Alan Walker",
         genre: "Electronica",
