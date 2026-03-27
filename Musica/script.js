@@ -55,49 +55,49 @@ const songs = [
         artist: "Bad Bunny",
         genre: "Regueton",
         src: "tracks/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i1.sndcdn.com/artworks-000200558179-m6zgz9-t500x500.jpg"
     },
     {
         title: "BELLAKEO",
         artist: "Peso Pluma ft. Anitta",
         genre: "Regueton",
         src: "tracks/BELLAKEO (Video Oficial) - Peso Pluma, Anitta.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b27354561692a6950e67b209c6b8"
     },
     {
         title: "MAYORES",
         artist: "Becky G ft. Bad Bunny",
         genre: "Regueton",
         src: "tracks/Becky G, Bad Bunny - Mayores (Official Video).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://www.cmtv.com.ar/tapas-cd/beckygmayoressingle.webp"
     },
     {
         title: "SIN_PIJAMA",
         artist: "Becky G ft. Natti Natasha",
         genre: "Regueton",
         src: "tracks/Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://www.cmtv.com.ar/tapas-cd/beckygsinpijamasingle.webp"
     },
     {
         title: "CUANDO_TE_BESE",
         artist: "Becky G ft. Paulo Londra",
         genre: "Regueton",
         src: "tracks/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSDTU6hliGXhdUh9jF9JPGG5PNRLFKS8Ci8XA&s"
     },
     {
         title: "JUST_THE_WAY_YOU_ARE",
         artist: "Bruno Mars",
         genre: "Romantica",
         src: "tracks/Bruno Mars - Just The Way You Are (Lyrics).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://m.media-amazon.com/images/M/MV5BYTNkZTU4ZmItZDlmMy00MzFhLWJiMzAtMjliZWEzM2YzN2Y1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
     },
     {
         title: "SIEMPRE_TE_VOY_A_QUERER",
         artist: "Calibre 50",
         genre: "Romantica",
         src: "tracks/Calibre 50 - Siempre te voy a querer (Letra) (Lyrics).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b27320f047dc3f75953a831b7db7"
     },
     {
         title: "DISFRUTO",
@@ -118,21 +118,21 @@ const songs = [
         artist: "Los Gigantes Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Dejando Huellas, Los Gigantes Del Vallenato, Video Letra - Sentir Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ2ozsl5xhAimT8M-GB48PL74YfxS4iQGmzfg&s"
     },
     {
         title: "DESPUES_DE_TI",
         artist: "Los Inquietos Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Después De Ti, Los Inquietos Del Vallenato, Video Letra.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/XwEOp5kPpgk/maxresdefault.jpg"
     },
     {
         title: "DOS_HOMBRES_Y_UN_DESTINO",
         artist: "David Bustamante y Axel",
         genre: "Romantica",
         src: "tracks/Dos hombres y un destino- David Bustamante y Axel- (letra).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b2737a5240a5c2a54855191dd03f"
     },
     {
         title: "EL_ERROR",
@@ -146,14 +146,14 @@ const songs = [
         artist: "Ana Gabriel",
         genre: "Romantica",
         src: "tracks/El cigarrillo - Ana Gabriel (LetraLyrics).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273a86459b31bbb26d163c518d0"
     },
     {
         title: "ES_UN_SECRETO",
         artist: "Plan B",
         genre: "Regueton",
         src: "tracks/Es Un Secreto - Plan B [Letra  Lyrics].mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b27395fbc6d77e637604be40c9eb"
     },
     {
         title: "HEROIC_EPIC_BEAT",
@@ -167,7 +167,7 @@ const songs = [
         artist: "Natalia Lafourcade",
         genre: "Romantica",
         src: "tracks/Hasta la Raíz - Natalia Lafourcade   LETRA.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://m.media-amazon.com/images/M/MV5BODA4YjU3M2UtNzBkNi00MGI0LTk2YTctZWIwYmQ5OGI0MjAzXkEyXkFqcGc@._V1_.jpg"
     },
     {
         title: "FANTASMAS",
@@ -181,7 +181,7 @@ const songs = [
         artist: "Jesse & Joy",
         genre: "Romantica",
         src: "tracks/Jesse & Joy  Corre! [Letra].mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS15H2rE0nhRnnorMTlje2LkLuAcTH9mIWFrQ&s"
     },
     {
         title: "VITAMINA",
@@ -195,14 +195,14 @@ const songs = [
         artist: "Justin Bieber ft. Jaden",
         genre: "Romantica",
         src: "tracks/Justin Bieber - Never Say Never ft. Jaden.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b27349130b16d4190db1d6822e59"
     },
     {
         title: "TUSA",
         artist: "Karol G ft. Nicki Minaj",
         genre: "Regueton",
         src: "tracks/KAROL G, Nicki Minaj - Tusa (Official Video).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://pics.filmaffinity.com/karol_g_nicki_minaj_tusa-511541072-large.jpg"
     },
     {
         title: "ROSAS",
