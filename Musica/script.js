@@ -518,6 +518,27 @@ const songs = [
         genre: "Romantica",
         src: "tracks/sapientdream - past lives (Subtitulada Español).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/10/a9/88/10a98827-ed7e-3077-6cd8-9cc96b764d74/cover.jpg/600x600cc.webp"
+    },
+    {
+        title: "Animals ",
+        artist: "Martin Garrix",
+        genre: "Electronica",
+        src: "tracks/Martin Garrix - Animals (Official Video).mp3",
+        cover: "https://i.ytimg.com/vi/LvJdIYhC3Ck/maxresdefault.jpg"
+    },
+    {
+        title: "Tremor  ",
+        artist: "Dimitri Vegas, Martin Garrix, Like Mike",
+        genre: "Electronica",
+        src: "tracks/Dimitri Vegas, Martin Garrix, Like Mike - Tremor (Official Music Video).mp3",
+        cover: "https://i1.sndcdn.com/artworks-000338799858-lprzob-t500x500.jpg"
+    },
+    {
+        title: "David Guetta & Showtek",
+        artist: "Bad ft.Vassy",
+        genre: "Electronica",
+        src: "tracks/David Guetta & Showtek - Bad ft.Vassy (Lyrics Video).mp3",
+        cover: "https://i.ytimg.com/vi/4tFktcmLl5M/maxresdefault.jpg"
     }
 ];
 
