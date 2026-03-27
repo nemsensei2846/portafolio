@@ -107,6 +107,13 @@ const songs = [
         cover: "https://i.scdn.co/image/ab67616d0000b2736bb920cebbe9cd79eccaf0e6"
     },
     {
+        title: "Micaela",
+        artist: "Mishelle Master Boys",
+        genre: "Regueton",
+        src: "tracks/Mishelle Master Boys",
+        cover: "https://i.ytimg.com/vi/bxl0cuevM_E/maxresdefault.jpg"
+    },
+    {
         title: "ME_MUERO_POR_ESTAR_CONTIGO",
         artist: "Silvana Di Lorenzo",
         genre: "Romantica",
