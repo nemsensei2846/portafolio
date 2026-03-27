@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v30'; // Versión 30 - Mini player click fix
+const CACHE_NAME = 'sensei-v33'; // Versión 33 - Updated song count to 102
 const urlsToCacheEssential = [
   './',
   './index.html',
