@@ -259,6 +259,20 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "Todo No Fue Suficiente ",
+        artist: "HA-ASH",
+        genre: "Romantica",
+        src: "tracks/HA-ASH - Todo No Fue Suficiente (Letra).mp3",
+        cover: "https://i.ytimg.com/vi/5AaQ3RWlJuQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAzRA22WZ8cobpz-LTA2mjR_J_2Rg"
+    },
+    {
+        title: "Un Ángel Llora ",
+        artist: "Annette Moreno",
+        genre: "Otros",
+        src: "tracks/Annette Moreno - Un Ángel Llora (Video Oficial).mp3",
+        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
+    },
+    {
         title: "JUST_THE_WAY_YOU_ARE",
         artist: "Bruno Mars",
         genre: "Romantica",
