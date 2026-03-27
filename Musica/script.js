@@ -39,7 +39,7 @@ const songs = [
     {
         title: "A_LA_ANTIGÜITA",
         artist: "Calibre 50",
-        genre: "Otros",
+        genre: "Vallenato",
         src: "tracks/A La Antigüita - Calibre 50 (LETRA).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
