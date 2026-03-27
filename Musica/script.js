@@ -163,10 +163,10 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "HEROIC_EPIC_BEAT",
-        artist: "Aidan x Maxxton",
-        genre: "Otros",
-        src: "tracks/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
+        title: "Amiga",
+        artist: "Miguel Bose",
+        genre: "70 and 80",
+        src: "tracks/Miguel Bose - Amiga.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
