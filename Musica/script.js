@@ -51,6 +51,13 @@ const songs = [
         cover: "https://i.ytimg.com/vi/ki2-xiMbQvU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUE9xMqD16OpyT1-DETW8qvws8gA"
     },
     {
+        title: "Te Amo",
+        artist: "Makano",
+        genre: "Romantica",
+        src: "tracks/Makano - Te Amo (Video Oficial).mp3",
+        cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/6/b/1/7/310471728900626.jpg"
+    },
+    {
         title: "Faded",
         artist: "Alan Walker",
         genre: "Electronica",
