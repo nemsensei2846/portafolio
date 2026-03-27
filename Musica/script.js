@@ -37,6 +37,13 @@ const songs = [
         cover: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/19746849/original/resize:600x600/crop:x0y28w1000h750/aspect:1.0/hash:1464359685/1408851199_695328360557496_4431409542517171851_o.jpg?1464359685"
     },
     {
+        title: "BEBE",
+        artist: "6ix9ine Ft. Anuel AA",
+        genre: "Regueton",
+        src: "tracks/6ix9ine - BEBE ft. Anuel AA.mp3",
+        cover: "https://images.squarespace-cdn.com/content/v1/58eef9c2f7e0abff4db78dc9/1535770144822-40AU0TG93OBZNWYYE3OQ/Screen+Shot+2018-08-31+at+7.47.38+PM.png?format=750w"
+    },
+    {
         title: "BARBIE_GIRL",
         artist: "Aqua",
         genre: "70 and 80",
