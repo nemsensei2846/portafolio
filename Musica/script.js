@@ -182,6 +182,13 @@ const songs = [
         cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdgpRWwk84LvKmPK5COlz2meF0EdlV0nTEvw&s"
     },
     {
+        title: "КАМИН",
+        artist: "EMIN feat. JONY",
+        genre: "Electronica",
+        src: "tracks/EMIN feat. JONY - КАМИН.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273870c1c64b1d77eb4456e4283"
+    },
+    {
         title: "Solo",
         artist: "Amenazzy ft. Lary Over",
         genre: "Regueton",
