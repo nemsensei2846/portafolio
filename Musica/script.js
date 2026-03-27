@@ -27,49 +27,49 @@ const songs = [
         artist: "ABBA",
         genre: "70 and 80",
         src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/guDFS72vG0r9U7nS7R/giphy.gif"
+        cover: "https://m.media-amazon.com/images/M/MV5BNzg4ZDE2NDAtMTA4Ni00NzUyLTk3NjUtZWU2ZTVkZWI0OTgwXkEyXkFqcGc@._V1_QL75_UY190_CR74,0,190,190_.jpg"
     },
     {
         title: "BARBIE_GIRL",
         artist: "Aqua",
         genre: "70 and 80",
         src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://upload.wikimedia.org/wikipedia/en/4/4c/Aquabarbie.jpg"
     },
     {
         title: "LAMBADA",
         artist: "Kaoma",
         genre: "70 and 80",
         src: "tracks/Kaoma - Lambada (Official Video) 1989 HD.mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwiLmXgxhBgx7WpFge67Aitqft0pQ61iLtTg&s"
     },
     {
         title: "MACARENA",
         artist: "Los Del Rio",
         genre: "70 and 80",
         src: "tracks/Los Del Rio - Macarena (Bayside Boys Remix).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/ki2-xiMbQvU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUE9xMqD16OpyT1-DETW8qvws8gA"
     },
     {
         title: "ME_MUERO_POR_ESTAR_CONTIGO",
         artist: "Silvana Di Lorenzo",
         genre: "Romantica",
         src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bHaVLciucHJOE6RXazLt-5Mi0Z68LRPxkQ&s"
     },
     {
         title: "BILLIE_JEAN",
         artist: "Michael Jackson",
         genre: "70 and 80",
         src: "tracks/Michael Jackson - Billie Jean (Official Video).mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/guDFS72vG0r9U7nS7R/giphy.gif"
+        cover: "https://www.eloriente.net/home/wp-content/uploads/2014/06/michael-jackson-billie-jean.jpg"
     },
     {
         title: "AMIGA",
         artist: "Miguel Bosé",
         genre: "70 and 80",
         src: "tracks/Miguel Bose - Amiga.mp3",
-        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
+        cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/7/e/3/6/438731433595119.jpg"
     },
     {
         title: "ANIMALS",
