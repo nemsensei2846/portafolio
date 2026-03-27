@@ -58,6 +58,20 @@ const songs = [
         cover: "https://static.wikia.nocookie.net/electropedia/images/3/36/Faded_Alan_Walker_%28logo%29.jpg/revision/latest?cb=20170513171308&path-prefix=es"
     },
     {
+        title: "Perdoname",
+        artist: "La Factoría ft. Eddy Lover",
+        genre: "Romantica",
+        src: "tracks/Perdóname - La Factoría ft. Eddy Lover (Video Ofical HD).mp3",
+        cover: "https://i.ytimg.com/vi/fPiVzM4bMOA/maxresdefault.jpg"
+    },
+    {
+        title: "Ella y Yo",
+        artist: "Aventura ft. Don Omar",
+        genre: "Romantica",
+        src: "tracks/Aventura - Ella y Yo (ft. Don Omar).mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2736bb920cebbe9cd79eccaf0e6"
+    },
+    {
         title: "ME_MUERO_POR_ESTAR_CONTIGO",
         artist: "Silvana Di Lorenzo",
         genre: "Romantica",
