@@ -315,6 +315,20 @@ const songs = [
         cover: "https://i.ytimg.com/vi/fp6TuMZOyj4/maxresdefault.jpg"
     },
     {
+        title: "Hasta el fin del mundo",
+        artist: "Jennifer Peña",
+        genre: "Romantica",
+        src: "tracks/Hasta el fin del mundo - Jennifer Peña.mp3",
+        cover: "https://i1.sndcdn.com/artworks-NFecCvyAwuBh0mxd-qzDskg-t1080x1080.jpg"
+    },
+    {
+        title: "Simplemente Amigos",
+        artist: "Ana Gabriel",
+        genre: "Romantica",
+        src: "tracks/Ana Gabriel Simplemente Amigos.mp3",
+        cover: "https://i1.sndcdn.com/artworks-FNE3Y5vDbevyc7Ev-LrNGBQ-t1080x1080.jpg"
+    },
+    {
         title: "JUST_THE_WAY_YOU_ARE",
         artist: "Bruno Mars",
         genre: "Romantica",
