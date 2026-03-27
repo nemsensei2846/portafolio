@@ -51,6 +51,13 @@ const songs = [
         cover: "https://i.ytimg.com/vi/ki2-xiMbQvU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUE9xMqD16OpyT1-DETW8qvws8gA"
     },
     {
+        title: "Faded",
+        artist: "Alan Walker",
+        genre: "Electronica",
+        src: "tracks/Alan Walker - Faded.mp3",
+        cover: "https://static.wikia.nocookie.net/electropedia/images/3/36/Faded_Alan_Walker_%28logo%29.jpg/revision/latest?cb=20170513171308&path-prefix=es"
+    },
+    {
         title: "ME_MUERO_POR_ESTAR_CONTIGO",
         artist: "Silvana Di Lorenzo",
         genre: "Romantica",
