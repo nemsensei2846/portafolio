@@ -128,6 +128,20 @@ const songs = [
         cover: "https://m.media-amazon.com/images/M/MV5BOWIzM2FmNGMtOTQ5NC00M2RiLTk3MzgtMGI2ZmIwZDljMGUzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
     },
     {
+        title: "Macarena",
+        artist: "Los del Rio",
+        genre: "70 and 80",
+        src: "tracks/Los Del Rio - Macarena (Bayside Boys Remix).mp3",
+        cover: "https://i.ytimg.com/vi/2zvd1JQ0EKY/maxresdefault.jpg"
+    },
+    {
+        title: "BARBIE GIRL ",
+        artist: "Aqua",
+        genre: "70 and 80",
+        src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
+        cover: "https://m.media-amazon.com/images/M/MV5BNDYwNzY4MzktYmEyZi00NzM4LTllNzMtZmY0ZDI2ODQ0OGZjXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
+    },
+    {
         title: "DISFRUTO",
         artist: "Carla Morrison",
         genre: "Romantica",
