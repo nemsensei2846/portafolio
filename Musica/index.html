@@ -6,6 +6,7 @@
     <title>SENSEI_AUDIO_PLAYER | MUSIC_PLAYER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <script src="https://unpkg.com/@lottiefiles/lottie-player@latest/dist/lottie-player.js"></script>
     <link rel="stylesheet" href="style.css">
 </head>
 <body class="sensei-audio">
@@ -97,8 +98,13 @@
                         <div class="profile-avatar">
                             <img src="../logo_sensei.jpg" alt="Avatar">
                         </div>
-                        <h2>Usuario Sensei</h2>
-                        <p>PWA Music Player Pro</p>
+                        <div class="profile-info-edit">
+                            <input type="text" id="user-name-input" class="profile-input" value="Usuario Sensei" maxlength="20">
+                            <p id="user-name-display" class="user-name-static hidden"></p>
+                            <p class="user-badge">Usuario Pro✰</p>
+                        </div>
+                        <div id="save-success-msg" class="save-success-msg hidden">Nombre de usuario Exitoso✅</div>
+                        <button id="save-profile-btn" class="save-btn"><i class="fas fa-save"></i> Guardar</button>
                     </div>
                     <div class="profile-stats">
                         <div class="stat-item">
@@ -191,7 +197,7 @@
                 </div>
 
                 <div class="fp-controls">
-                    <button class="fp-secondary-btn"><i class="fas fa-random"></i></button>
+                    <button id="fp-shuffle" class="fp-secondary-btn"><i class="fas fa-random"></i></button>
                     <button id="fp-prev" class="fp-nav-btn"><i class="fas fa-step-backward"></i></button>
                     <button id="fp-play-pause" class="fp-main-btn"><i class="fas fa-play"></i></button>
                     <button id="fp-next" class="fp-nav-btn"><i class="fas fa-step-forward"></i></button>
