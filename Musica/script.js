@@ -17,6 +17,16 @@ document.addEventListener('DOMContentLoaded', () => {
     updateFavCount();
     loadSong(songs[songIndex]);
 
+    // Ocultar banner VIP después de 10 segundos
+    const vipBanner = document.querySelector('.promo-banner');
+    if (vipBanner) {
+        setTimeout(() => {
+            vipBanner.classList.add('hidden');
+            // Refrescar AOS para que las secciones suban suavemente
+            setTimeout(() => AOS.refresh(), 500);
+        }, 10000);
+    }
+
     // Escuchar scroll en el contenedor principal para AOS
     document.querySelector('.app-main').addEventListener('scroll', () => {
         AOS.refresh();
@@ -44,12 +54,14 @@ const fpBg = document.getElementById('fp-bg');
 const fpPlayPauseBtn = document.getElementById('fp-play-pause');
 const fpPrevBtn = document.getElementById('fp-prev');
 const fpNextBtn = document.getElementById('fp-next');
+const fpRepeatBtn = document.getElementById('fp-repeat');
 const fpProgressFill = document.getElementById('fp-progress-fill');
 const fpProgressBar = document.getElementById('fp-progress-bar');
 const fpCurrentTime = document.getElementById('fp-current-time');
 const fpDuration = document.getElementById('fp-duration');
 
 let isPlaying = false;
+let isRepeatOne = false;
 let favorites = JSON.parse(localStorage.getItem('sensei_favs')) || [];
 
 // Datos de las canciones (90 Pistas Sincronizadas)
@@ -790,20 +802,47 @@ function renderFavorites() {
 document.querySelectorAll('.nav-item').forEach(item => {
     item.addEventListener('click', () => {
         const section = item.dataset.section;
-        
-        // UI Update
-        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
-        item.classList.add('active');
-        
-        document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
-        document.getElementById(`section-${section}`).classList.add('active');
-        
-        if (section === 'favorites') renderFavorites();
-        
-        window.scrollTo(0, 0);
-        AOS.refresh();
+        switchSection(section);
     });
 });
+
+function switchSection(section) {
+    // UI Update
+    document.querySelectorAll('.nav-item').forEach(n => {
+        n.classList.remove('active');
+        if (n.dataset.section === section) n.classList.add('active');
+    });
+    
+    document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+    const targetSection = document.getElementById(`section-${section}`);
+    if (targetSection) targetSection.classList.add('active');
+    
+    if (section === 'favorites') renderFavorites();
+    
+    // Guardar estado en el historial para el botón atrás
+    if (history.state?.section !== section) {
+        history.pushState({ section: section }, '', `#${section}`);
+    }
+    
+    window.scrollTo(0, 0);
+    AOS.refresh();
+}
+
+// Manejo del botón atrás del navegador/sistema
+window.addEventListener('popstate', (e) => {
+    if (fullPlayer.style.transform === 'translate(-50%, 0%)') {
+        closeFullPlayer();
+    } else if (e.state && e.state.section) {
+        switchSection(e.state.section);
+    } else {
+        switchSection('home');
+    }
+});
+
+// Inicializar estado del historial al cargar
+if (!history.state) {
+    history.replaceState({ section: 'home' }, '', '#home');
+}
 
 // --- Search Logic ---
 document.getElementById('search-input').addEventListener('input', (e) => {
@@ -829,6 +868,7 @@ document.getElementById('genre-filter').addEventListener('change', (e) => {
 // --- Player Core ---
 function openFullPlayer() {
     gsap.to(fullPlayer, { y: 0, xPercent: -50, duration: 0.6, ease: "power4.out" });
+    history.pushState({ section: history.state?.section, player: 'open' }, '', '#player');
 }
 
 function closeFullPlayer() {
@@ -953,6 +993,15 @@ fpNextBtn.addEventListener('click', nextSong);
 prevBtn.addEventListener('click', prevSong);
 fpPrevBtn.addEventListener('click', prevSong);
 
+fpRepeatBtn.addEventListener('click', () => {
+    isRepeatOne = !isRepeatOne;
+    if (isRepeatOne) {
+        fpRepeatBtn.classList.add('active-repeat');
+    } else {
+        fpRepeatBtn.classList.remove('active-repeat');
+    }
+});
+
 audio.addEventListener('timeupdate', () => {
     const { duration, currentTime } = audio;
     const progressPercent = (currentTime / duration) * 100;
@@ -981,7 +1030,14 @@ function formatTime(seconds) {
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-audio.addEventListener('ended', nextSong);
+audio.addEventListener('ended', () => {
+    if (isRepeatOne) {
+        audio.currentTime = 0;
+        playSong();
+    } else {
+        nextSong();
+    }
+});
 
 progressBar.addEventListener('click', (e) => {
     const width = progressBar.clientWidth;

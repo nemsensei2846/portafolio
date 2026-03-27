@@ -27,11 +27,11 @@
         <main class="app-main">
             <!-- SECTION: INICIO -->
             <section id="section-home" class="app-section active">
-                <div class="promo-banner" data-aos="fade-down">
-                    <div class="promo-content">
-                        <h2>Top de la Semana</h2>
-                        <p>Descubre lo más escuchado en Sensei System</p>
-                        <button class="play-btn-large"><i class="fas fa-play"></i> Reproducir Todo</button>
+                <div class="promo-banner" data-aos="fade-right">
+                    <div class="promo-content" data-aos="fade-up" data-aos-delay="200">
+                        <h2>Usuario VIP PREMIUM</h2>
+                        <p>Disfruta tus musica sin internet en cualquier lado del mundo.</p>
+                        <button onclick="window.location.href='https://wa.me/593997900653?text=Hola,%20me%20gustaria%20ser%20Usuario%20VIP%20PREMIUM'" class="play-btn-large">Quiero ser VIP Premium</button>
                     </div>
                 </div>
 
@@ -42,16 +42,6 @@
                     </div>
                     <div id="recommendations-grid" class="cards-grid">
                         <!-- Cards generadas dinámicamente -->
-                    </div>
-                </div>
-
-                <div class="section-block" data-aos="fade-up">
-                    <div class="block-header">
-                        <h3>Top de canciones</h3>
-                        <a href="#" class="see-all">Ver ranking</a>
-                    </div>
-                    <div id="top-songs-grid" class="cards-grid">
-                        <!-- Top canciones generadas dinámicamente -->
                     </div>
                 </div>
 
@@ -205,7 +195,10 @@
                     <button id="fp-prev" class="fp-nav-btn"><i class="fas fa-step-backward"></i></button>
                     <button id="fp-play-pause" class="fp-main-btn"><i class="fas fa-play"></i></button>
                     <button id="fp-next" class="fp-nav-btn"><i class="fas fa-step-forward"></i></button>
-                    <button class="fp-secondary-btn"><i class="fas fa-redo"></i></button>
+                    <button id="fp-repeat" class="fp-secondary-btn">
+                        <i class="fas fa-redo"></i>
+                        <span id="repeat-badge" class="repeat-badge">1</span>
+                    </button>
                 </div>
             </div>
         </div>
