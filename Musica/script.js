@@ -107,6 +107,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "Me muero por estar contigo",
+        artist: "Silvana Di Lorenzo",
+        genre: "70 and 80",
+        src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
+        cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
+    },
+    {
         title: "DISFRUTO",
         artist: "Carla Morrison",
         genre: "Romantica",
