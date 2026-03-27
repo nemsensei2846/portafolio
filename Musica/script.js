@@ -273,6 +273,13 @@ const songs = [
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
     },
     {
+        title: "Guardian De Mi Corazón ",
+        artist: "Annette Moreno",
+        genre: "Otros",
+        src: "tracks/Annette Moreno - Guardian De Mi Corazón (Video Oficial).mp3",
+        cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
+    },
+    {
         title: "JUST_THE_WAY_YOU_ARE",
         artist: "Bruno Mars",
         genre: "Romantica",
