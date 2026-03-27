@@ -17,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
     initRecommendations();
     initTopSongs();
     updateFavCount();
+    updateDownloadCount();
     loadSong(songs[songIndex]);
 
     // Ocultar banner VIP después de 10 segundos con animación de "jalado"
@@ -43,8 +44,23 @@ document.addEventListener('DOMContentLoaded', () => {
         AOS.refresh();
     });
 
+    // Cargar nombre de usuario y ocultar botón si ya existe
     const nameInput = document.getElementById('user-name-input');
-    if (nameInput) nameInput.value = userName;
+    const nameDisplay = document.getElementById('user-name-display');
+    const saveBtn = document.getElementById('save-profile-btn');
+    
+    if (nameInput) {
+        const savedName = localStorage.getItem('sensei_user_name');
+        if (savedName) {
+            userName = savedName;
+            nameDisplay.innerText = userName;
+            nameDisplay.classList.remove('hidden');
+            nameInput.classList.add('hidden');
+            if (saveBtn) saveBtn.classList.add('hidden');
+        } else {
+            nameInput.value = userName;
+        }
+    }
 });
 
 // Perfil Logic
@@ -106,6 +122,10 @@ const fpPrevBtn = document.getElementById('fp-prev');
 const fpNextBtn = document.getElementById('fp-next');
 const fpRepeatBtn = document.getElementById('fp-repeat');
 const fpShuffleBtn = document.getElementById('fp-shuffle');
+const fpOptionsBtn = document.getElementById('fp-options-btn');
+const fpOptionsMenu = document.getElementById('fp-options-menu');
+const optFavBtn = document.getElementById('opt-fav');
+const optDownloadBtn = document.getElementById('opt-download');
 const fpProgressFill = document.getElementById('fp-progress-fill');
 const fpProgressBar = document.getElementById('fp-progress-bar');
 const fpCurrentTime = document.getElementById('fp-current-time');
@@ -751,6 +771,7 @@ const songs = [
 ];
 
 let songIndex = 0;
+let downloads = JSON.parse(localStorage.getItem('sensei_downloads')) || [];
 let originalSongs = [...songs]; // Guardar el orden original para cuando se desactive shuffle
 let currentSongs = [...songs];
 
@@ -872,6 +893,7 @@ function switchSection(section) {
     if (targetSection) targetSection.classList.add('active');
     
     if (section === 'favorites') renderFavorites();
+    if (section === 'profile') renderDownloads();
     
     // Guardar estado en el historial para el botón atrás
     if (history.state?.section !== section) {
@@ -1083,6 +1105,109 @@ function toggleShuffle() {
         const currentSong = songs[songIndex];
         songs.splice(0, songs.length, ...originalSongs);
         songIndex = songs.findIndex(s => s.src === currentSong.src);
+    }
+}
+
+// --- Options Menu & Downloads Logic ---
+
+if (fpOptionsBtn) {
+    fpOptionsBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        fpOptionsMenu.classList.toggle('hidden');
+    });
+}
+
+// Cerrar menú al hacer click fuera
+document.addEventListener('click', () => {
+    if (fpOptionsMenu) fpOptionsMenu.classList.add('hidden');
+});
+
+if (optFavBtn) {
+    optFavBtn.addEventListener('click', () => {
+        const currentSong = songs[songIndex];
+        toggleFavoriteManual(currentSong.src);
+        fpOptionsMenu.classList.add('hidden');
+    });
+}
+
+if (optDownloadBtn) {
+    optDownloadBtn.addEventListener('click', () => {
+        const currentSong = songs[songIndex];
+        downloadSong(currentSong);
+        fpOptionsMenu.classList.add('hidden');
+    });
+}
+
+function toggleFavoriteManual(src) {
+    if (favorites.includes(src)) {
+        favorites = favorites.filter(f => f !== src);
+    } else {
+        favorites.push(src);
+    }
+    localStorage.setItem('sensei_favs', JSON.stringify(favorites));
+    updateFavCount();
+    // Actualizar grids si están visibles
+    if (document.getElementById('section-favorites').classList.contains('active')) renderFavorites();
+    initPlaylist(); // Refrescar iconos en la lista principal
+}
+
+function downloadSong(song) {
+    if (!downloads.some(d => d.src === song.src)) {
+        downloads.push(song);
+        localStorage.setItem('sensei_downloads', JSON.stringify(downloads));
+        updateDownloadCount();
+        alert(`"${song.title}" se ha añadido a tus descargas en el Perfil.`);
+    } else {
+        alert("Esta canción ya está en tus descargas.");
+    }
+}
+
+function updateDownloadCount() {
+    const countEl = document.getElementById('download-count');
+    if (countEl) countEl.innerText = downloads.length;
+}
+
+function renderDownloads() {
+    const downloadsGrid = document.getElementById('downloads-grid');
+    if (!downloadsGrid) return;
+    downloadsGrid.innerHTML = '';
+    if (downloads.length === 0) {
+        downloadsGrid.innerHTML = '<p style="grid-column: span 2; text-align: center; opacity: 0.5;">No tienes canciones descargadas.</p>';
+    } else {
+        // Renderizar grid normal pero con un distintivo de descarga si se desea
+        downloads.forEach((song, index) => {
+            const isFav = favorites.includes(song.src);
+            const card = document.createElement('div');
+            card.className = 'card';
+            card.setAttribute('data-aos', 'fade-up');
+            card.innerHTML = `
+                <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${song.src}')">
+                    <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+                </button>
+                <div class="card-art">
+                    <img src="${song.cover}" alt="${song.title}" onerror="this.src='../logo_sensei.jpg'; this.onerror=null;">
+                    <div class="card-play-overlay">
+                        <i class="fas fa-play"></i>
+                    </div>
+                </div>
+                <div class="card-info">
+                    <h4>${song.title}</h4>
+                    <p>${song.artist}</p>
+                </div>
+                <span class="download-status-badge"><i class="fas fa-check-circle"></i> OFF</span>
+            `;
+            
+            card.addEventListener('click', () => {
+                const originalIndex = songs.findIndex(s => s.src === song.src);
+                if (originalIndex !== -1) {
+                    songIndex = originalIndex;
+                    playSongWithAnimation(card);
+                }
+            });
+            
+            downloadsGrid.appendChild(card);
+        });
+        AOS.refresh();
     }
 }
 

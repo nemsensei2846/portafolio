@@ -112,9 +112,23 @@
                             <label>Favoritos</label>
                         </div>
                         <div class="stat-item">
+                            <span id="download-count">0</span>
+                            <label>Descargas</label>
+                        </div>
+                        <div class="stat-item">
                             <span>90</span>
                             <label>Canciones</label>
                         </div>
+                    </div>
+                </div>
+
+                <!-- SECCIÓN DE DESCARGAS EN PERFIL -->
+                <div class="section-block downloads-section" data-aos="fade-up">
+                    <div class="block-header">
+                        <h3>Música Descargada</h3>
+                    </div>
+                    <div id="downloads-grid" class="cards-grid">
+                        <!-- Canciones descargadas -->
                     </div>
                 </div>
             </section>
@@ -171,7 +185,13 @@
                 <div class="fp-header-info">
                     <span class="fp-playing-from">REPRODUCIENDO</span>
                 </div>
-                <button class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+                <div class="fp-options-container">
+                    <button id="fp-options-btn" class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+                    <div id="fp-options-menu" class="fp-options-menu hidden">
+                        <button id="opt-fav"><i class="fas fa-heart"></i> Poner en Favorito</button>
+                        <button id="opt-download"><i class="fas fa-download"></i> Descargar</button>
+                    </div>
+                </div>
             </div>
 
             <div class="fp-body">

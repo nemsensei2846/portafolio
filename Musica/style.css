@@ -979,6 +979,78 @@ body.sensei-audio {
 }
 
 /* Responsive */
+/* Full Player Options Menu */
+.fp-options-container {
+    position: relative;
+}
+
+.fp-options-menu {
+    position: absolute;
+    top: 40px;
+    right: 0;
+    background: var(--sgc-surface);
+    border: 1px solid var(--sgc-border);
+    border-radius: 12px;
+    padding: 10px;
+    z-index: 1000;
+    width: 200px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    backdrop-filter: blur(10px);
+    animation: fadeIn 0.3s ease;
+}
+
+.fp-options-menu button {
+    width: 100%;
+    padding: 12px;
+    background: transparent;
+    border: none;
+    color: #fff;
+    text-align: left;
+    font-size: 0.9rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: 0.2s;
+    border-radius: 8px;
+}
+
+.fp-options-menu button:hover {
+    background: rgba(0, 204, 255, 0.1);
+    color: var(--sgc-cian);
+}
+
+.fp-options-menu button i {
+    font-size: 1rem;
+    width: 20px;
+}
+
+/* Downloads Section in Profile */
+.downloads-section {
+    margin-top: 30px;
+    padding: 0 10px;
+}
+
+.downloads-section h3 {
+    color: var(--sgc-cian);
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.download-status-badge {
+    position: absolute;
+    bottom: 10px;
+    right: 10px;
+    background: rgba(0, 204, 255, 0.2);
+    color: var(--sgc-cian);
+    font-size: 0.6rem;
+    padding: 3px 8px;
+    border-radius: 10px;
+    border: 1px solid var(--sgc-border);
+}
+
 @media (max-width: 500px) {
     .app-wrapper {
         width: 100%;
