@@ -65,6 +65,20 @@ const songs = [
         cover: "https://i.scdn.co/image/ab67616d0000b2739f92d222a80a9bea9805a8eb"
     },
     {
+        title: "En este mundo",
+        artist: "Nigga",
+        genre: "Romantica",
+        src: "tracks/En este mundo - Nigga (Letra).mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b27329c3d17e74dcc33d8beb2f68"
+    },
+    {
+        title: "Te Amo tanto",
+        artist: "Nigga",
+        genre: "Romantica",
+        src: "tracks/Te Amo Tanto.mp3",
+        cover: "https://i.ytimg.com/vi/6QYcYUATQdw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA7iQtcpRhdApGHHRnsDYOjb8BSEQ"
+    },
+    {
         title: "Faded",
         artist: "Alan Walker",
         genre: "Electronica",
