@@ -233,11 +233,18 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "HEROIC_EPIC_BEAT",
-        artist: "Aidan x Maxxton",
+        title: "Phoenix",
+        artist: "Cailin Russo y Chrissy Costanza",
         genre: "Otros",
-        src: "tracks/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        src: "tracks/Phoenix (ft. Cailin Russo and Chrissy Costanza)  Worlds 2019 - League of Legends.mp3",
+        cover: "https://cdn.dribbble.com/userupload/11462293/file/original-5bb6bc1193c08cd04ab0df28c0786515.jpg"
+    },
+    {
+        title: "Burn It All Down",
+        artist: "PVRIS",
+        genre: "Otros",
+        src: "tracks/Burn It All Down (ft. PVRIS)  Worlds 2021 - League of Legends.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrs7H13nkBXTAENpqSw5rIRgzOERlJAKdL0g&s"
     },
     {
         title: "HASTA_LA_RAIZ",
