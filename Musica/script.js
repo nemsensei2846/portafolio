@@ -114,6 +114,20 @@ const songs = [
         cover: "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/l41lOdmS8TzH5927K/giphy.gif"
     },
     {
+        title: "Lambada",
+        artist: "Kaoma",
+        genre: "70 and 80",
+        src: "tracks/Kaoma - Lambada (Official Video) 1989 HD.mp3",
+        cover: "https://m.media-amazon.com/images/M/MV5BZWNiNjBiM2UtNDZmMi00YjA2LWIzODMtNWJlNDg1OTg0OWQ3XkEyXkFqcGc@._V1_.jpg"
+    },
+    {
+        title: "Gimme! Gimme! Gimme!",
+        artist: "ABBA",
+        genre: "70 and 80",
+        src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
+        cover: "https://m.media-amazon.com/images/M/MV5BOWIzM2FmNGMtOTQ5NC00M2RiLTk3MzgtMGI2ZmIwZDljMGUzXkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
+    },
+    {
         title: "DISFRUTO",
         artist: "Carla Morrison",
         genre: "Romantica",
