@@ -30,6 +30,13 @@ const songs = [
         cover: "https://m.media-amazon.com/images/M/MV5BNzg4ZDE2NDAtMTA4Ni00NzUyLTk3NjUtZWU2ZTVkZWI0OTgwXkEyXkFqcGc@._V1_QL75_UY190_CR74,0,190,190_.jpg"
     },
     {
+        title: "Me acuerdo",
+        artist: "Vico C",
+        genre: "Romantica",
+        src: "tracks/Vico C Me acuerdo.mp3",
+        cover: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/19746849/original/resize:600x600/crop:x0y28w1000h750/aspect:1.0/hash:1464359685/1408851199_695328360557496_4431409542517171851_o.jpg?1464359685"
+    },
+    {
         title: "BARBIE_GIRL",
         artist: "Aqua",
         genre: "70 and 80",
