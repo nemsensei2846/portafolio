@@ -259,25 +259,39 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "Todo No Fue Suficiente ",
+        title: "Todo No Fue Suficiente",
         artist: "HA-ASH",
         genre: "Romantica",
         src: "tracks/HA-ASH - Todo No Fue Suficiente (Letra).mp3",
         cover: "https://i.ytimg.com/vi/5AaQ3RWlJuQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLAzRA22WZ8cobpz-LTA2mjR_J_2Rg"
     },
     {
-        title: "Un Ángel Llora ",
+        title: "Un Ángel Llora",
         artist: "Annette Moreno",
         genre: "Otros",
         src: "tracks/Annette Moreno - Un Ángel Llora (Video Oficial).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
     },
     {
-        title: "Guardian De Mi Corazón ",
+        title: "Guardian De Mi Corazón",
         artist: "Annette Moreno",
         genre: "Otros",
         src: "tracks/Annette Moreno - Guardian De Mi Corazón (Video Oficial).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music124/v4/68/fc/b6/68fcb610-4456-e372-499a-2255cdc48a17/828357003426.jpg/3000x3000bb.jpg"
+    },
+    {
+        title: "Devuélveme El Corazón",
+        artist: "Sebastián Yatra",
+        genre: "Otros",
+        src: "tracks/Sebastián Yatra - Devuélveme El Corazón.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2732ee91833ee0b20ad2554256f"
+    },
+    {
+        title: "Cómo Mirarte",
+        artist: "Sebastián Yatra",
+        genre: "Otros",
+        src: "tracks/Sebastián Yatra - Cómo Mirarte.mp3",
+        cover: "https://i.ytimg.com/vi/fp6TuMZOyj4/maxresdefault.jpg"
     },
     {
         title: "JUST_THE_WAY_YOU_ARE",
