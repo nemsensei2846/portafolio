@@ -5,137 +5,218 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>SENSEI_AUDIO_PLAYER | MUSIC_PLAYER</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#00ff41">
-    <link rel="apple-touch-icon" href="../logo_sensei.jpg">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <script>
-        // --- Registro de Service Worker para Actualizaciones Agresivas ---
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('../service-worker.js').then(reg => {
-                    reg.update(); // Revisar actualización al cargar
-
-                    reg.onupdatefound = () => {
-                        const installingWorker = reg.installing;
-                        installingWorker.onstatechange = () => {
-                            if (installingWorker.state === 'installed') {
-                                if (navigator.serviceWorker.controller) {
-                                    console.log('>>> ACTUALIZANDO MUSICA...');
-                                    window.location.reload();
-                                }
-                            }
-                        };
-                    };
-                }).catch(err => console.log('Error SW:', err));
-            });
-            
-            let refreshing = false;
-            navigator.serviceWorker.addEventListener('controllerchange', () => {
-                if (!refreshing) {
-                    window.location.reload();
-                    refreshing = true;
-                }
-            });
-        }
-
-        // --- Protección de Código Fuente ---
-        document.addEventListener('contextmenu', event => event.preventDefault());
-        document.onkeydown = function(e) {
-            if (e.keyCode == 123 || (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) || (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
-                return false;
-            }
-        };
-    </script>
 </head>
 <body class="sensei-audio">
     <div class="matrix-bg" id="matrix-bg"></div>
     <div class="scanlines"></div>
 
-    <div class="player-container">
-        <header class="player-header">
-            <div class="status-bar">
-                <span class="blink"><i class="fas fa-signal"></i> SECURE_LINK_ACTIVE</span>
-                <span><i class="fas fa-lock"></i> AES_256_ENCRYPTED</span>
-            </div>
-            <h1>NEMSENSEI2846</h1>
-        </header>
-
-        <main class="player-body">
-            <div class="album-art">
-                <img id="cover" src="../logo_sensei.jpg" alt="Sensei Art">
-                <div class="visualizer-container">
-                    <canvas id="visualizer"></canvas>
+    <div class="app-wrapper">
+        <!-- HEADER -->
+        <header class="app-header">
+            <div class="header-content">
+                <span class="logo-text">SENSEI <span class="music-glow">MUSIC</span></span>
+                <div class="header-actions">
+                    <button id="theme-toggle" class="icon-btn"><i class="fas fa-moon"></i></button>
                 </div>
             </div>
+        </header>
 
-            <div class="track-info">
-                <h2 id="title">HEROIC_EPIC_BEAT</h2>
-                <p id="artist">Aidan x Maxxton</p>
+        <!-- MAIN CONTENT SECTIONS -->
+        <main class="app-main">
+            <!-- SECTION: INICIO -->
+            <section id="section-home" class="app-section active">
+                <div class="promo-banner" data-aos="fade-down">
+                    <div class="promo-content">
+                        <h2>Top de la Semana</h2>
+                        <p>Descubre lo más escuchado en Sensei System</p>
+                        <button class="play-btn-large"><i class="fas fa-play"></i> Reproducir Todo</button>
+                    </div>
+                </div>
+
+                <div class="section-block" data-aos="fade-up">
+                    <div class="block-header">
+                        <h3>Recomendaciones</h3>
+                        <a href="#" class="see-all">Ver todo</a>
+                    </div>
+                    <div id="recommendations-grid" class="cards-grid">
+                        <!-- Cards generadas dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="section-block" data-aos="fade-up">
+                    <div class="block-header">
+                        <h3>Top de canciones</h3>
+                        <a href="#" class="see-all">Ver ranking</a>
+                    </div>
+                    <div id="top-songs-grid" class="cards-grid">
+                        <!-- Top canciones generadas dinámicamente -->
+                    </div>
+                </div>
+
+                <div class="section-block" data-aos="fade-up">
+                    <div class="block-header">
+                        <h3>Organizado por Género</h3>
+                        <select id="genre-filter" class="sensei-select-modern">
+                            <option value="All">TODOS_LOS_GENEROS</option>
+                            <option value="Regueton">REGUETON</option>
+                            <option value="Romantica">ROMANTICA</option>
+                            <option value="Vallenato">VALLENATO</option>
+                            <option value="Bachata">BACHATA</option>
+                            <option value="70 and 80">70 AND 80</option>
+                            <option value="Electronica">ELECTRONICA</option>
+                            <option value="Otros">OTROS</option>
+                        </select>
+                    </div>
+                    <div id="playlist" class="cards-grid">
+                        <!-- Cards generadas dinámicamente -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: BUSCAR -->
+            <section id="section-search" class="app-section">
+                <div class="search-container" data-aos="fade-down">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Buscar canciones, artistas...">
+                    </div>
+                </div>
+                <div id="search-results" class="cards-grid">
+                    <!-- Resultados de búsqueda -->
+                </div>
+            </section>
+
+            <!-- SECTION: FAVORITOS -->
+            <section id="section-favorites" class="app-section">
+                <div class="section-block">
+                    <div class="block-header">
+                        <h3>Mis Favoritos</h3>
+                    </div>
+                    <div id="favorites-grid" class="cards-grid">
+                        <!-- Favoritos guardados -->
+                    </div>
+                </div>
+            </section>
+
+            <!-- SECTION: PERFIL -->
+            <section id="section-profile" class="app-section">
+                <div class="profile-container" data-aos="zoom-in">
+                    <div class="profile-header">
+                        <div class="profile-avatar">
+                            <img src="../logo_sensei.jpg" alt="Avatar">
+                        </div>
+                        <h2>Usuario Sensei</h2>
+                        <p>PWA Music Player Pro</p>
+                    </div>
+                    <div class="profile-stats">
+                        <div class="stat-item">
+                            <span id="fav-count">0</span>
+                            <label>Favoritos</label>
+                        </div>
+                        <div class="stat-item">
+                            <span>90</span>
+                            <label>Canciones</label>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- MINI PLAYER (SIEMPRE VISIBLE CUANDO HAY MÚSICA) -->
+        <footer class="mini-player" id="mini-player">
+            <div class="player-left">
+                <div class="mini-art">
+                    <img id="mini-cover" src="" alt="">
+                </div>
+                <div class="mini-info">
+                    <span id="mini-title">Selecciona una canción</span>
+                    <span id="mini-artist">Sensei Music</span>
+                </div>
             </div>
-
-            <div class="progress-container">
-                <span id="current-time">0:00</span>
+            <div class="player-controls">
+                <button id="prev" class="mini-btn"><i class="fas fa-step-backward"></i></button>
+                <button id="play-pause" class="mini-btn play-main"><i class="fas fa-play"></i></button>
+                <button id="next" class="mini-btn"><i class="fas fa-step-forward"></i></button>
+            </div>
+            <div class="progress-container-mini">
                 <div class="progress-bar" id="progress-bar">
                     <div class="progress-fill" id="progress-fill"></div>
                 </div>
-                <span id="duration">0:00</span>
-            </div>
-
-            <div class="controls">
-                <button class="ctrl-btn" id="repeat"><i class="fas fa-redo"></i></button>
-                <button class="ctrl-btn" id="prev"><i class="fas fa-step-backward"></i></button>
-                <button class="ctrl-btn main-play" id="play-pause"><i class="fas fa-play"></i></button>
-                <button class="ctrl-btn" id="next"><i class="fas fa-step-forward"></i></button>
-                <button class="ctrl-btn" id="shuffle"><i class="fas fa-random"></i></button>
-            </div>
-
-            <div class="volume-container">
-                <i class="fas fa-volume-up"></i>
-                <input type="range" id="volume" min="0" max="1" step="0.1" value="1">
-            </div>
-        </main>
-
-        <footer class="player-footer">
-            <div class="footer-data">
-                <span>BITRATE: 320KBPS</span>
-                <span>FORMAT: .MP3</span>
-                <span>SERVER: SENSEI_AUDIO_NODE</span>
             </div>
         </footer>
-    </div>
 
-    <!-- Lista de reproducción visible -->
-    <div class="playlist-container">
-        <div class="playlist-header">
-            <h3><i class="fas fa-list"></i> LIST MUSIC</h3>
-            <div class="filter-container">
-                <select id="genre-filter" class="sensei-select">
-                    <option value="All">TODOS_LOS_GENEROS</option>
-                    <option value="Regueton">REGUETON</option>
-                    <option value="Romantica">ROMANTICA</option>
-                    <option value="Salsas">SALSAS</option>
-                    <option value="Vallenato">VALLENATO</option>
-                    <option value="Bachata">BACHATA</option>
-                    <option value="70 and 80">70 AND 80</option>
-                    <option value="Electronica">ELECTRONICA</option>
-                    <option value="Otros">OTROS</option>
-                </select>
-                <button id="sort-btn" class="sort-btn" title="Ordenar A-Z">
-                    <i class="fas fa-sort-alpha-down"></i>
-                </button>
+        <!-- BOTTOM NAVIGATION BAR -->
+        <nav class="bottom-nav">
+            <button class="nav-item active" data-section="home">
+                <i class="fas fa-home"></i>
+                <span>Inicio</span>
+            </button>
+            <button class="nav-item" data-section="search">
+                <i class="fas fa-search"></i>
+                <span>Buscar</span>
+            </button>
+            <button class="nav-item" data-section="favorites">
+                <i class="fas fa-heart"></i>
+                <span>Favoritos</span>
+            </button>
+            <button class="nav-item" data-section="profile">
+                <i class="fas fa-user"></i>
+                <span>Perfil</span>
+            </button>
+        </nav>
+
+        <!-- FULL SCREEN PLAYER OVERLAY -->
+        <div id="full-player" class="full-player">
+            <div class="fp-bg" id="fp-bg"></div>
+            <div class="fp-header">
+                <button id="close-full-player" class="fp-close-btn"><i class="fas fa-chevron-down"></i></button>
+                <div class="fp-header-info">
+                    <span class="fp-playing-from">REPRODUCIENDO</span>
+                </div>
+                <button class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+            </div>
+
+            <div class="fp-body">
+                <div class="fp-art-container">
+                    <div class="hacker-border"></div>
+                    <img id="fp-cover" src="" alt="Cover">
+                    <div class="glow-effect"></div>
+                </div>
+
+                <div class="fp-song-info">
+                    <h2 id="fp-title">Título de la canción</h2>
+                    <p id="fp-artist">Artista</p>
+                </div>
+
+                <div class="fp-progress-section">
+                    <div class="fp-progress-container" id="fp-progress-bar">
+                        <div class="fp-progress-fill" id="fp-progress-fill"></div>
+                    </div>
+                    <div class="fp-time-info">
+                        <span id="fp-current-time">0:00</span>
+                        <span id="fp-duration">0:00</span>
+                    </div>
+                </div>
+
+                <div class="fp-controls">
+                    <button class="fp-secondary-btn"><i class="fas fa-random"></i></button>
+                    <button id="fp-prev" class="fp-nav-btn"><i class="fas fa-step-backward"></i></button>
+                    <button id="fp-play-pause" class="fp-main-btn"><i class="fas fa-play"></i></button>
+                    <button id="fp-next" class="fp-nav-btn"><i class="fas fa-step-forward"></i></button>
+                    <button class="fp-secondary-btn"><i class="fas fa-redo"></i></button>
+                </div>
             </div>
         </div>
-        <ul id="playlist" class="playlist-items">
-            <!-- Las canciones se generarán dinámicamente en JS -->
-        </ul>
     </div>
 
     <!-- Elemento de audio oculto -->
     <audio id="audio-player"></audio>
 
+    <!-- Scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script src="script.js"></script>
 
     <!-- Firebase Analytics Tracking -->

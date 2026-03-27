@@ -1,6 +1,27 @@
 /**
- * SENSEI_AUDIO_PLAYER - CORE LOGIC
+ * SENSEI_AUDIO_PLAYER - MODERN APP LOGIC
  */
+
+// --- Initialization ---
+document.addEventListener('DOMContentLoaded', () => {
+    AOS.init({
+        duration: 800,
+        once: true,
+        offset: 10,
+        delay: 50,
+        disable: false // Forzar en todos los dispositivos
+    });
+    initPlaylist();
+    initRecommendations();
+    initTopSongs();
+    updateFavCount();
+    loadSong(songs[songIndex]);
+
+    // Escuchar scroll en el contenedor principal para AOS
+    document.querySelector('.app-main').addEventListener('scroll', () => {
+        AOS.refresh();
+    });
+});
 
 const audio = document.getElementById('audio-player');
 const playPauseBtn = document.getElementById('play-pause');
@@ -8,166 +29,37 @@ const prevBtn = document.getElementById('prev');
 const nextBtn = document.getElementById('next');
 const progressFill = document.getElementById('progress-fill');
 const progressBar = document.getElementById('progress-bar');
-const currentTimeEl = document.getElementById('current-time');
-const durationEl = document.getElementById('duration');
-const volumeSlider = document.getElementById('volume');
-const titleEl = document.getElementById('title');
-const artistEl = document.getElementById('artist');
-const repeatBtn = document.getElementById('repeat');
-const shuffleBtn = document.getElementById('shuffle');
+const miniTitle = document.getElementById('mini-title');
+const miniArtist = document.getElementById('mini-artist');
+const miniCover = document.getElementById('mini-cover');
+
+// Full Player Elements
+const fullPlayer = document.getElementById('full-player');
+const closeFullPlayerBtn = document.getElementById('close-full-player');
+const miniPlayerBar = document.getElementById('mini-player');
+const fpTitle = document.getElementById('fp-title');
+const fpArtist = document.getElementById('fp-artist');
+const fpCover = document.getElementById('fp-cover');
+const fpBg = document.getElementById('fp-bg');
+const fpPlayPauseBtn = document.getElementById('fp-play-pause');
+const fpPrevBtn = document.getElementById('fp-prev');
+const fpNextBtn = document.getElementById('fp-next');
+const fpProgressFill = document.getElementById('fp-progress-fill');
+const fpProgressBar = document.getElementById('fp-progress-bar');
+const fpCurrentTime = document.getElementById('fp-current-time');
+const fpDuration = document.getElementById('fp-duration');
 
 let isPlaying = false;
-let isRepeat = false;
-let isShuffle = false;
+let favorites = JSON.parse(localStorage.getItem('sensei_favs')) || [];
 
-// Datos de las canciones (Actualización Final - 65 Pistas Detectadas)
+// Datos de las canciones (90 Pistas Sincronizadas)
 const songs = [
-    {
-        title: "GIMME_GIMME_GIMME",
-        artist: "ABBA",
-        genre: "70 and 80",
-        src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
-        cover: "https://m.media-amazon.com/images/M/MV5BNzg4ZDE2NDAtMTA4Ni00NzUyLTk3NjUtZWU2ZTVkZWI0OTgwXkEyXkFqcGc@._V1_QL75_UY190_CR74,0,190,190_.jpg"
-    },
-    {
-        title: "Solo",
-        artist: "Amenazzy ft. Lary Over",
-        genre: "Regueton",
-        src: "tracks/Amenazzy ft. Lary Over - Solo (Video Oficial).mp3",
-        cover: "https://s.mxmcdn.net/images-storage/albums2/1/0/9/0/7/0/40070901_350_350.jpg"
-    },
-    {
-        title: "Me acuerdo",
-        artist: "Vico C",
-        genre: "Romantica",
-        src: "tracks/Vico C Me acuerdo.mp3",
-        cover: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/19746849/original/resize:600x600/crop:x0y28w1000h750/aspect:1.0/hash:1464359685/1408851199_695328360557496_4431409542517171851_o.jpg?1464359685"
-    },
     {
         title: "BEBE",
         artist: "6ix9ine Ft. Anuel AA",
         genre: "Regueton",
         src: "tracks/6ix9ine - BEBE ft. Anuel AA.mp3",
         cover: "https://images.squarespace-cdn.com/content/v1/58eef9c2f7e0abff4db78dc9/1535770144822-40AU0TG93OBZNWYYE3OQ/Screen+Shot+2018-08-31+at+7.47.38+PM.png?format=750w"
-    },
-    {
-        title: "BARBIE_GIRL",
-        artist: "Aqua",
-        genre: "70 and 80",
-        src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
-        cover: "https://upload.wikimedia.org/wikipedia/en/4/4c/Aquabarbie.jpg"
-    },
-    {
-        title: "LAMBADA",
-        artist: "Kaoma",
-        genre: "70 and 80",
-        src: "tracks/Kaoma - Lambada (Official Video) 1989 HD.mp3",
-        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwiLmXgxhBgx7WpFge67Aitqft0pQ61iLtTg&s"
-    },
-    {
-        title: "MACARENA",
-        artist: "Los Del Rio",
-        genre: "70 and 80",
-        src: "tracks/Los Del Rio - Macarena (Bayside Boys Remix).mp3",
-        cover: "https://i.ytimg.com/vi/ki2-xiMbQvU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUE9xMqD16OpyT1-DETW8qvws8gA"
-    },
-    {
-        title: "Te Amo",
-        artist: "Makano",
-        genre: "Romantica",
-        src: "tracks/Makano - Te Amo (Video Oficial).mp3",
-        cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/6/b/1/7/310471728900626.jpg"
-    },
-    {
-        title: "Te Quiero",
-        artist: "Nigga",
-        genre: "Romantica",
-        src: "tracks/Flex Te quiero.mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b2739f92d222a80a9bea9805a8eb"
-    },
-    {
-        title: "En este mundo",
-        artist: "Nigga",
-        genre: "Romantica",
-        src: "tracks/En este mundo - Nigga (Letra).mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b27329c3d17e74dcc33d8beb2f68"
-    },
-    {
-        title: "Te Amo tanto",
-        artist: "Nigga",
-        genre: "Romantica",
-        src: "tracks/Te Amo Tanto.mp3",
-        cover: "https://i.ytimg.com/vi/6QYcYUATQdw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA7iQtcpRhdApGHHRnsDYOjb8BSEQ"
-    },
-    {
-        title: "Faded",
-        artist: "Alan Walker",
-        genre: "Electronica",
-        src: "tracks/Alan Walker - Faded.mp3",
-        cover: "https://static.wikia.nocookie.net/electropedia/images/3/36/Faded_Alan_Walker_%28logo%29.jpg/revision/latest?cb=20170513171308&path-prefix=es"
-    },
-    {
-        title: "Perdoname",
-        artist: "La Factoría ft. Eddy Lover",
-        genre: "Romantica",
-        src: "tracks/Perdóname - La Factoría ft. Eddy Lover (Video Ofical HD).mp3",
-        cover: "https://i.ytimg.com/vi/fPiVzM4bMOA/maxresdefault.jpg"
-    },
-    {
-        title: "Ella y Yo",
-        artist: "Aventura ft. Don Omar",
-        genre: "Romantica",
-        src: "tracks/Aventura - Ella y Yo (ft. Don Omar).mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b2736bb920cebbe9cd79eccaf0e6"
-    },
-    {
-        title: "Micaela",
-        artist: "Mishelle Master Boys",
-        genre: "Regueton",
-        src: "tracks/Micaela.mp3",
-        cover: "https://i.ytimg.com/vi/bxl0cuevM_E/maxresdefault.jpg"
-    },
-    {
-        title: "ME_MUERO_POR_ESTAR_CONTIGO",
-        artist: "Silvana Di Lorenzo",
-        genre: "Romantica",
-        src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
-        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bHaVLciucHJOE6RXazLt-5Mi0Z68LRPxkQ&s"
-    },
-    {
-        title: "BILLIE_JEAN",
-        artist: "Michael Jackson",
-        genre: "70 and 80",
-        src: "tracks/Michael Jackson - Billie Jean (Official Video).mp3",
-        cover: "https://www.eloriente.net/home/wp-content/uploads/2014/06/michael-jackson-billie-jean.jpg"
-    },
-    {
-        title: "AMIGA",
-        artist: "Miguel Bosé",
-        genre: "70 and 80",
-        src: "tracks/Miguel Bose - Amiga.mp3",
-        cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/7/e/3/6/438731433595119.jpg"
-    },
-    {
-        title: "ANIMALS",
-        artist: "Martin Garrix",
-        genre: "Electronica",
-        src: "tracks/Martin Garrix - Animals (Official Video).mp3",
-        cover: "https://i.ytimg.com/vi/LvJdIYhC3Ck/maxresdefault.jpg"
-    },
-    {
-        title: "TREMOR",
-        artist: "Dimitri Vegas, Martin Garrix, Like Mike",
-        genre: "Electronica",
-        src: "tracks/Dimitri Vegas, Martin Garrix, Like Mike - Tremor (Official Music Video).mp3",
-        cover: "https://i1.sndcdn.com/artworks-000338799858-lprzob-t500x500.jpg"
-    },
-    {
-        title: "BAD",
-        artist: "David Guetta & Showtek ft. Vassy",
-        genre: "Electronica",
-        src: "tracks/David Guetta & Showtek - Bad ft.Vassy (Lyrics Video).mp3",
-        cover: "https://i.ytimg.com/vi/4tFktcmLl5M/maxresdefault.jpg"
     },
     {
         title: "PA_TI",
@@ -184,11 +76,39 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "GIMME_GIMME_GIMME",
+        artist: "ABBA",
+        genre: "70 and 80",
+        src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
+        cover: "https://m.media-amazon.com/images/M/MV5BNzg4ZDE2NDAtMTA4Ni00NzUyLTk3NjUtZWU2ZTVkZWI0OTgwXkEyXkFqcGc@._V1_QL75_UY190_CR74,0,190,190_.jpg"
+    },
+    {
+        title: "Faded",
+        artist: "Alan Walker",
+        genre: "Electronica",
+        src: "tracks/Alan Walker - Faded.mp3",
+        cover: "https://static.wikia.nocookie.net/electropedia/images/3/36/Faded_Alan_Walker_%28logo%29.jpg/revision/latest?cb=20170513171308&path-prefix=es"
+    },
+    {
+        title: "Solo",
+        artist: "Amenazzy ft. Lary Over",
+        genre: "Regueton",
+        src: "tracks/Amenazzy ft. Lary Over - Solo (Video Oficial).mp3",
+        cover: "https://s.mxmcdn.net/images-storage/albums2/1/0/9/0/7/0/40070901_350_350.jpg"
+    },
+    {
         title: "NACIMOS_PA_MORIR",
         artist: "Anuel ft. Jory",
         genre: "Regueton",
         src: "tracks/Anuel - Nacimos Pa Morir (Official Video) ft. Jory.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "Ella y Yo",
+        artist: "Aventura ft. Don Omar",
+        genre: "Bachata",
+        src: "tracks/Aventura - Ella y Yo (ft. Don Omar).mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2736bb920cebbe9cd79eccaf0e6"
     },
     {
         title: "AMORFODA",
@@ -203,6 +123,13 @@ const songs = [
         genre: "Regueton",
         src: "tracks/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "BARBIE_GIRL",
+        artist: "Aqua",
+        genre: "Otros",
+        src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
+        cover: "https://upload.wikimedia.org/wikipedia/en/4/4c/Aquabarbie.jpg"
     },
     {
         title: "BELLAKEO",
@@ -240,6 +167,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "Burn It All Down",
+        artist: "PVRIS",
+        genre: "Otros",
+        src: "tracks/Burn It All Down (ft. PVRIS)  Worlds 2021 - League of Legends.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrs7H13nkBXTAENpqSw5rIRgzOERlJAKdL0g&s"
+    },
+    {
         title: "SIEMPRE_TE_VOY_A_QUERER",
         artist: "Calibre 50",
         genre: "Romantica",
@@ -252,6 +186,13 @@ const songs = [
         genre: "Romantica",
         src: "tracks/Carla Morrison - Disfruto (letra).mp3",
         cover: "https://images.genius.com/246f08d740fb0c470092b744dbd2cbab.500x500x1.jpg"
+    },
+    {
+        title: "BAD",
+        artist: "David Guetta & Showtek ft. Vassy",
+        genre: "Electronica",
+        src: "tracks/David Guetta & Showtek - Bad ft.Vassy (Lyrics Video).mp3",
+        cover: "https://i.ytimg.com/vi/4tFktcmLl5M/maxresdefault.jpg"
     },
     {
         title: "FRONTEAMOS_PORQUE_PODEMOS",
@@ -275,6 +216,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "TREMOR",
+        artist: "Dimitri Vegas, Martin Garrix, Like Mike",
+        genre: "Electronica",
+        src: "tracks/Dimitri Vegas, Martin Garrix, Like Mike - Tremor (Official Music Video).mp3",
+        cover: "https://i1.sndcdn.com/artworks-000338799858-lprzob-t500x500.jpg"
+    },
+    {
         title: "DOS_HOMBRES_Y_UN_DESTINO",
         artist: "David Bustamante y Axel",
         genre: "Romantica",
@@ -296,6 +244,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "En este mundo",
+        artist: "Nigga",
+        genre: "Romantica",
+        src: "tracks/En este mundo - Nigga (Letra).mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b27329c3d17e74dcc33d8beb2f68"
+    },
+    {
         title: "ES_UN_SECRETO",
         artist: "Plan B",
         genre: "Regueton",
@@ -303,32 +258,18 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "Phoenix",
-        artist: "Cailin Russo y Chrissy Costanza",
-        genre: "Otros",
-        src: "tracks/Phoenix (ft. Cailin Russo and Chrissy Costanza)  Worlds 2019 - League of Legends.mp3",
-        cover: "https://cdn.dribbble.com/userupload/11462293/file/original-5bb6bc1193c08cd04ab0df28c0786515.jpg"
+        title: "Te Quiero",
+        artist: "Nigga",
+        genre: "Romantica",
+        src: "tracks/Flex Te quiero.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2739f92d222a80a9bea9805a8eb"
     },
     {
-        title: "Burn It All Down",
-        artist: "PVRIS",
+        title: "HEROIC",
+        artist: "Aidan x Maxxton",
         genre: "Otros",
-        src: "tracks/Burn It All Down (ft. PVRIS)  Worlds 2021 - League of Legends.mp3",
-        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrs7H13nkBXTAENpqSw5rIRgzOERlJAKdL0g&s"
-    },
-    {
-        title: "Éveillez-vous",
-        artist: "avec Valerie Broussard",
-        genre: "Otros",
-        src: "tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3",
-        cover: "https://i.ytimg.com/vi/zF5Ddo9JdpY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDKL44ewCHdZXSQt-v7OtbFQZSeyA"
-    },
-    {
-        title: "Warriors",
-        artist: "ft. 2WEI y Edda Hayes",
-        genre: "Otros",
-        src: "tracks/Warriors  Season 2020 Cinematic - League of Legends (ft. 2WEI and Edda Hayes).mp3",
-        cover: "https://i.scdn.co/image/ab67616d0000b273f8fa082806184fcb032d8e0a"
+        src: "tracks/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
         title: "HASTA_LA_RAIZ",
@@ -373,6 +314,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "LAMBADA",
+        artist: "Kaoma",
+        genre: "Otros",
+        src: "tracks/Kaoma - Lambada (Official Video) 1989 HD.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwiLmXgxhBgx7WpFge67Aitqft0pQ61iLtTg&s"
+    },
+    {
         title: "ROSAS",
         artist: "La Oreja de Van Gogh",
         genre: "Romantica",
@@ -408,11 +356,25 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "MACARENA",
+        artist: "Los Del Rio",
+        genre: "Otros",
+        src: "tracks/Los Del Rio - Macarena (Bayside Boys Remix).mp3",
+        cover: "https://i.ytimg.com/vi/ki2-xiMbQvU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUE9xMqD16OpyT1-DETW8qvws8gA"
+    },
+    {
         title: "DEJAME_ENTRAR",
         artist: "Makano",
         genre: "Regueton",
         src: "tracks/Makano - Dejame Entrar [Video Oficial].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "Te Amo",
+        artist: "Makano",
+        genre: "Romantica",
+        src: "tracks/Makano - Te Amo (Video Oficial).mp3",
+        cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/6/b/1/7/310471728900626.jpg"
     },
     {
         title: "SU_NOMBRE_EN_MI_CUADERNO",
@@ -429,6 +391,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "ANIMALS",
+        artist: "Martin Garrix",
+        genre: "Electronica",
+        src: "tracks/Martin Garrix - Animals (Official Video).mp3",
+        cover: "https://i.ytimg.com/vi/LvJdIYhC3Ck/maxresdefault.jpg"
+    },
+    {
         title: "ME_BEFORE_YOU",
         artist: "Louisa & Will",
         genre: "Romantica",
@@ -441,6 +410,27 @@ const songs = [
         genre: "Vallenato",
         src: "tracks/Me Parte El Corazón, Daniel Calderón & Los Gigantes Del Vallenato, Video Letra - Sentir Vallenato.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "Micaela",
+        artist: "Mishelle Master Boys",
+        genre: "Regueton",
+        src: "tracks/Micaela.mp3",
+        cover: "https://i.ytimg.com/vi/bxl0cuevM_E/maxresdefault.jpg"
+    },
+    {
+        title: "BILLIE_JEAN",
+        artist: "Michael Jackson",
+        genre: "70 and 80",
+        src: "tracks/Michael Jackson - Billie Jean (Official Video).mp3",
+        cover: "https://www.eloriente.net/home/wp-content/uploads/2014/06/michael-jackson-billie-jean.jpg"
+    },
+    {
+        title: "AMIGA",
+        artist: "Miguel Bosé",
+        genre: "70 and 80",
+        src: "tracks/Miguel Bose - Amiga.mp3",
+        cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/7/e/3/6/438731433595119.jpg"
     },
     {
         title: "MIENTELE_AL_CORAZON",
@@ -483,6 +473,20 @@ const songs = [
         genre: "Regueton",
         src: "tracks/Ozuna - Te Vas (Video Oficial).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "Perdoname",
+        artist: "La Factoría ft. Eddy Lover",
+        genre: "Romantica",
+        src: "tracks/Perdóname - La Factoría ft. Eddy Lover (Video Ofical HD).mp3",
+        cover: "https://i.ytimg.com/vi/fPiVzM4bMOA/maxresdefault.jpg"
+    },
+    {
+        title: "Phoenix",
+        artist: "Cailin Russo y Chrissy Costanza",
+        genre: "Otros",
+        src: "tracks/Phoenix (ft. Cailin Russo and Chrissy Costanza)  Worlds 2019 - League of Legends.mp3",
+        cover: "https://cdn.dribbble.com/userupload/11462293/file/original-5bb6bc1193c08cd04ab0df28c0786515.jpg"
     },
     {
         title: "PRESUMIDA",
@@ -555,6 +559,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "ME_MUERO_POR_ESTAR_CONTIGO",
+        artist: "Silvana Di Lorenzo",
+        genre: "Romantica",
+        src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bHaVLciucHJOE6RXazLt-5Mi0Z68LRPxkQ&s"
+    },
+    {
         title: "SIN_TU_AMOR",
         artist: "Luis Mateus",
         genre: "Vallenato",
@@ -574,6 +585,13 @@ const songs = [
         genre: "Vallenato",
         src: "tracks/Te Amaré, Los Inquietos Del Vallenato, Video Letra.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "Te Amo tanto",
+        artist: "Nigga",
+        genre: "Romantica",
+        src: "tracks/Te Amo Tanto.mp3",
+        cover: "https://i.ytimg.com/vi/6QYcYUATQdw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA7iQtcpRhdApGHHRnsDYOjb8BSEQ"
     },
     {
         title: "TE_SORPRENDERAS",
@@ -618,6 +636,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "Me acuerdo",
+        artist: "Vico C",
+        genre: "Romantica",
+        src: "tracks/Vico C Me acuerdo.mp3",
+        cover: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/19746849/original/resize:600x600/crop:x0y28w1000h750/aspect:1.0/hash:1464359685/1408851199_695328360557496_4431409542517171851_o.jpg?1464359685"
+    },
+    {
         title: "VIVAMOS_LO_NUESTRO",
         artist: "Miguel Morales",
         genre: "Vallenato",
@@ -632,6 +657,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "Warriors",
+        artist: "ft. 2WEI y Edda Hayes",
+        genre: "Otros",
+        src: "tracks/Warriors  Season 2020 Cinematic - League of Legends (ft. 2WEI and Edda Hayes).mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273f8fa082806184fcb032d8e0a"
+    },
+    {
         title: "APARENTEMENTE",
         artist: "Yaga y Mackie ft. Arcangel & De La Ghetto",
         genre: "Regueton",
@@ -644,388 +676,348 @@ const songs = [
         genre: "Romantica",
         src: "tracks/sapientdream - past lives (Subtitulada Español).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/10/a9/88/10a98827-ed7e-3077-6cd8-9cc96b764d74/cover.jpg/600x600cc.webp"
+    },
+    {
+        title: "Éveillez-vous",
+        artist: "avec Valerie Broussard",
+        genre: "Otros",
+        src: "tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3",
+        cover: "https://i.ytimg.com/vi/zF5Ddo9JdpY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDKL44ewCHdZXSQt-v7OtbFQZSeyA"
     }
 ];
 
-const playlistItems = document.getElementById('playlist');
-const genreFilter = document.getElementById('genre-filter');
-const sortBtn = document.getElementById('sort-btn');
-
 let songIndex = 0;
 let currentSongs = [...songs];
-let isAscending = true;
 
-// Generar lista de reproducción
+// --- Core UI Functions ---
+
 function initPlaylist(filteredSongs = currentSongs) {
-    playlistItems.innerHTML = '';
-    filteredSongs.forEach((song, index) => {
-        const li = document.createElement('li');
-        // Encontrar el índice original en el array 'songs' para cargar la canción correcta
-        const originalIndex = songs.findIndex(s => s.src === song.src);
-        li.dataset.index = originalIndex;
-        li.innerHTML = `
-            <span class="track-id">${(index + 1).toString().padStart(2, '0')}</span>
-            <div class="track-details">
-                <span class="track-name">${song.title}</span>
-                <span class="track-genre-label">${song.genre}</span>
+    const playlistContainer = document.getElementById('playlist');
+    playlistContainer.innerHTML = '';
+    renderGrid(filteredSongs, playlistContainer);
+    setTimeout(() => AOS.refresh(), 100);
+}
+
+function initRecommendations() {
+    const recContainer = document.getElementById('recommendations-grid');
+    const recs = [...songs].sort(() => 0.5 - Math.random()).slice(0, 4);
+    renderGrid(recs, recContainer);
+    setTimeout(() => AOS.refresh(), 100);
+}
+
+function initTopSongs() {
+    const topContainer = document.getElementById('top-songs-grid');
+    // Simulamos top con las primeras 4 canciones o aleatorias por ahora
+    const top = [...songs].slice(0, 4); 
+    renderGrid(top, topContainer);
+    setTimeout(() => AOS.refresh(), 100);
+}
+
+function renderGrid(songList, container) {
+    songList.forEach((song, index) => {
+        const isFav = favorites.includes(song.src);
+        const card = document.createElement('div');
+        card.className = 'card';
+        card.setAttribute('data-aos', 'fade-up');
+        card.setAttribute('data-aos-delay', (index % 4) * 50); // Escalonado ligero
+        card.innerHTML = `
+            <button class="fav-btn ${isFav ? 'active' : ''}" onclick="toggleFavorite(event, '${song.src}')">
+                <i class="${isFav ? 'fas' : 'far'} fa-heart"></i>
+            </button>
+            <div class="card-art">
+                <img src="${song.cover}" alt="${song.title}" onerror="this.src='../logo_sensei.jpg'; this.onerror=null;">
+                <div class="card-play-overlay">
+                    <i class="fas fa-play"></i>
+                </div>
+            </div>
+            <div class="card-info">
+                <h4>${song.title}</h4>
+                <p>${song.artist}</p>
             </div>
         `;
         
-        // Si la canción actual es la que se está reproduciendo
-        if (originalIndex === songIndex) li.classList.add('active');
-        
-        li.addEventListener('click', () => {
+        card.addEventListener('click', () => {
+            const originalIndex = songs.findIndex(s => s.src === song.src);
             songIndex = originalIndex;
-            loadSong(songs[songIndex]);
-            playSong();
+            playSongWithAnimation(card);
         });
         
-        playlistItems.appendChild(li);
+        container.appendChild(card);
     });
 }
 
-// Lógica de Filtrado por Género
-genreFilter.addEventListener('change', (e) => {
-    const genre = e.target.value;
-    if (genre === 'All') {
-        currentSongs = [...songs];
+function playSongWithAnimation(card) {
+    gsap.to(card, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1 });
+    loadSong(songs[songIndex]);
+    playSong();
+}
+
+function toggleFavorite(event, src) {
+    event.stopPropagation();
+    if (favorites.includes(src)) {
+        favorites = favorites.filter(f => f !== src);
     } else {
-        currentSongs = songs.filter(song => song.genre === genre);
+        favorites.push(src);
     }
-    applySort(); // Mantener el orden actual al filtrar
-    initPlaylist();
-});
-
-// Lógica de Ordenación
-function applySort() {
-    currentSongs.sort((a, b) => {
-        const titleA = a.title.toUpperCase();
-        const titleB = b.title.toUpperCase();
-        if (isAscending) {
-            return titleA < titleB ? -1 : (titleA > titleB ? 1 : 0);
-        } else {
-            return titleA > titleB ? -1 : (titleA < titleB ? 1 : 0);
-        }
-    });
+    localStorage.setItem('sensei_favs', JSON.stringify(favorites));
+    updateFavCount();
+    
+    const btn = event.currentTarget;
+    btn.classList.toggle('active');
+    btn.querySelector('i').className = btn.classList.contains('active') ? 'fas fa-heart' : 'far fa-heart';
+    
+    if (document.getElementById('section-favorites').classList.contains('active')) {
+        renderFavorites();
+    }
 }
 
-sortBtn.addEventListener('click', () => {
-    isAscending = !isAscending;
-    sortBtn.innerHTML = isAscending ? '<i class="fas fa-sort-alpha-down"></i>' : '<i class="fas fa-sort-alpha-up"></i>';
-    applySort();
-    initPlaylist();
+function updateFavCount() {
+    document.getElementById('fav-count').innerText = favorites.length;
+}
+
+function renderFavorites() {
+    const favGrid = document.getElementById('favorites-grid');
+    const favSongs = songs.filter(s => favorites.includes(s.src));
+    favGrid.innerHTML = '';
+    if (favSongs.length === 0) {
+        favGrid.innerHTML = '<p style="grid-column: span 2; text-align: center; opacity: 0.5;">No tienes favoritos aún.</p>';
+    } else {
+        renderGrid(favSongs, favGrid);
+    }
+}
+
+// --- Navigation Logic ---
+document.querySelectorAll('.nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+        const section = item.dataset.section;
+        
+        // UI Update
+        document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+        item.classList.add('active');
+        
+        document.querySelectorAll('.app-section').forEach(s => s.classList.remove('active'));
+        document.getElementById(`section-${section}`).classList.add('active');
+        
+        if (section === 'favorites') renderFavorites();
+        
+        window.scrollTo(0, 0);
+        AOS.refresh();
+    });
 });
 
-// Cargar canción
+// --- Search Logic ---
+document.getElementById('search-input').addEventListener('input', (e) => {
+    const term = e.target.value.toLowerCase();
+    const results = songs.filter(s => 
+        s.title.toLowerCase().includes(term) || 
+        s.artist.toLowerCase().includes(term) ||
+        s.genre.toLowerCase().includes(term)
+    );
+    const grid = document.getElementById('search-results');
+    grid.innerHTML = term ? '' : '<p style="grid-column: span 2; text-align: center; opacity: 0.5;">Escribe algo para buscar...</p>';
+    if (term) renderGrid(results, grid);
+});
+
+// --- Filter Logic ---
+document.getElementById('genre-filter').addEventListener('change', (e) => {
+    const genre = e.target.value;
+    currentSongs = genre === 'All' ? [...songs] : songs.filter(s => s.genre === genre);
+    initPlaylist(currentSongs);
+    AOS.refresh();
+});
+
+// --- Player Core ---
+function openFullPlayer() {
+    gsap.to(fullPlayer, { y: 0, xPercent: -50, duration: 0.6, ease: "power4.out" });
+}
+
+function closeFullPlayer() {
+    gsap.to(fullPlayer, { y: "100%", xPercent: -50, duration: 0.5, ease: "power4.in" });
+}
+
+// Swipe down to close logic
+let startY = 0;
+fullPlayer.addEventListener('touchstart', (e) => startY = e.touches[0].clientY);
+fullPlayer.addEventListener('touchmove', (e) => {
+    const currentY = e.touches[0].clientY;
+    const diff = currentY - startY;
+    if (diff > 50) {
+        gsap.set(fullPlayer, { y: diff, xPercent: -50 });
+    }
+});
+fullPlayer.addEventListener('touchend', (e) => {
+    const endY = e.changedTouches[0].clientY;
+    if (endY - startY > 150) {
+        closeFullPlayer();
+    } else {
+        gsap.to(fullPlayer, { y: 0, xPercent: -50, duration: 0.3 });
+    }
+});
+
+miniPlayerBar.addEventListener('click', (e) => {
+    // Evitar que el click en los botones del mini player abra el full player
+    if (!e.target.closest('.mini-btn')) {
+        openFullPlayer();
+    }
+});
+
+closeFullPlayerBtn.addEventListener('click', closeFullPlayer);
+
 function loadSong(song) {
-    titleEl.innerText = song.title;
-    artistEl.innerText = song.artist;
+    miniTitle.innerText = song.title;
+    miniArtist.innerText = song.artist;
+    miniCover.src = song.cover;
+    miniCover.onerror = () => miniCover.src = '../logo_sensei.jpg';
+    
+    // Full Player Update
+    fpTitle.innerText = song.title;
+    fpArtist.innerText = song.artist;
+    fpCover.src = song.cover;
+    fpBg.style.backgroundImage = `url('${song.cover}')`;
+    fpCover.onerror = () => fpCover.src = '../logo_sensei.jpg';
+    
     audio.src = song.src;
     
-    // Asegurar que la ruta de la portada sea absoluta para Media Session
-    const absoluteCover = new URL(song.cover, window.location.href).href;
-    
-    // Actualizar imagen de portada con el GIF de la canción
-    const coverImg = document.getElementById('cover');
-    if (coverImg) {
-        coverImg.src = song.cover;
-    }
-    
-    // Actualizar clase activa en la lista
-    const items = playlistItems.querySelectorAll('li');
-    items.forEach(item => {
-        if (parseInt(item.dataset.index) === songIndex) {
-            item.classList.add('active');
-        } else {
-            item.classList.remove('active');
-        }
-    });
-    
-    // Configurar Media Session API (Para controles en pantalla de bloqueo)
     if ('mediaSession' in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: song.title,
             artist: song.artist,
-            album: 'SENSEI_AUDIO_SYSTEM',
             artwork: [
-                { src: absoluteCover, sizes: '512x512', type: 'image/gif' },
-                { src: absoluteCover, sizes: '192x192', type: 'image/gif' }
+                { src: song.cover, sizes: '96x96', type: 'image/png' },
+                { src: song.cover, sizes: '128x128', type: 'image/png' },
+                { src: song.cover, sizes: '192x192', type: 'image/png' },
+                { src: song.cover, sizes: '256x256', type: 'image/png' },
+                { src: song.cover, sizes: '384x384', type: 'image/png' },
+                { src: song.cover, sizes: '512x512', type: 'image/png' },
             ]
         });
-
-        // Asegurar que el estado de reproducción esté sincronizado
-        navigator.mediaSession.playbackState = isPlaying ? "playing" : "paused";
-
-        // Manejadores de eventos de la sesión multimedia
-        navigator.mediaSession.setActionHandler('play', () => {
-            playSong();
-            navigator.mediaSession.playbackState = "playing";
-        });
-        navigator.mediaSession.setActionHandler('pause', () => {
-            pauseSong();
-            navigator.mediaSession.playbackState = "paused";
-        });
+        
+        // Registrar acciones del sistema
+        navigator.mediaSession.setActionHandler('play', playSong);
+        navigator.mediaSession.setActionHandler('pause', pauseSong);
         navigator.mediaSession.setActionHandler('previoustrack', prevSong);
         navigator.mediaSession.setActionHandler('nexttrack', nextSong);
-
-        // Soporte para barra de progreso en pantalla de bloqueo (Seek)
-        navigator.mediaSession.setActionHandler('seekbackward', (details) => {
-            const skipTime = details.seekOffset || 10;
-            audio.currentTime = Math.max(audio.currentTime - skipTime, 0);
-            updatePositionState();
-        });
-
-        navigator.mediaSession.setActionHandler('seekforward', (details) => {
-            const skipTime = details.seekOffset || 10;
-            audio.currentTime = Math.min(audio.currentTime + skipTime, audio.duration);
-            updatePositionState();
-        });
-
+        
+        // Soporte para buscar (opcional)
         navigator.mediaSession.setActionHandler('seekto', (details) => {
-            if (details.fastSeek && 'fastSeek' in audio) {
-                audio.fastSeek(details.seekTime);
-                return;
-            }
-            audio.currentTime = details.seekTime;
-            updatePositionState();
+            if (details.seekTime) audio.currentTime = details.seekTime;
         });
     }
 }
 
-// Actualizar el estado de la posición para el sistema (Lock Screen)
-function updatePositionState() {
-    if ('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession) {
-        if (!isNaN(audio.duration) && audio.duration > 0) {
-            try {
-                navigator.mediaSession.setPositionState({
-                    duration: audio.duration,
-                    playbackRate: audio.playbackRate,
-                    position: audio.currentTime
-                });
-            } catch (error) {
-                console.error("Error actualizando PositionState:", error);
-            }
-        }
-    }
-}
-
-// Reproducir
 function playSong() {
     isPlaying = true;
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    audio.play().then(() => {
-        if ('mediaSession' in navigator) {
-            navigator.mediaSession.playbackState = "playing";
-        }
-        startVisualizer();
-        updatePositionState();
-    }).catch(error => {
-        console.error("Error al reproducir:", error);
-    });
+    fpPlayPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    audio.play();
+    gsap.to('#mini-player', { y: 0, opacity: 1, duration: 0.5 });
+    
+    // Animación del botón play del full player
+    gsap.fromTo(fpPlayPauseBtn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: "back.out(2)" });
+
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'playing';
+    }
 }
 
-// Pausar
 function pauseSong() {
     isPlaying = false;
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    fpPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     audio.pause();
+    
+    gsap.fromTo(fpPlayPauseBtn, { scale: 1.2 }, { scale: 1, duration: 0.2, ease: "power2.out" });
+
     if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = "paused";
+        navigator.mediaSession.playbackState = 'paused';
     }
-    updatePositionState();
 }
 
-// Anterior
-function prevSong() {
-    if (currentSongs.length === 0) return;
-    
-    // Encontrar la posición actual en la lista filtrada
-    let currentFilteredIndex = currentSongs.findIndex(s => s.src === songs[songIndex].src);
-    
-    // Si la canción actual no está en la lista filtrada (por cambio de género), empezar desde el final
-    if (currentFilteredIndex === -1) currentFilteredIndex = currentSongs.length - 1;
-    else {
-        currentFilteredIndex--;
-        if (currentFilteredIndex < 0) currentFilteredIndex = currentSongs.length - 1;
-    }
-    
-    // Obtener la canción de la lista filtrada
-    const nextSongObj = currentSongs[currentFilteredIndex];
-    // Actualizar el índice global
-    songIndex = songs.findIndex(s => s.src === nextSongObj.src);
-    
-    loadSong(songs[songIndex]);
-    if (isPlaying) playSong();
-    updatePositionState(); // Sincronizar con el sistema
-}
-
-// Siguiente
 function nextSong() {
-    if (currentSongs.length === 0) return;
-
-    // Lógica de Shuffle
-    if (isShuffle) {
-        let randomIndex = Math.floor(Math.random() * currentSongs.length);
-        // Evitar que se repita la misma canción si hay más de una
-        if (currentSongs.length > 1) {
-            let currentFilteredIndex = currentSongs.findIndex(s => s.src === songs[songIndex].src);
-            while (randomIndex === currentFilteredIndex) {
-                randomIndex = Math.floor(Math.random() * currentSongs.length);
-            }
-        }
-        const nextSongObj = currentSongs[randomIndex];
-        songIndex = songs.findIndex(s => s.src === nextSongObj.src);
-    } else {
-        // Encontrar la posición actual en la lista filtrada
-        let currentFilteredIndex = currentSongs.findIndex(s => s.src === songs[songIndex].src);
-        
-        // Si la canción actual no está en la lista filtrada, empezar desde el principio
-        if (currentFilteredIndex === -1) currentFilteredIndex = 0;
-        else {
-            currentFilteredIndex++;
-            if (currentFilteredIndex > currentSongs.length - 1) currentFilteredIndex = 0;
-        }
-        
-        const nextSongObj = currentSongs[currentFilteredIndex];
-        songIndex = songs.findIndex(s => s.src === nextSongObj.src);
-    }
-    
+    songIndex = (songIndex + 1) % songs.length;
     loadSong(songs[songIndex]);
     if (isPlaying) playSong();
-    updatePositionState(); // Sincronizar con el sistema
 }
 
-// Actualizar progreso
-function updateProgress(e) {
-    const { duration, currentTime } = e.srcElement;
-    const progressPercent = (currentTime / duration) * 100;
-    progressFill.style.width = `${progressPercent}%`;
-
-    // Tiempo actual
-    let currentMin = Math.floor(currentTime / 60);
-    let currentSec = Math.floor(currentTime % 60);
-    if (currentSec < 10) currentSec = `0${currentSec}`;
-    currentTimeEl.innerText = `${currentMin}:${currentSec}`;
-
-    // Actualizar también la barra de progreso del sistema (lock screen) cada segundo
-    if (Math.floor(currentTime) % 1 === 0) {
-        updatePositionState();
-    }
-}
-
-// Configurar duración al cargar
-audio.addEventListener('loadedmetadata', () => {
-    let totalMin = Math.floor(audio.duration / 60);
-    let totalSec = Math.floor(audio.duration % 60);
-    if (totalSec < 10) totalSec = `0${totalSec}`;
-    durationEl.innerText = `${totalMin}:${totalSec}`;
-});
-
-// Click en barra de progreso
-function setProgress(e) {
-    const width = this.clientWidth;
-    const clickX = e.offsetX;
-    const duration = audio.duration;
-    audio.currentTime = (clickX / width) * duration;
+function prevSong() {
+    songIndex = (songIndex - 1 + songs.length) % songs.length;
+    loadSong(songs[songIndex]);
+    if (isPlaying) playSong();
 }
 
 // Event Listeners
-playPauseBtn.addEventListener('click', () => (isPlaying ? pauseSong() : playSong()));
-prevBtn.addEventListener('click', prevSong);
+playPauseBtn.addEventListener('click', () => isPlaying ? pauseSong() : playSong());
+fpPlayPauseBtn.addEventListener('click', () => isPlaying ? pauseSong() : playSong());
 nextBtn.addEventListener('click', nextSong);
-audio.addEventListener('timeupdate', updateProgress);
-audio.addEventListener('ended', () => {
-    if (isRepeat) {
-        audio.currentTime = 0;
-        playSong();
-    } else {
-        nextSong();
-    }
-});
-progressBar.addEventListener('click', setProgress);
-volumeSlider.addEventListener('input', (e) => {
-    audio.volume = e.target.value;
-});
+fpNextBtn.addEventListener('click', nextSong);
+prevBtn.addEventListener('click', prevSong);
+fpPrevBtn.addEventListener('click', prevSong);
 
-repeatBtn.addEventListener('click', () => {
-    isRepeat = !isRepeat;
-    repeatBtn.classList.toggle('active');
-    repeatBtn.style.color = isRepeat ? '#fff' : 'var(--sgc-cian)';
-});
-
-shuffleBtn.addEventListener('click', () => {
-    isShuffle = !isShuffle;
-    shuffleBtn.classList.toggle('active');
-    shuffleBtn.style.color = isShuffle ? '#fff' : 'var(--sgc-cian)';
-});
-
-// --- Visualizador de Audio (Canvas) ---
-let audioCtx, analyser, source, dataArray;
-let canvas = document.getElementById('visualizer');
-let ctx = canvas.getContext('2d');
-
-function startVisualizer() {
-    if (!audioCtx) {
-        audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-        analyser = audioCtx.createAnalyser();
-        source = audioCtx.createMediaElementSource(audio);
-        source.connect(analyser);
-        analyser.connect(audioCtx.destination);
-        analyser.fftSize = 64;
-        const bufferLength = analyser.frequencyBinCount;
-        dataArray = new Uint8Array(bufferLength);
-        draw();
-    }
-}
-
-function draw() {
-    requestAnimationFrame(draw);
-    analyser.getByteFrequencyData(dataArray);
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
+audio.addEventListener('timeupdate', () => {
+    const { duration, currentTime } = audio;
+    const progressPercent = (currentTime / duration) * 100;
+    progressFill.style.width = `${progressPercent}%`;
+    fpProgressFill.style.width = `${progressPercent}%`;
     
-    const barWidth = (canvas.width / dataArray.length) * 2.5;
-    let x = 0;
-
-    for (let i = 0; i < dataArray.length; i++) {
-        const barHeight = dataArray[i] / 2;
-        ctx.fillStyle = `rgba(0, 204, 255, ${barHeight / 100})`;
-        ctx.fillRect(x, canvas.height - barHeight, barWidth, barHeight);
-        x += barWidth + 2;
+    // Update labels
+    fpCurrentTime.innerText = formatTime(currentTime);
+    if (!isNaN(duration)) {
+        fpDuration.innerText = formatTime(duration);
+        
+        // Sincronizar posición con el sistema (opcional pero recomendado)
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setPositionState({
+                duration: duration,
+                playbackRate: audio.playbackRate,
+                position: currentTime
+            });
+        }
     }
+});
+
+function formatTime(seconds) {
+    const min = Math.floor(seconds / 60);
+    const sec = Math.floor(seconds % 60);
+    return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
 
-// --- Fondo Matrix ---
-const matrixCanvas = document.createElement('canvas');
-const mCtx = matrixCanvas.getContext('2d');
-document.getElementById('matrix-bg').appendChild(matrixCanvas);
+audio.addEventListener('ended', nextSong);
 
-function resizeMatrix() {
-    matrixCanvas.width = window.innerWidth;
-    matrixCanvas.height = window.innerHeight;
-}
-window.addEventListener('resize', resizeMatrix);
-resizeMatrix();
+progressBar.addEventListener('click', (e) => {
+    const width = progressBar.clientWidth;
+    const clickX = e.offsetX;
+    audio.currentTime = (clickX / width) * audio.duration;
+});
 
-const chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ$@#&*%".split("");
-const fontSize = 14;
-const columns = matrixCanvas.width / fontSize;
+fpProgressBar.addEventListener('click', (e) => {
+    const width = fpProgressBar.clientWidth;
+    const clickX = e.offsetX;
+    audio.currentTime = (clickX / width) * audio.duration;
+});
+
+// --- Matrix Background ---
+const canvas = document.createElement('canvas');
+const ctx = canvas.getContext('2d');
+document.getElementById('matrix-bg').appendChild(canvas);
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+const fontSize = 10;
+const columns = canvas.width / fontSize;
 const drops = Array(Math.floor(columns)).fill(1);
 
 function drawMatrix() {
-    mCtx.fillStyle = "rgba(0, 8, 16, 0.05)";
-    mCtx.fillRect(0, 0, matrixCanvas.width, matrixCanvas.height);
-    mCtx.fillStyle = "#00ccff";
-    mCtx.font = fontSize + "px monospace";
-
+    ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+    ctx.fillRect(0, 0, canvas.width, canvas.height);
+    ctx.fillStyle = "#00ccff";
+    ctx.font = fontSize + "px arial";
     for (let i = 0; i < drops.length; i++) {
-        const text = chars[Math.floor(Math.random() * chars.length)];
-        mCtx.fillText(text, i * fontSize, drops[i] * fontSize);
-        if (drops[i] * fontSize > matrixCanvas.height && Math.random() > 0.975) drops[i] = 0;
+        const text = letters[Math.floor(Math.random() * letters.length)];
+        ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+        if (drops[i] * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
         drops[i]++;
     }
 }
-setInterval(drawMatrix, 50);
-
-// Inicializar
-initPlaylist();
-loadSong(songs[songIndex]);
+setInterval(drawMatrix, 33);
