@@ -11,11 +11,15 @@ document.addEventListener('DOMContentLoaded', () => {
         once: true,
         offset: 10,
         delay: 50,
-        disable: false // Forzar en todos los dispositivos
+        disable: false
     });
     initPlaylist();
     initRecommendations();
     initTopSongs();
+    
+    // Refresh AOS once after all initializations
+    setTimeout(() => AOS.refresh(), 500);
+
     updateFavCount();
     updateDownloadCount();
     loadSong(songs[songIndex]);
@@ -136,68 +140,6 @@ let isPlaying = false;
 let isRepeatOne = false;
 let isShuffle = false;
 let favorites = JSON.parse(localStorage.getItem('sensei_favs')) || [];
-
-// --- IndexedDB Setup for Offline Audio ---
-const DB_NAME = 'SenseiMusicDB';
-const DB_VERSION = 1;
-const STORE_NAME = 'offline_tracks';
-
-function getDB() {
-    return new Promise((resolve, reject) => {
-        const request = indexedDB.open(DB_NAME, DB_VERSION);
-        request.onupgradeneeded = (e) => {
-            const db = e.target.result;
-            if (!db.objectStoreNames.contains(STORE_NAME)) {
-                db.createObjectStore(STORE_NAME, { keyPath: 'src' });
-            }
-        };
-        request.onsuccess = (e) => resolve(e.target.result);
-        request.onerror = (e) => reject(e.target.error);
-    });
-}
-
-async function saveTrackToOffline(song) {
-    try {
-        const response = await fetch(song.src);
-        const blob = await response.blob();
-        const db = await getDB();
-        const tx = db.transaction(STORE_NAME, 'readwrite');
-        const store = tx.objectStore(STORE_NAME);
-        
-        await new Promise((resolve, reject) => {
-            const putReq = store.put({ 
-                src: song.src, 
-                blob: blob,
-                title: song.title,
-                artist: song.artist,
-                cover: song.cover,
-                timestamp: Date.now()
-            });
-            putReq.onsuccess = resolve;
-            putReq.onerror = reject;
-        });
-        return true;
-    } catch (err) {
-        console.error('Error saving to IndexedDB:', err);
-        return false;
-    }
-}
-
-async function getOfflineBlob(src) {
-    try {
-        const db = await getDB();
-        const tx = db.transaction(STORE_NAME, 'readonly');
-        const store = tx.objectStore(STORE_NAME);
-        const track = await new Promise((resolve, reject) => {
-            const getReq = store.get(src);
-            getReq.onsuccess = () => resolve(getReq.result);
-            getReq.onerror = reject;
-        });
-        return track ? track.blob : null;
-    } catch (err) {
-        return null;
-    }
-}
 
 // Datos de las canciones (102 Pistas Sincronizadas)
 const songs = [
@@ -831,20 +773,13 @@ const songs = [
         src: "tracks/sapientdream - past lives (Subtitulada Español).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/10/a9/88/10a98827-ed7e-3077-6cd8-9cc96b764d74/cover.jpg/600x600cc.webp"
     },
-    {
+    { 
         title: "Éveillez-vous",
         artist: "avec Valerie Broussard",
         genre: "Otros",
         src: "tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3",
         cover: "https://i.ytimg.com/vi/zF5Ddo9JdpY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDKL44ewCHdZXSQt-v7OtbFQZSeyA"
     },
-    { 
-        title: "Kamin cover", 
-        artist: "Cover Tiktok", 
-        genre: "Electronica", 
-        src: "tracks/kaim-tiktok.mp3", 
-        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRdgpRWwk84LvKmPK5COlz2meF0EdlV0nTEvw&s" 
-    }, 
     { 
         title: "КАМИН", 
         artist: "EMIN feat. JONY", 
@@ -933,17 +868,15 @@ let currentSongs = [...songs];
 
 function initPlaylist(filteredSongs = currentSongs) {
     const playlistContainer = document.getElementById('playlist');
-    if (!playlistContainer) return; // Seguridad
+    if (!playlistContainer) return; 
     playlistContainer.innerHTML = '';
     renderGrid(filteredSongs, playlistContainer);
-    setTimeout(() => AOS.refresh(), 100);
 }
 
 function initRecommendations() {
     const recContainer = document.getElementById('recommendations-grid');
     const recs = [...songs].sort(() => 0.5 - Math.random()).slice(0, 4);
     renderGrid(recs, recContainer);
-    setTimeout(() => AOS.refresh(), 100);
 }
 
 function initTopSongs() {
@@ -951,7 +884,6 @@ function initTopSongs() {
     // Simulamos top con las primeras 4 canciones o aleatorias por ahora
     const top = [...songs].slice(0, 4); 
     renderGrid(top, topContainer);
-    setTimeout(() => AOS.refresh(), 100);
 }
 
 function renderGrid(songList, container) {
@@ -1143,15 +1075,23 @@ async function loadSong(song) {
     fpBg.style.backgroundImage = `url('${song.cover}')`;
     fpCover.onerror = () => fpCover.src = '../logo_sensei.jpg';
     
-    // Intentar cargar desde IndexedDB si está descargada
-    const offlineBlob = await getOfflineBlob(song.src);
-    if (offlineBlob) {
-        audio.src = URL.createObjectURL(offlineBlob);
-        console.log(`Cargando audio offline para: ${song.title}`);
-    } else {
-        audio.src = song.src;
+    // Optimización de carga: Solo resetear si es una canción diferente
+    if (audio.dataset.currentSrc === song.src) return;
+
+    audio.pause();
+    audio.dataset.currentSrc = song.src;
+
+    // Solo cargamos directamente desde red o caché del Service Worker
+    audio.src = song.src;
+    audio.preload = "auto";
+    
+    // REPRODUCCIÓN INMEDIATA: No esperar a load() si ya se llamó a play()
+    if (isPlaying) {
+        audio.play().catch(e => console.log("Auto-play bloqueado por el navegador"));
     }
     
+    preloadNextSong();
+
     if ('mediaSession' in navigator) {
         navigator.mediaSession.metadata = new MediaMetadata({
             title: song.title,
@@ -1179,14 +1119,36 @@ async function loadSong(song) {
     }
 }
 
+function preloadNextSong() {
+    const nextIndex = (songIndex + 1) % songs.length;
+    const nextSong = songs[nextIndex];
+    
+    // Usamos una etiqueta link prefetch para el siguiente audio
+    let prefetchLink = document.getElementById('next-song-prefetch');
+    if (!prefetchLink) {
+        prefetchLink = document.createElement('link');
+        prefetchLink.id = 'next-song-prefetch';
+        prefetchLink.rel = 'prefetch';
+        prefetchLink.as = 'audio';
+        document.head.appendChild(prefetchLink);
+    }
+    prefetchLink.href = nextSong.src;
+}
+
 function playSong() {
     isPlaying = true;
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
     fpPlayPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
-    audio.play();
-    gsap.to('#mini-player', { y: 0, opacity: 1, duration: 0.5 });
     
-    // Animación del botón play del full player
+    // Reproducción directa
+    const playPromise = audio.play();
+    if (playPromise !== undefined) {
+        playPromise.catch(error => {
+            console.log("Error al reproducir:", error);
+        });
+    }
+
+    gsap.to('#mini-player', { y: 0, opacity: 1, duration: 0.3 });
     gsap.fromTo(fpPlayPauseBtn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: "back.out(2)" });
 
     if ('mediaSession' in navigator) {
@@ -1311,19 +1273,21 @@ function toggleFavoriteManual(src) {
 
 async function downloadSong(song) {
     if (!downloads.some(d => d.src === song.src)) {
-        // Mostrar aviso de descarga iniciada
         updateDownloadStatus(song.src, 'descargando');
         
-        const success = await saveTrackToOffline(song);
-        
-        if (success) {
+        try {
+            // Usamos el Cache API directamente en lugar de IndexedDB
+            const cache = await caches.open('sensei-v36');
+            await cache.add(song.src);
+            
             downloads.push(song);
             localStorage.setItem('sensei_downloads', JSON.stringify(downloads));
             updateDownloadCount();
             if (document.getElementById('section-profile').classList.contains('active')) renderDownloads();
-            alert(`"${song.title}" se ha descargado y está disponible offline.`);
-        } else {
-            alert(`Error al descargar "${song.title}". Inténtalo de nuevo.`);
+            alert(`"${song.title}" se ha descargado para escuchar offline.`);
+        } catch (err) {
+            console.error('Error al descargar:', err);
+            alert(`Error al descargar "${song.title}".`);
         }
     } else {
         alert("Esta canción ya está en tus descargas.");
