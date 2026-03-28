@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v35'; // Versión 35 - Ultra Fast & Efficient
+const CACHE_NAME = 'sensei-v36'; // Versión 36 - Ultra Streaming & Instant Audio
 const urlsToCacheEssential = [
   './',
   './index.html',
@@ -35,8 +35,7 @@ self.addEventListener('install', event => {
   self.skipWaiting(); 
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Cache v35 abierta. Iniciando cacheo esencial...');
-      // Solo cacheamos lo esencial para que la app cargue instantáneamente
+      console.log('Cache v36 abierta. Iniciando cacheo esencial...');
       return Promise.all([
         cache.addAll(urlsToCacheEssential),
         cache.addAll(urlsToCacheImages)
@@ -65,51 +64,20 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // MANEJO PARA AUDIO (RANGE REQUESTS)
-  // Optimizamos para que si no está en caché, use la red directamente sin intermediarios
-  if (event.request.headers.get('range') && (event.request.destination === 'audio' || url.pathname.endsWith('.mp3'))) {
-    event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) {
-          return cachedResponse.arrayBuffer().then(buffer => {
-            const rangeHeader = event.request.headers.get('range');
-            const parts = rangeHeader.replace(/bytes=/, "").split("-");
-            const start = parseInt(parts[0], 10);
-            const end = parts[1] ? parseInt(parts[1], 10) : buffer.byteLength - 1;
-            const chunk = buffer.slice(start, end + 1);
-
-            return new Response(chunk, {
-              status: 206,
-              statusText: 'Partial Content',
-              headers: {
-                'Content-Range': `bytes ${start}-${end}/${buffer.byteLength}`,
-                'Accept-Ranges': 'bytes',
-                'Content-Length': chunk.byteLength,
-                'Content-Type': 'audio/mpeg'
-              }
-            });
-          });
-        }
-        // Si no está en caché, pasamos directamente a la red (lo más rápido para streaming)
-        return fetch(event.request);
-      })
-    );
-    return;
-  }
-
-  // Estrategia Cache First para Audio no-range (o para asegurar que se guarde)
+  // OPTIMIZACIÓN CRÍTICA PARA AUDIO: PASSTHROUGH DIRECTO PARA STREAMING
+  // Si es un archivo .mp3, dejamos que el navegador lo maneje directamente por red
+  // para aprovechar el motor de streaming nativo, EXCEPTO si el usuario decidió descargarlo (vía IndexedDB en script.js)
   if (url.pathname.endsWith('.mp3')) {
+    // Si hay un rango pedido (streaming), devolvemos fetch directo (lo más rápido)
+    if (event.request.headers.get('range')) {
+      event.respondWith(fetch(event.request));
+      return;
+    }
+    
+    // Si no hay rango, intentamos cache first pero sin bloquear el streaming
     event.respondWith(
       caches.match(event.request).then(response => {
-        if (response) return response;
-        
-        return fetch(event.request).then(networkResponse => {
-          if (networkResponse && networkResponse.status === 200) {
-            const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
-          }
-          return networkResponse;
-        });
+        return response || fetch(event.request);
       })
     );
     return;
