@@ -5,8 +5,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Formulario para Estudiantes</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="manifest" href="../manifest.json">
+    <meta name="theme-color" content="#00ff41">
+    <link rel="apple-touch-icon" href="../logo_sensei.jpg">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:wght@400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script>
+        // --- Bloqueo de Acceso ---
+        if (!sessionStorage.getItem('access_granted')) {
+            alert(">>> ACCESO DENEGADO. DEBE INGRESAR LA CONTRASEÑA EN EL MENÚ PRINCIPAL.");
+            window.location.href = "../index.html";
+        }
+
+        // --- Registro de Service Worker para Actualizaciones Agresivas ---
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('../service-worker.js').then(reg => {
+                    reg.update(); // Revisar actualización al cargar
+
+                    reg.onupdatefound = () => {
+                        const installingWorker = reg.installing;
+                        installingWorker.onstatechange = () => {
+                            if (installingWorker.state === 'installed') {
+                                if (navigator.serviceWorker.controller) {
+                                    console.log('>>> ACTUALIZANDO FORMULARIOS...');
+                                    window.location.reload();
+                                }
+                            }
+                        };
+                    };
+                }).catch(err => console.log('Error SW:', err));
+            });
+            
+            let refreshing = false;
+            navigator.serviceWorker.addEventListener('controllerchange', () => {
+                if (!refreshing) {
+                    window.location.reload();
+                    refreshing = true;
+                }
+            });
+        }
+    </script>
 </head>
 <body>
     <canvas id="matrix"></canvas>
@@ -24,6 +65,30 @@
         </div>
 
         <div class="content">
+            <!-- Bloque de Matemáticas -->
+            <div class="section-block">
+                <h2 class="main-title">Formulario de Matematica</h2>
+                <div class="terminal-box">
+                    <p class="status">>>> ACCESO CONCEDIDO: MATEMATICA_DB_V1</p>
+                    <div class="carousel-container">
+                        <div class="document-carousel">
+                            <a href="anexos/formulario matematico.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-calculator"></i></div>
+                                <div class="card-name">formulario matematico.pdf</div>
+                            </a>
+                            <a href="anexos/Formulario-de-Matematicas-final-PDF.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-square-root-alt"></i></div>
+                                <div class="card-name">Formulario-de-Matematicas-final-PDF.pdf</div>
+                            </a>
+                            <a href="anexos/formulario-completo-de-matematicas.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-infinity"></i></div>
+                                <div class="card-name">formulario-completo-de-matematicas.pdf</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <!-- Bloque de Física -->
             <div class="section-block">
                 <h2 class="main-title">Formulario de Fisica</h2>
@@ -64,6 +129,22 @@
                             <a href="anexos/Nomenclatura_y_Formulacion_Quimica.pdf" target="_blank" class="doc-card">
                                 <div class="card-icon"><i class="fas fa-dna"></i></div>
                                 <div class="card-name">Nomenclatura_y_Formulacion_Quimica.pdf</div>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Bloque de Operaciones Unitarias -->
+            <div class="section-block">
+                <h2 class="main-title">Formulario de Operaciones Unitaria 1</h2>
+                <div class="terminal-box">
+                    <p class="status">>>> ACCESO CONCEDIDO: OPERACIONES_UNITARIAS_DB_V1</p>
+                    <div class="carousel-container">
+                        <div class="document-carousel">
+                            <a href="anexos/Formulario Operaciones Unitarias 2_hemi.pdf" target="_blank" class="doc-card">
+                                <div class="card-icon"><i class="fas fa-cogs"></i></div>
+                                <div class="card-name">Formulario Operaciones Unitarias 2_hemi.pdf</div>
                             </a>
                         </div>
                     </div>
