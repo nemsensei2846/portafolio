@@ -940,6 +940,76 @@ const songs = [
         genre: "Vallenato",
         src: "tracks/si tú estuvieras - Los inquietos del vallenato.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "ADIOS AMOR",
+        artist: "Clan Vallenato",
+        genre: "Vallenato",
+        src: "tracks/Adios Amor - Clan Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "ATADO A TUS SENTIMIENTOS",
+        artist: "Clan Vallenato",
+        genre: "Vallenato",
+        src: "tracks/Atado A Tus Sentimientos - Clan Vallenato (Letra) @paseosvallenatos9149.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "CORAZON_ATREVIDO",
+        artist: "Los Comandantes Del Vallenato",
+        genre: "Vallenato",
+        src: "tracks/Corazón Atrevido - Los Comandantes Del Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "COMO_EXPRESAR_LO_QUE_SIENTO",
+        artist: "Binomio De Oro De América",
+        genre: "Vallenato",
+        src: "tracks/Cómo Expresar Lo Que Siento, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "DESPUES_DE_AMAR",
+        artist: "Los Inquietos Del Vallenato",
+        genre: "Vallenato",
+        src: "tracks/Después De Amar, Los Inquietos Del Vallenato - Audio.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NO_PUDE_OLVIDARTE",
+        artist: "Binomio De Oro De América",
+        genre: "Vallenato",
+        src: "tracks/No Pude Olvidarte, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NO_QUEDA_NADA",
+        artist: "Los Inquietos Del Vallenato",
+        genre: "Vallenato",
+        src: "tracks/No Queda Nada, Los Inquietos Del Vallenato - Audio.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NO_TE_OLVIDARE",
+        artist: "Jorge Celedón",
+        genre: "Vallenato",
+        src: "tracks/No Te Olvidare - Jorge Celedon  Letra.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NO_PODRAN_SEPARARNOS",
+        artist: "Jorge Celedón",
+        genre: "Vallenato",
+        src: "tracks/No podrán separarnos jorge celedon.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "Y_NO_FUISTE_MIA",
+        artist: "Los Comandantes Del Vallenato",
+        genre: "Vallenato",
+        src: "tracks/Y No Fuiste Mía - Los Comandantes Del Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     }
 ];
 
