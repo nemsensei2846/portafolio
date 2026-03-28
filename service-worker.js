@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v33'; // Versión 33 - Updated song count to 102
+const CACHE_NAME = 'sensei-v34'; // Versión 34 - Ultra Fast Audio & Offline Fix
 const urlsToCacheEssential = [
   './',
   './index.html',
@@ -121,7 +121,19 @@ const urlsToCacheMusic = [
   './Musica/tracks/Warriors  Season 2020 Cinematic - League of Legends (ft. 2WEI and Edda Hayes).mp3',
   './Musica/tracks/Yaga y Mackie feat. Arcangel y de La Ghetto - Aparentemente (Video Oficial).mp3',
   './Musica/tracks/sapientdream - past lives (Subtitulada Español).mp3',
-  './Musica/tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3'
+  './Musica/tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3',
+  './Musica/tracks/kaim-tiktok.mp3',
+  './Musica/tracks/EMIN feat. JONY - КАМИН.mp3',
+  './Musica/tracks/Ha-Ash - Lo Aprendí de Ti.mp3',
+  './Musica/tracks/HA-ASH - Perdón, Perdón.mp3',
+  './Musica/tracks/HA-ASH - Te Dejo En Libertad.mp3',
+  './Musica/tracks/HA-ASH - Todo No Fue Suficiente (Letra).mp3',
+  './Musica/tracks/Annette Moreno - Un Ángel Llora (Video Oficial).mp3',
+  './Musica/tracks/Annette Moreno - Guardian De Mi Corazón (Video Oficial).mp3',
+  './Musica/tracks/Sebastián Yatra - Devuélveme El Corazón.mp3',
+  './Musica/tracks/Sebastián Yatra - Cómo Mirarte.mp3',
+  './Musica/tracks/Hasta el fin del mundo - Jennifer Peña.mp3',
+  './Musica/tracks/Ana Gabriel Simplemente Amigos.mp3'
 ];
 
 // Evento de instalación
@@ -129,7 +141,7 @@ self.addEventListener('install', event => {
   self.skipWaiting(); 
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Cache v19 abierta. Iniciando cacheo...');
+      console.log('Cache v34 abierta. Iniciando cacheo...');
       // Intentamos cachear lo esencial primero
       cache.addAll(urlsToCacheEssential);
       // Imágenes comunes
@@ -187,43 +199,36 @@ self.addEventListener('fetch', event => {
                 'Content-Range': `bytes ${start}-${end}/${buffer.byteLength}`,
                 'Accept-Ranges': 'bytes',
                 'Content-Length': chunk.byteLength,
-                'Content-Type': 'audio/mpeg'
+                'Content-Type': 'audio/mpeg',
+                'Cache-Control': 'no-cache'
               }
             });
           });
         }
+        // Si no está en caché, intentar fetch con prioridad alta
         return fetch(event.request);
       })
     );
     return;
   }
 
-  // Estrategia Stale-While-Revalidate para Imágenes
-  if (event.request.destination === 'image' || 
-      url.pathname.endsWith('.jpg') ||
-      url.pathname.endsWith('.gif') ||
-      url.pathname.endsWith('.png') ||
-      url.hostname === 'media1.giphy.com' ||
-      url.hostname === 'media.giphy.com') {
+  // Estrategia Cache First para Audio no-range (o para asegurar que se guarde)
+  if (url.pathname.endsWith('.mp3')) {
     event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        const fetchPromise = fetch(event.request).then(networkResponse => {
+      caches.match(event.request).then(response => {
+        return response || fetch(event.request).then(networkResponse => {
           if (networkResponse && networkResponse.status === 200) {
             const responseToCache = networkResponse.clone();
-            caches.open(CACHE_NAME).then(cache => {
-              cache.put(event.request, responseToCache);
-            });
+            caches.open(CACHE_NAME).then(cache => cache.put(event.request, responseToCache));
           }
           return networkResponse;
-        }).catch(() => null);
-
-        return cachedResponse || fetchPromise;
+        });
       })
     );
     return;
   }
 
-  // Estrategia Stale-While-Revalidate para HTML, JS, CSS
+  // Estrategia Stale-While-Revalidate para Imágenes y otros
   event.respondWith(
     caches.match(event.request).then(cachedResponse => {
       const fetchPromise = fetch(event.request).then(networkResponse => {
