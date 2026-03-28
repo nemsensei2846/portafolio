@@ -854,8 +854,92 @@ const songs = [
         title: "Simplemente Amigos", 
         artist: "Ana Gabriel", 
         genre: "Romantica", 
-        src: "tracks/Ana Gabriel Simplemente Amigos.mp3", 
+        src: "tracks/Ana Gabriel  Simplemente Amigos.mp3", 
         cover: "https://i1.sndcdn.com/artworks-FNE3Y5vDbevyc7Ev-LrNGBQ-t1080x1080.jpg" 
+    },
+    {
+        title: "DISTINTOS_DESTINOS",
+        artist: "Binomio De Oro De América",
+        genre: "Vallenato",
+        src: "tracks/Distintos Destinos, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "LA_ABEJITA",
+        artist: "La dinastía romero",
+        genre: "Vallenato",
+        src: "tracks/La abejita - La dinastía romero.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "LO_DULCE_DE_UN_TE_QUIERO",
+        artist: "Los chiches del vallenato",
+        genre: "Vallenato",
+        src: "tracks/Lo dulce de un te quiero - Los chiches del vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "ME_GUSTAS_MUCHO",
+        artist: "Luis Mateus",
+        genre: "Vallenato",
+        src: "tracks/Me Gustas Mucho Luis Mateus Letra.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "ME_ILUSIONE",
+        artist: "Binomio De Oro De América",
+        genre: "Vallenato",
+        src: "tracks/Me Ilusioné, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "ME_DEJARON",
+        artist: "Los amantes del vallenato",
+        genre: "Vallenato",
+        src: "tracks/Me dejaron - Los amantes del vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NO_ME_PIDAS_QUE_TE_OLVIDE",
+        artist: "Ivan Villazón",
+        genre: "Vallenato",
+        src: "tracks/No me pidas que te olvide - Ivan Villazón.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "PERTENECE_A_TI",
+        artist: "Los valbuena",
+        genre: "Vallenato",
+        src: "tracks/Pertenece a ti - Los valbuena.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "PORQUE_ME_ENAMORE_DE_TI",
+        artist: "Los amantes del vallenato",
+        genre: "Vallenato",
+        src: "tracks/Porque me enamore de ti - Los amantes del vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SOLO_AMAME",
+        artist: "Los Inquietos del vallenato",
+        genre: "Vallenato",
+        src: "tracks/Solo ámame - Los Inquietos del vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "VOLVER_V2",
+        artist: "Los inquietos del vallenato",
+        genre: "Vallenato",
+        src: "tracks/Volver - Los inquietos del vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "SI_TU_ESTUVIERAS",
+        artist: "Los inquietos del vallenato",
+        genre: "Vallenato",
+        src: "tracks/si tú estuvieras - Los inquietos del vallenato.mp3",
+        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     }
 ];
 
