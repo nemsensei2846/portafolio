@@ -267,22 +267,24 @@ body.sensei-audio {
 /* Redimensionar grid de categorías */
 .cards-grid {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap: 12px;
+    width: 100%;
 }
 
 /* Card Styling */
 .card {
     background: var(--sgc-surface);
     border-radius: 12px;
-    padding: 8px; /* Reducido */
+    padding: 10px;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     border: 1px solid var(--sgc-border);
     position: relative;
     cursor: pointer;
-    min-height: 160px; /* Reducido */
     display: flex;
     flex-direction: column;
+    width: 100%;
+    overflow: hidden;
 }
 
 .card[data-aos] {
@@ -978,7 +980,6 @@ body.sensei-audio {
     transform: scale(0.9);
 }
 
-/* Responsive */
 /* Full Player Options Menu */
 .fp-options-container {
     position: relative;
@@ -997,6 +998,42 @@ body.sensei-audio {
     box-shadow: 0 10px 30px rgba(0,0,0,0.5);
     backdrop-filter: blur(10px);
     animation: fadeIn 0.3s ease;
+}
+
+/* Responsive & Universal Mobile Compatibility */
+@media (max-width: 480px) {
+    .app-main {
+        padding: 0 12px 180px 12px;
+    }
+    .cards-grid {
+        gap: 10px;
+        grid-template-columns: repeat(2, 1fr); /* Forzar 2 columnas en móviles estándar */
+    }
+}
+
+@media (max-width: 350px) {
+    .cards-grid {
+        grid-template-columns: repeat(2, 1fr); /* Seguir con 2 columnas pero más pequeñas */
+        gap: 8px;
+    }
+    .card-info h4 {
+        font-size: 0.75rem;
+    }
+    .logo-text {
+        font-size: 1.1rem;
+    }
+}
+
+/* Prevenir scroll horizontal global */
+html, body {
+    max-width: 100vw;
+    overflow-x: hidden;
+}
+
+.app-wrapper {
+    width: 100%;
+    max-width: 500px;
+    margin: 0 auto;
 }
 
 .fp-options-menu button {
