@@ -291,7 +291,7 @@ const songs = [
         cover: "https://i.ytimg.com/vi/4tFktcmLl5M/maxresdefault.jpg"
     },
     {
-        title: "FRONTEAMOS_PORQUE_PODEMOS",
+        title: "FRONTEAMOS PORQUE PODEMOS",
         artist: "De La Ghetto ft. Daddy Yankee",
         genre: "Regueton",
         src: "tracks/De La Ghetto - Fronteamos Porque Podemos ft. Daddy Yankee, Yandel & Ñengo Flow [Official Video].mp3",
@@ -305,7 +305,7 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "DESPUES_DE_TI",
+        title: "DESPUES DE TI",
         artist: "Los Inquietos Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Después De Ti, Los Inquietos Del Vallenato, Video Letra.mp3",
@@ -319,21 +319,21 @@ const songs = [
         cover: "https://i1.sndcdn.com/artworks-000338799858-lprzob-t500x500.jpg"
     },
     {
-        title: "DOS_HOMBRES_Y_UN_DESTINO",
+        title: "DOS HOMBRES Y UN DESTINO",
         artist: "David Bustamante y Axel",
         genre: "Romantica",
         src: "tracks/Dos hombres y un destino- David Bustamante y Axel- (letra).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "EL_ERROR",
+        title: "EL ERROR",
         artist: "Los Gigantes Del Vallenato",
         genre: "Vallenato",
         src: "tracks/El Error, Los Gigantes Del Vallenato - Audio.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "EL_CIGARRILLO",
+        title: "EL CIGARRILLO",
         artist: "Ana Gabriel",
         genre: "Romantica",
         src: "tracks/El cigarrillo - Ana Gabriel (LetraLyrics).mp3",
@@ -347,7 +347,7 @@ const songs = [
         cover: "https://i.scdn.co/image/ab67616d0000b27329c3d17e74dcc33d8beb2f68"
     },
     {
-        title: "ES_UN_SECRETO",
+        title: "ES UN SECRETO",
         artist: "Plan B",
         genre: "Regueton",
         src: "tracks/Es Un Secreto - Plan B [Letra  Lyrics].mp3",
@@ -368,7 +368,7 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "HASTA_LA_RAIZ",
+        title: "HASTA LA RAIZ",
         artist: "Natalia Lafourcade",
         genre: "Romantica",
         src: "tracks/Hasta la Raíz - Natalia Lafourcade   LETRA.mp3",
@@ -396,7 +396,7 @@ const songs = [
         cover: "https://i.scdn.co/image/ab67616d0000b2734b11635cbdec6917dd2c58b1"
     },
     {
-        title: "NEVER_SAY_NEVER",
+        title: "NEVER SAY NEVER",
         artist: "Justin Bieber ft. Jaden",
         genre: "Romantica",
         src: "tracks/Justin Bieber - Never Say Never ft. Jaden.mp3",
@@ -424,28 +424,28 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "LA_PREGUNTA",
+        title: "LA PREGUNTA",
         artist: "J Alvarez",
         genre: "Regueton",
         src: "tracks/La Pregunta - J Alvarez [Letra  Lyrics].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "LA_QUEMONA",
+        title: "LA QUEMONA",
         artist: "Master Boys",
         genre: "Regueton",
         src: "tracks/La Quemona Master Boys LetraLyrics.mp3",
         cover: "https://i.ytimg.com/vi/bc3z62HkFbs/maxresdefault.jpg"
     },
     {
-        title: "LA_TORMENTA_DE_ARENA",
+        title: "LA TORMENTA DE ARENA",
         artist: "Dorian",
         genre: "Romantica",
         src: "tracks/La Tormenta De Arena - Dorian (letra).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "EN_CAMBIO_NO",
+        title: "EN CAMBIO NO",
         artist: "Laura Pausini",
         genre: "Romantica",
         src: "tracks/Laura Pausini - En Cambio No (Official Music Video).mp3",
@@ -459,7 +459,7 @@ const songs = [
         cover: "https://i.ytimg.com/vi/ki2-xiMbQvU/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCUE9xMqD16OpyT1-DETW8qvws8gA"
     },
     {
-        title: "DEJAME_ENTRAR",
+        title: "DEJAME ENTRAR",
         artist: "Makano",
         genre: "Regueton",
         src: "tracks/Makano - Dejame Entrar [Video Oficial].mp3",
@@ -473,14 +473,14 @@ const songs = [
         cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/6/b/1/7/310471728900626.jpg"
     },
     {
-        title: "SU_NOMBRE_EN_MI_CUADERNO",
+        title: "SU NOMBRE EN MI CUADERNO",
         artist: "Makano ft. Josenid",
         genre: "Regueton",
         src: "tracks/Makano feat. Josenid - Su Nombre en mi Cuaderno [Video Oficial].mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "CUATRO_BABYS",
+        title: "CUATRO BABYS",
         artist: "Maluma ft. Noriel",
         genre: "Regueton",
         src: "tracks/Maluma - Cuatro Babys (Official Video) ft. Trap Capos, Noriel, Bryant Myers, Juhn.mp3",
@@ -494,14 +494,14 @@ const songs = [
         cover: "https://i.ytimg.com/vi/LvJdIYhC3Ck/maxresdefault.jpg"
     },
     {
-        title: "ME_BEFORE_YOU",
+        title: "ME BEFORE YOU",
         artist: "Louisa & Will",
         genre: "Romantica",
         src: "tracks/Me Before You - Louisa and Will - Photograph and Letter.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "ME_PARTE_EL_CORAZON",
+        title: "ME PARTE EL CORAZON",
         artist: "Daniel Calderón & Los Gigantes Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Me Parte El Corazón, Daniel Calderón & Los Gigantes Del Vallenato, Video Letra - Sentir Vallenato.mp3",
@@ -515,7 +515,7 @@ const songs = [
         cover: "https://i.ytimg.com/vi/bxl0cuevM_E/maxresdefault.jpg"
     },
     {
-        title: "BILLIE_JEAN",
+        title: "BILLIE JEAN",
         artist: "Michael Jackson",
         genre: "70 and 80",
         src: "tracks/Michael Jackson - Billie Jean (Official Video).mp3",
@@ -529,7 +529,7 @@ const songs = [
         cover: "https://akamai.sscdn.co/uploadfile/letras/albuns/7/e/3/6/438731433595119.jpg"
     },
     {
-        title: "MIENTELE_AL_CORAZON",
+        title: "MIENTELE AL CORAZON",
         artist: "Miguel Morales",
         genre: "Vallenato",
         src: "tracks/Miéntele Al Corazón, Miguel Morales, Video Letra - Sentir Vallenato.mp3",
@@ -543,14 +543,14 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "NIÑA_BONITA",
+        title: "NIÑA BONITA",
         artist: "Binomio De Oro De América",
         genre: "Vallenato",
         src: "tracks/Niña Bonita, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "EL_TREN_QUE_NOS_SEPARA",
+        title: "EL TREN QUE NOS SEPARA",
         artist: "Original",
         genre: "Romantica",
         src: "tracks/ORIGINAL El Tren Que Nos Separa (Letra) .....mp3",
@@ -564,7 +564,7 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "TE_VAS",
+        title: "TE VAS",
         artist: "Ozuna",
         genre: "Regueton",
         src: "tracks/Ozuna - Te Vas (Video Oficial).mp3",
@@ -592,14 +592,14 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "QUE_TIENE_ELLA",
+        title: "QUE TIENE ELLA",
         artist: "Unknown",
         genre: "Romantica",
         src: "tracks/Qué tiene ella que no tenga yo_.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "QUITAME_ESE_HOMBRE",
+        title: "QUITAME ESE HOMBRE",
         artist: "Pilar Montenegro",
         genre: "Romantica",
         src: "tracks/Quítame Ese Hombre Del Corazón - Pilar Montenegro   Letra  Norteña.mp3",
@@ -613,14 +613,14 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "HOLA_BEBE",
+        title: "HOLA BEBE",
         artist: "RD Maravilla",
         genre: "Regueton",
         src: "tracks/RD Maravilla - Hola Bebe (Te Lo Hundo).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "LOCO_LOCO",
+        title: "LOCO LOCO",
         artist: "RD Maravilla ft. El Original",
         genre: "Regueton",
         src: "tracks/RD Maravilla Feat. El Original - Loco loco (Video Oficial).mp3",
@@ -641,42 +641,42 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "SI_TU_LO_DEJAS",
+        title: "SI TU LO DEJAS",
         artist: "Rvssian ft. Bad Bunny",
         genre: "Regueton",
         src: "tracks/Rvssian - Si Tu Lo Dejas FT Bad Bunny X Farruko X Nicky Jam X King Kosa.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "LOVE_YOU_LIKE_A_LOVE_SONG",
+        title: "LOVE YOU LIKE A LOVE SONG",
         artist: "Selena Gomez",
         genre: "Romantica",
         src: "tracks/Selena Gomez - Love You Like a Love Song (Lyrics) no one compares you stand alone.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "ME_MUERO_POR_ESTAR_CONTIGO",
+        title: "ME MUERO POR ESTAR CONTIGO",
         artist: "Silvana Di Lorenzo",
         genre: "Romantica",
         src: "tracks/Silvana Di Lorenzo Me muero por estar contigo (VIDEO).mp3",
         cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR8bHaVLciucHJOE6RXazLt-5Mi0Z68LRPxkQ&s"
     },
     {
-        title: "SIN_TU_AMOR",
+        title: "SIN TU AMOR",
         artist: "Luis Mateus",
         genre: "Vallenato",
         src: "tracks/Sin Tu Amor - Luis Mateus (Video Lyric)  Vallenato Romántico.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "SOLO_ME_FALTAS_TU",
+        title: "SOLO ME FALTAS TU",
         artist: "Dinastía Romero",
         genre: "Vallenato",
         src: "tracks/Solo Me Faltas Tú, Dinastía Romero, Video Letra - Sentir Vallenato.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "TE_AMARE",
+        title: "TE AMARE",
         artist: "Los Inquietos Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Te Amaré, Los Inquietos Del Vallenato, Video Letra.mp3",
@@ -690,28 +690,28 @@ const songs = [
         cover: "https://i.ytimg.com/vi/6QYcYUATQdw/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLA7iQtcpRhdApGHHRnsDYOjb8BSEQ"
     },
     {
-        title: "TE_SORPRENDERAS",
+        title: "TE SORPRENDERAS",
         artist: "Los Inquietos Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Te Sorprenderás, Los Inquietos Del Vallenato, Video Letra.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "NO_ME_ACUERDO",
+        title: "NO ME ACUERDO",
         artist: "Thalia ft. Natti Natasha",
         genre: "Regueton",
         src: "tracks/Thalia, NATTI NATASHA - No Me Acuerdo (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "IN_THIS_SHIRT",
+        title: "IN THIS SHIRT",
         artist: "The Irrepressibles",
         genre: "Romantica",
         src: "tracks/The Irrepressibles - In This Shirt (Sub. Español).mp3",
         cover: "https://i1.sndcdn.com/artworks-000663988471-2eooz2-t500x500.jpg"
     },
     {
-        title: "TRES_NOCHES",
+        title: "TRES NOCHES",
         artist: "Jesús Manuel",
         genre: "Vallenato",
         src: "tracks/Tres Noches, Jesús Manuel, Vídeo Letra - Sentir Vallenato.mp3",
@@ -725,7 +725,7 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "UN_OSITO_DORMILON",
+        title: "UN OSITO DORMILON",
         artist: "Binomio De Oro De América",
         genre: "Vallenato",
         src: "tracks/Un Osito Dormilón, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
@@ -739,7 +739,7 @@ const songs = [
         cover: "https://d3e6ckxkrs5ntg.cloudfront.net/photos/images/19746849/original/resize:600x600/crop:x0y28w1000h750/aspect:1.0/hash:1464359685/1408851199_695328360557496_4431409542517171851_o.jpg?1464359685"
     },
     {
-        title: "VIVAMOS_LO_NUESTRO",
+        title: "VIVAMOS LO NUESTRO",
         artist: "Miguel Morales",
         genre: "Vallenato",
         src: "tracks/Vivamos Lo Nuestro, Miguel Morales, Video Letra - Sentir Vallenato.mp3",
@@ -767,21 +767,21 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "PAST_LIVES",
+        title: "PAST LIVES",
         artist: "sapientdream",
         genre: "Romantica",
         src: "tracks/sapientdream - past lives (Subtitulada Español).mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music126/v4/10/a9/88/10a98827-ed7e-3077-6cd8-9cc96b764d74/cover.jpg/600x600cc.webp"
     },
     { 
-        title: "Éveillez-vous",
+        title: "Eveillez-vous",
         artist: "avec Valerie Broussard",
         genre: "Otros",
         src: "tracks/Éveillez-vous (avec Valerie Broussard)  Cinématique de League of Legends  Saison 2019.mp3",
         cover: "https://i.ytimg.com/vi/zF5Ddo9JdpY/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDKL44ewCHdZXSQt-v7OtbFQZSeyA"
     },
     { 
-        title: "КАМИН", 
+        title: "КАМIM", 
         artist: "EMIN feat. JONY", 
         genre: "Electronica", 
         src: "tracks/EMIN feat. JONY - КАМИН.mp3", 
@@ -795,7 +795,7 @@ const songs = [
         cover: "https://i.scdn.co/image/ab67616d0000b273996dd344d4aa79463b40bb8f" 
     }, 
     { 
-        title: "Perdón, Perdón", 
+        title: "Perdón Perdón", 
         artist: "HA-ASH", 
         genre: "Romantica", 
         src: "tracks/HA-ASH - Perdón, Perdón.mp3", 
@@ -858,158 +858,158 @@ const songs = [
         cover: "https://i1.sndcdn.com/artworks-FNE3Y5vDbevyc7Ev-LrNGBQ-t1080x1080.jpg" 
     },
     {
-        title: "DISTINTOS_DESTINOS",
+        title: "DISTINTOS DESTINOS",
         artist: "Binomio De Oro De América",
         genre: "Vallenato",
         src: "tracks/Distintos Destinos, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/IKzQ6O80IW8/sddefault.jpg"
     },
     {
-        title: "LA_ABEJITA",
+        title: "LA ABEJITA",
         artist: "La dinastía romero",
         genre: "Vallenato",
         src: "tracks/La abejita - La dinastía romero.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "LO_DULCE_DE_UN_TE_QUIERO",
+        title: "LO DULCE DE UN TE QUIERO",
         artist: "Los chiches del vallenato",
         genre: "Vallenato",
         src: "tracks/Lo dulce de un te quiero - Los chiches del vallenato.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "ME_GUSTAS_MUCHO",
+        title: "ME GUSTAS MUCHO",
         artist: "Luis Mateus",
         genre: "Vallenato",
         src: "tracks/Me Gustas Mucho Luis Mateus Letra.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "ME_ILUSIONE",
+        title: "ME ILUSIONE",
         artist: "Binomio De Oro De América",
         genre: "Vallenato",
         src: "tracks/Me Ilusioné, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/5YYmQsqrvc8/maxresdefault.jpg"
     },
     {
-        title: "ME_DEJARON",
+        title: "ME DEJARON",
         artist: "Los amantes del vallenato",
         genre: "Vallenato",
         src: "tracks/Me dejaron - Los amantes del vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSbxtvSLkY6DG3xeVbkdkYS0v8TGq04KsbF3w&s"
     },
     {
-        title: "NO_ME_PIDAS_QUE_TE_OLVIDE",
+        title: "NO ME PIDAS QUE TE OLVIDE",
         artist: "Ivan Villazón",
         genre: "Vallenato",
         src: "tracks/No me pidas que te olvide - Ivan Villazón.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "PERTENECE_A_TI",
+        title: "PERTENECE A TI",
         artist: "Los valbuena",
         genre: "Vallenato",
         src: "tracks/Pertenece a ti - Los valbuena.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "PORQUE_ME_ENAMORE_DE_TI",
+        title: "PORQUE ME ENAMORE DE TI",
         artist: "Los amantes del vallenato",
         genre: "Vallenato",
         src: "tracks/Porque me enamore de ti - Los amantes del vallenato.mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "SOLO_AMAME",
+        title: "SOLO AMAME",
         artist: "Los Inquietos del vallenato",
         genre: "Vallenato",
         src: "tracks/Solo ámame - Los Inquietos del vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273e0a2cd1b76f9ec36c47a2e99"
     },
     {
-        title: "VOLVER_V2",
+        title: "VOLVER V2",
         artist: "Los inquietos del vallenato",
         genre: "Vallenato",
         src: "tracks/Volver - Los inquietos del vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273e0a2cd1b76f9ec36c47a2e99"
     },
     {
-        title: "SI_TU_ESTUVIERAS",
+        title: "SI TU ESTUVIERAS",
         artist: "Los inquietos del vallenato",
         genre: "Vallenato",
         src: "tracks/si tú estuvieras - Los inquietos del vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/rjcTs-y6uwA/sddefault.jpg?v=67a69229"
     },
     {
         title: "ADIOS AMOR",
         artist: "Clan Vallenato",
         genre: "Vallenato",
         src: "tracks/Adios Amor - Clan Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://s.mxmcdn.net/images-storage/albums5/5/4/6/2/1/3/32312645_500_500.jpg"
     },
     {
         title: "ATADO A TUS SENTIMIENTOS",
         artist: "Clan Vallenato",
         genre: "Vallenato",
         src: "tracks/Atado A Tus Sentimientos - Clan Vallenato (Letra) @paseosvallenatos9149.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://s.mxmcdn.net/images-storage/albums5/5/4/6/2/1/3/32312645_500_500.jpg"
     },
     {
-        title: "CORAZON_ATREVIDO",
+        title: "CORAZON ATREVIDO",
         artist: "Los Comandantes Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Corazón Atrevido - Los Comandantes Del Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/vc-LcxFMvCM/maxresdefault.jpg"
     },
     {
-        title: "COMO_EXPRESAR_LO_QUE_SIENTO",
+        title: "COMO EXPRESAR LO QUE SIENTO",
         artist: "Binomio De Oro De América",
         genre: "Vallenato",
         src: "tracks/Cómo Expresar Lo Que Siento, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/siwNtC75DOQ/maxresdefault.jpg"
     },
     {
-        title: "DESPUES_DE_AMAR",
+        title: "DESPUES DE AMAR",
         artist: "Los Inquietos Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Después De Amar, Los Inquietos Del Vallenato - Audio.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/z9h0mD7rwJg/maxresdefault.jpg"
     },
     {
-        title: "NO_PUDE_OLVIDARTE",
+        title: "NO PUDE OLVIDARTE",
         artist: "Binomio De Oro De América",
         genre: "Vallenato",
         src: "tracks/No Pude Olvidarte, Binomio De Oro De América, Video Letra - Sentir Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/TcQO38KcZhA/sddefault.jpg"
     },
     {
-        title: "NO_QUEDA_NADA",
+        title: "NO QUEDA NADA",
         artist: "Los Inquietos Del Vallenato",
         genre: "Vallenato",
         src: "tracks/No Queda Nada, Los Inquietos Del Vallenato - Audio.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b2730757dcbd35cab77d94e3f934"
     },
     {
-        title: "NO_TE_OLVIDARE",
+        title: "NO TE OLVIDARE",
         artist: "Jorge Celedón",
         genre: "Vallenato",
         src: "tracks/No Te Olvidare - Jorge Celedon  Letra.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273b901c0f988e169aa37ad823a"
     },
     {
-        title: "NO_PODRAN_SEPARARNOS",
+        title: "NO PODRAN SEPARARNOS",
         artist: "Jorge Celedón",
         genre: "Vallenato",
         src: "tracks/No podrán separarnos jorge celedon.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.ytimg.com/vi/6rYK0rBM1yE/maxresdefault.jpg"
     },
     {
-        title: "Y_NO_FUISTE_MIA",
+        title: "Y NO FUISTE MIA",
         artist: "Los Comandantes Del Vallenato",
         genre: "Vallenato",
         src: "tracks/Y No Fuiste Mía - Los Comandantes Del Vallenato.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273e208462dfd422f5c0458300a"
     }
 ];
 
