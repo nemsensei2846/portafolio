@@ -209,7 +209,7 @@ const songs = [
     {
         title: "Atrapado en Dos Amores",
         artist: "Baúl",
-        genre: "Salsa",
+        genre: "Otros",
         src: "tracks/Atrapado en Dos Amores  Letra Salsa.mp3",
         cover: "https://is1-ssl.mzstatic.com/image/thumb/Music221/v4/f5/78/0a/f5780ae2-42bb-294c-ff1a-27b902ca8b81/artwork.jpg/3000x3000bb.jpg"
     },
