@@ -361,13 +361,6 @@ const songs = [
         cover: "https://i.scdn.co/image/ab67616d0000b2739f92d222a80a9bea9805a8eb"
     },
     {
-        title: "HEROIC",
-        artist: "Aidan x Maxxton",
-        genre: "Otros",
-        src: "tracks/HEROIC Hard Epic String Rap Beat  Prod. By Aidan x Maxxton.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
-    },
-    {
         title: "HASTA LA RAIZ",
         artist: "Natalia Lafourcade",
         genre: "Romantica",
