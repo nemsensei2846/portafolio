@@ -151,21 +151,21 @@ const songs = [
         cover: "https://images.squarespace-cdn.com/content/v1/58eef9c2f7e0abff4db78dc9/1535770144822-40AU0TG93OBZNWYYE3OQ/Screen+Shot+2018-08-31+at+7.47.38+PM.png?format=750w"
     },
     {
-        title: "PA_TI",
+        title: "PA TI",
         artist: "6ix9ine ft. Yailin",
         genre: "Regueton",
         src: "tracks/6ix9ine - Pa Ti (feat. Yailin La Más Viral) (Official Music Video).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i1.sndcdn.com/artworks-000200598950-szqjd2-t500x500.jpg"
     },
     {
-        title: "A_LA_ANTIGÜITA",
+        title: "A la antiguita",
         artist: "Calibre 50",
         genre: "Vallenato",
         src: "tracks/A La Antigüita - Calibre 50 (LETRA).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273fd7bf5ad7bbf66e04b1bffb0"
     },
     {
-        title: "GIMME_GIMME_GIMME",
+        title: "GIMME GIMME GIMME",
         artist: "ABBA",
         genre: "70 and 80",
         src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
@@ -193,11 +193,11 @@ const songs = [
         cover: "https://s.mxmcdn.net/images-storage/albums2/1/0/9/0/7/0/40070901_350_350.jpg"
     },
     {
-        title: "NACIMOS_PA_MORIR",
+        title: "Nacimos pa morir",
         artist: "Anuel ft. Jory",
         genre: "Regueton",
         src: "tracks/Anuel - Nacimos Pa Morir (Official Video) ft. Jory.mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b273a16fd43991f51ee4312b7519"
     },
     {
         title: "Ella y Yo",
@@ -214,14 +214,14 @@ const songs = [
         cover: "https://i.ytimg.com/vi/E6jIgT-38u8/maxresdefault.jpg"
     },
     {
-        title: "SOY_PEOR",
+        title: "SOY PEOR",
         artist: "Bad Bunny",
         genre: "Regueton",
         src: "tracks/BAD BUNNY - SOY PEOR (Video Oficial).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "BARBIE_GIRL",
+        title: "BARBIE GIRL",
         artist: "Aqua",
         genre: "Otros",
         src: "tracks/BARBIE GIRL - Aqua  Subtítulos inglés y español.mp3",
@@ -242,25 +242,25 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "SIN_PIJAMA",
+        title: "SIN PIJAMA",
         artist: "Becky G ft. Natti Natasha",
         genre: "Regueton",
         src: "tracks/Becky G, NATTI NATASHA - Sin Pijama (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "CUANDO_TE_BESE",
+        title: "CUANDO TE BESE",
         artist: "Becky G ft. Paulo Londra",
         genre: "Regueton",
         src: "tracks/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
-        title: "JUST_THE_WAY_YOU_ARE",
+        title: "JUST THE WAY YOU ARE",
         artist: "Bruno Mars",
         genre: "Romantica",
         src: "tracks/Bruno Mars - Just The Way You Are (Lyrics).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://m.media-amazon.com/images/M/MV5BYTNkZTU4ZmItZDlmMy00MzFhLWJiMzAtMjliZWEzM2YzN2Y1XkEyXkFqcGc@._V1_FMjpg_UX1000_.jpg"
     },
     {
         title: "Burn It All Down",
@@ -270,11 +270,11 @@ const songs = [
         cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSrs7H13nkBXTAENpqSw5rIRgzOERlJAKdL0g&s"
     },
     {
-        title: "SIEMPRE_TE_VOY_A_QUERER",
+        title: "Siempre te voy a querer",
         artist: "Calibre 50",
         genre: "Romantica",
         src: "tracks/Calibre 50 - Siempre te voy a querer (Letra) (Lyrics).mp3",
-        cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+        cover: "https://i.scdn.co/image/ab67616d0000b27320f047dc3f75953a831b7db7"
     },
     {
         title: "DISFRUTO",
