@@ -158,7 +158,7 @@ const songs = [
         cover: "https://i1.sndcdn.com/artworks-000200598950-szqjd2-t500x500.jpg"
     },
     {
-        title: "A la antiguita",
+        title: "A LA ANTIGUITA",
         artist: "Calibre 50",
         genre: "Vallenato",
         src: "tracks/A La Antigüita - Calibre 50 (LETRA).mp3",
