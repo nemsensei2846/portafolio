@@ -9,21 +9,21 @@
   "theme_color": "#00ff41",
   "icons": [
     {
-      "src": "logo_sensei.jpg",
+      "src": "logo SENSEI.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo_sensei.jpg",
+      "src": "logo SENSEI.png",
       "sizes": "512x512",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "any"
     },
     {
-      "src": "logo_sensei.jpg",
+      "src": "logo SENSEI.png",
       "sizes": "192x192",
-      "type": "image/jpeg",
+      "type": "image/png",
       "purpose": "maskable"
     }
   ]

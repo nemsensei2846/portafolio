@@ -1,9 +1,9 @@
-const CACHE_NAME = 'sensei-v36'; // Versión 36 - Ultra Streaming & Instant Audio
+const CACHE_NAME = 'sensei-v49'; // Versión 49 - Fixed paths and extensions for broken tracks
 const urlsToCacheEssential = [
   './',
   './index.html',
   './manifest.json',
-  './logo_sensei.jpg',
+  './logo SENSEI.png',
   './google495610aeff1281cc.html',
   './Musica/index.html',
   './Musica/script.js',
