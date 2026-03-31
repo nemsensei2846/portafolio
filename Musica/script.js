@@ -1010,6 +1010,958 @@ const songs = [
         genre: "Vallenato",
         src: "tracks/Y No Fuiste Mía - Los Comandantes Del Vallenato.mp3",
         cover: "https://i.scdn.co/image/ab67616d0000b273e208462dfd422f5c0458300a"
+    },
+    {
+        title: "FERNANDEZ 13",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/13. fernandez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PERDON",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/23. perdon.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 01",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/01 Pista 1.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 04",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/04 Pista 4.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 05",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/05 Pista 5.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 07",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/07 Pista 7.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 15 (Pista)",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/15 Pista 15.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 15",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/15. fernandez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 17",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/17 Pista 17.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 18",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/18. fernandez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 19",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/19 Pista 19.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 21 (Pista)",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/21 Pista 21.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 21",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/21. fernandez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FERNANDEZ 22",
+        artist: "Vicente Fernandez",
+        genre: "Ranchera",
+        src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/22 Pista 22.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL CONTRAGOLPE",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/EL CONTRAGOLPE.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LA COPA ROTA",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/LA COPA ROTA.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AMOR GITANO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/AMOR GITANO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AMOR DEL ALMA",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/AMOR DEL ALMA.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BRAVO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/BRAVO .mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL PRESO # 9",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/EL PRESO # 9.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL ULTIMO BESO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/EL ULTIMO BESO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "HOLA SOLEDAD",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/HOLA SOLEDAD.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "JORNALERO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/JORNALERO .mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LA ARAÑA",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/LA ARAÑA.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LA CARCEL DE SING SING",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/La carcel de sing sing.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LA ULTIMA COPA",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/LA ULTIMA COPA.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MALDITO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/MALDITO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ME LLEVARAS EN TI",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/ME LLEVARAS EN TI.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NIEGALO TODO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/NIEGALO TODO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ODIAME",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/ODIAME.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ODIO GITANO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/ODIO GITANO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PAPEL DE LA CALLE",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/PAPEL DE LA CALLE.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "QUIERO SER TU AMIGO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/QUIERO SER TU AMIGO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "RENUNCIACION",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/RENUNCIACION.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TANGO NEGRO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/TANGO NEGRO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TE PROPONGO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/TE PROPONGO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TRAICIONERA",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/TRAICIONERA.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "YO TE MALDIGO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/YO TE MALDIGO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "COSTUMBRES",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/COSTUMBRES.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "DE QUE MANERA TE OLVIDO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/DE QUE MANERA TE OLVIDO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MUJERES DIVINAS",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/MUJERES DIVINAS.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PORQUE AHORA",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/PORQUE AHORA - ALCI ACOSTA.MP3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "SI HOY FUERA AYER",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/SI HOY FUERA AYER.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PORQUE SE FUE",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/porqué se fue.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL PRESO -9",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/EL PRESO -9.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LA CARCEL DE SING SING (2)",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/LA CARCEL DE SING SING (2).mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NIEGALO TODO (2)",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/NIEGALO TODO (2).mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "JORNALERO",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "categoria/ALCI ACOSTA/JORNALERO.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL ULTIMO BESO (CHUPATE LOS DOLARES)",
+        artist: "Alci Acosta",
+        genre: "Bolero",
+        src: "tracks/chupate los dolares fruko/11 - EL ULTIMO BESO - ALCI ACOSTA - 11.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PORQUE YO TE AMO",
+        artist: "Sandro",
+        genre: "Balada",
+        src: "tracks/BALADAS ANTIGUAS/SANDRO/Sandro  Porque yo te amo.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ROSA ROSA",
+        artist: "Sandro",
+        genre: "Balada",
+        src: "tracks/BALADAS ANTIGUAS/SANDRO/Sandro Rosa Rosa.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "DESPIERTA",
+        artist: "Los Tres Diamantes",
+        genre: "Bolero",
+        src: "tracks/BOLEROS/LOS DIAMANTES/Despierta Los Tres Diamantes.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LA GLORIA ERES TU",
+        artist: "Los Tres Diamantes",
+        genre: "Bolero",
+        src: "tracks/BOLEROS/LOS DIAMANTES/Los tres diamantes La Gloria Eres Tu.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NUESTRO JURAMENTO (MIX)",
+        artist: "Julio Jaramillo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Julio Jaramillo Vol 1 Nuestro Juramento Odiame Fatalidad Rondando Tu Esquina Musica de Ecuador.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AMOR SUBLIME",
+        artist: "Jesús Vásquez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/AMOR SUBLIME Jesús Vásquez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PASILLOS MIX",
+        artist: "Anita Lucía Proaño",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/ANITA LUCIA PROANO ( PASILLOS MIX).mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AQUELLA TARDE",
+        artist: "Gerardo Morán",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/AQUELLA TARDE - GERARDO MORAN - 13.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ENTREGA FINAL",
+        artist: "Anita Lucía Proaño",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Anita Lucia Proaño Entrega Final.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MOSAICO DE SANJUANITOS",
+        artist: "Anita Lucía Proaño",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Anita Lucía Proaño Mix - Mosaico de Sanjuanitos Ecuatorianos.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AVECILLA",
+        artist: "Hnos Núñez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Avecilla Hnos Nuñez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "CAUTIVO DE AMOR",
+        artist: "José Antonio",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/CAUTIVO DE AMOR - JOSE ANTONIO - 15.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "CELOS SIN MOTIVO",
+        artist: "Odilio González",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/CELOS SIN MOTIVO - ODILIO GONZALEZ - 12.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "CIELO DE LUJO",
+        artist: "Lucho Barrios",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/CIELO DE LUJO - LUCHO BARRIOS - 09.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "COMO PEQUEÑA FLORECITA",
+        artist: "Claudio Vallejo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/COMO PEQUE�A FLORECITA - CLAUDIO VALLEJO - 16.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "COMO VOY A OLVIDARTE",
+        artist: "Claudio Vallejo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/COMO VOY A OLVIDARTE - CLAUDIO VALLEJO - 17.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "CARIÑO BONITO",
+        artist: "Hermanos Núñez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Cariño bonito - (Hermanos Núñez - Letra).mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "CLAUDIO VALLEJO MIX",
+        artist: "Claudio Vallejo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Claudio Vallejo mix.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL CARMIN DE TUS LABIOS",
+        artist: "Kike Vega",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/EL CARMIN DE TUS LABIOS - KIKE VEGA - 14.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "EL ULTIMO BESO (PASILLO)",
+        artist: "Alci Acosta",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/EL ULTIMO BESO - ALCI ACOSTA - 11.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ELENA",
+        artist: "José Antonio",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/ELENA - JOSE ANTONIO - 23.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ESTOY PENSANDO EN TI",
+        artist: "Julio Jaramillo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/ESTOY PENSANDO EN TI - JULIO JARAMILLO - 01.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ESTOY SIN TI",
+        artist: "Segundo Rosero",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/ESTOY SIN TI - SEGUNDO ROSERO - 22.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FALSA MUJER (ASTUDILLO)",
+        artist: "Carlos Astudillo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/FALSA MUJER - CARLOS ASTUDILLO - 18.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "FALSA MUJER (ROSERO)",
+        artist: "Segundo Rosero",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/FALSA MUJER - SEGUNDO ROSERO - 20.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TU Y YO",
+        artist: "Hermanos Núñez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Hermanos Nuñez Tu y yo.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ACUÉRDATE DE MÍ",
+        artist: "Jesús Vásquez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/JESUS VAZQUEZ Acuerdate de mi.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ENDECHAS",
+        artist: "Jesús Vásquez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Jesus Vasquez Endechas.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "JESÚS VÁSQUEZ MIX",
+        artist: "Jesús Vásquez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Jesús Vásquez Mix.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "LEONOR",
+        artist: "Cecilio Alva",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/LEONOR - CECILIO ALVA - 08.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MAL PASO",
+        artist: "Los Kipus",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/MAL PASO - LOS KIPUS - 19.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MAS TE QUIERO",
+        artist: "Kike Vega",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/MAS TE QUIERO - KIKE VEGA - 05.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "POPURRÍ DE PASILLOS",
+        artist: "Hermanos Miño Naranjo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/MUSICA ECUATORIANA - Hermanos Miño Naranjo - Popurri de Pasillos y Albazos.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MI ÚLTIMO ADIÓS",
+        artist: "Olga Gutiérrez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Mi Ultimo Adios - Olga Gutierrez y la rondalla de Christian Naranjo.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NUESTRO JURAMENTO (SANTOS)",
+        artist: "Daniel Santos",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/NUESTRO JURAMENTO - DANIEL SANTOS - 02.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NUNCA TE OLVIDARÉ",
+        artist: "Pepe Jaramillo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/NUNCA TE OLVIDARE - PEPE JARAMILLO - 06.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NUESTRO JURAMENTO (SINGLE)",
+        artist: "Julio Jaramillo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Nuestro Juramento - Julio Jaramillo.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "OJOS TENTADORES",
+        artist: "Olga Gutiérrez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Ojos Tentadores - Pasillo - Olga Gutiérrez.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "OJOS NEGROS",
+        artist: "Olga Gutiérrez",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Olga Gutierrez Ojos Negros.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PAULINA TAMAYO MIX",
+        artist: "Paulina Tamayo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/PAULINA TAMAYO MIX.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PERDISTE",
+        artist: "Los Kipus",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/PERDISTE - LOS KIPUS - 07.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PERDÓN MUJER",
+        artist: "Kike Vega",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/PERDON MUJER - KIKE VEGA - 10.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "PAULINA TAMAYO PASILLOS",
+        artist: "Paulina Tamayo",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Paulina Tamayo Pasillos Mix Dj PauL 2016.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "SEGUNDO ROSERO MIX",
+        artist: "Segundo Rosero",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/Segundo Rosero Mix -  Exitos.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TIÉNDEME LA MANO",
+        artist: "Hermanos Zañartu",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/TIENDEME LA MANO - HERMANOS ZA�ARTU - 21.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TU AMIGO SERÉ",
+        artist: "Lucho Barrios",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/TU AMIGO SERE - LUCHO BARRIOS - 03.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "VAGABUNDO, BORRACHO Y LOCO",
+        artist: "Segundo Rosero",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/VAGABUNDO, BORRACHO Y LOCO - SEGUNDO ROSERO - 24.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "VENGANZA",
+        artist: "Cecilio Alva",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/VENGANZA - CECILIO ALVA - 04.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "17 AÑOS",
+        artist: "Segundo Rosero",
+        genre: "Pasillo",
+        src: "categoria/PASILLLOS/17 años - Segundo Rosero (Videoclip Oficial).mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "QUE LEVANTE LA MANO",
+        artist: "Américo",
+        genre: "Cumbia",
+        src: "tracks/SEÑORA MÚSICA/AMERICO/03.-_Que_levante_la_mano___Americo_A_morir.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "TE VAS",
+        artist: "Américo",
+        genre: "Cumbia",
+        src: "tracks/SEÑORA MÚSICA/AMERICO/Américo Te vas.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AMANECIENDO",
+        artist: "La Sonora Dinamita",
+        genre: "Cumbia",
+        src: "tracks/SEÑORA MÚSICA/LA SONORA DINAMITA/AMANECIENDO_(SONORA_DINAMITA).mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NEGRO JOSE",
+        artist: "La Sonora Dinamita",
+        genre: "Cumbia",
+        src: "tracks/SEÑORA MÚSICA/LA SONORA DINAMITA/Negro_Jose_Completo.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 01",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/01 Pista 1.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 02",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/02 Pista 2.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 03",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/03 Pista 3.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 04",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/04 Pista 4.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 05",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/05 Pista 5.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 06",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/06 Pista 6.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 07",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/07 Pista 7.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 08",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/08 Pista 8.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 09",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/09 Pista 9.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 10",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/10 Pista 10.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 11",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/11 Pista 11.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "BACHITA 12",
+        artist: "BACHITA",
+        genre: "Ranchera",
+        src: "categoria/BACHITA/12 Pista 12.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 01",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/01 Pista 1.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 02",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/02 Pista 2.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 03",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/03 Pista 3.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 04",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/04 Pista 4.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 05",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/05 Pista 5.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 07",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/07 Pista 7.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 08",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/08 Pista 8.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 10",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/10 Pista 10.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 12",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/12 Pista 12.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 14",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/14 Pista 14.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 15",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/15 Pista 15.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 16",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/16 Pista 16.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 18",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/18 Pista 18.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 20",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/20 Pista 20.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 25",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/25 Pista 25.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "AMOR POR TI",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/amor por ti.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 29",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/pista 29.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "ANGELES NEGROS 31",
+        artist: "Angeles Negros",
+        genre: "Balada",
+        src: "categoria/ANGELES NEGROS/pista 31.wma",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MIX MERENGUE 1",
+        artist: "Varios",
+        genre: "OTROS",
+        src: "tracks/MIX MERENGUE 1.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MIX MERENGUE 2",
+        artist: "Varios",
+        genre: "OTROS",
+        src: "tracks/MIX MERENGUE 2.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MIX MERENGUE 5",
+        artist: "Varios",
+        genre: "OTROS",
+        src: "tracks/MIX MERENGUE 5.mp3",
+        cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "MIX MERENGUE 7",
+        artist: "Varios",
+        genre: "OTROS",
+        src: "tracks/MIX MERENGUE 7.mp3",
+        cover: "../logo%20SENSEI.png"
     }
 ];
 
