@@ -273,18 +273,32 @@ const App = {
 
     toggleFavorite() {
         const currentSong = this.state.currentPlaylist[this.state.currentIndex];
-        console.log("Intentando marcar como favorito:", currentSong);
         if (!currentSong) return;
 
         let newFavs = [...this.state.favorites];
         const index = newFavs.findIndex(s => s.src === currentSong.src);
 
         if (index > -1) {
-            console.log("Removiendo de favoritos:", currentSong.title);
-            newFavs.splice(index, 1);
+            newFavs.splice(index, 1); // Quitar de favoritos
+            // Notificar al SW para que considere si quiere borrar el cache (opcional)
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'REMOVE_SONG',
+                    url: currentSong.src
+                });
+            }
         } else {
-            console.log("Añadiendo a favoritos:", currentSong.title);
+            // Asegurarnos de guardar el objeto completo de la canción
             newFavs.push({...currentSong}); 
+            
+            // --- NUEVO: Guardar físicamente en el PWA (Cache Offline) ---
+            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+                console.log("PWA: Solicitando guardado offline de:", currentSong.title);
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'CACHE_SONG',
+                    url: currentSong.src
+                });
+            }
         }
 
         this.setState({ favorites: newFavs });
