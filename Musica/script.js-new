@@ -1,0 +1,274 @@
+/**
+ * SENSEI_AUDIO_PLAYER - ADVANCED PWA ENGINE (React Hybrid)
+ */
+
+// --- 1. Audio Engine (Core Playback Logic) ---
+class AudioEngine {
+    constructor() {
+        this.audio = new Audio();
+        this.audio.id = "audio-player"; // Para compatibilidad con estilos CSS
+        this.wakeLock = null;
+        this.setupListeners();
+    }
+
+    setupListeners() {
+        this.audio.addEventListener('ended', () => {
+            if (App.state.isRepeatOne) {
+                this.play();
+            } else {
+                setTimeout(() => App.nextSong(), 200);
+            }
+        });
+
+        this.audio.addEventListener('play', () => {
+            App.setState({ isPlaying: true });
+            this.requestWakeLock();
+            this.updateMediaSession('playing');
+        });
+
+        this.audio.addEventListener('pause', () => {
+            App.setState({ isPlaying: false });
+            this.releaseWakeLock();
+            this.updateMediaSession('paused');
+        });
+
+        this.audio.onerror = () => {
+            console.error("Error de audio, saltando...");
+            setTimeout(() => App.nextSong(), 500);
+        };
+
+        // Media Session Handlers
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.setActionHandler('play', () => this.play());
+            navigator.mediaSession.setActionHandler('pause', () => this.pause());
+            navigator.mediaSession.setActionHandler('nexttrack', () => App.nextSong());
+            navigator.mediaSession.setActionHandler('previoustrack', () => App.prevSong());
+        }
+    }
+
+    async load(song) {
+        if (!song) return;
+        this.audio.src = song.src;
+        this.audio.title = song.title;
+        this.audio.load();
+        this.updateMediaMetadata(song);
+    }
+
+    async play() {
+        try {
+            await this.audio.play();
+        } catch (err) {
+            console.warn("Play bloqueado:", err);
+        }
+    }
+
+    pause() {
+        this.audio.pause();
+    }
+
+    updateMediaMetadata(song) {
+        if ('mediaSession' in navigator) {
+            const coverUrl = song.cover.startsWith('http') ? song.cover : window.location.origin + '/' + song.cover;
+            navigator.mediaSession.metadata = new MediaMetadata({
+                title: song.title,
+                artist: song.artist,
+                album: 'SENSEI PWA',
+                artwork: [{ src: coverUrl, sizes: '512x512', type: 'image/png' }]
+            });
+        }
+    }
+
+    updateMediaSession(state) {
+        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = state;
+    }
+
+    async requestWakeLock() {
+        if ('wakeLock' in navigator && !this.wakeLock) {
+            try { this.wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
+        }
+    }
+
+    releaseWakeLock() {
+        if (this.wakeLock) {
+            this.wakeLock.release();
+            this.wakeLock = null;
+        }
+    }
+}
+
+// --- 2. Main App Controller (State Management) ---
+const App = {
+    state: {
+        songs: songs, // Se asume que 'songs' está definido arriba o en otro script
+        currentPlaylist: [...songs],
+        queue: [],
+        currentIndex: 0,
+        isPlaying: false,
+        isShuffle: false,
+        isRepeatOne: false,
+        showLyrics: false,
+        favorites: JSON.parse(localStorage.getItem('sensei_favs')) || [],
+        downloads: JSON.parse(localStorage.getItem('sensei_downloads')) || [],
+    },
+
+    engine: null,
+
+    init() {
+        this.engine = new AudioEngine();
+        this.loadLastState();
+        this.render();
+        console.log("SENSEI Advanced Engine Ready");
+    },
+
+    setState(newState) {
+        this.state = { ...this.state, ...newState };
+        this.render();
+        this.syncStorage();
+    },
+
+    loadSong(index) {
+        const song = this.state.currentPlaylist[index];
+        this.setState({ currentIndex: index });
+        this.engine.load(song);
+        if (this.state.isPlaying) this.engine.play();
+    },
+
+    nextSong() {
+        let nextIndex = (this.state.currentIndex + 1) % this.state.currentPlaylist.length;
+        this.loadSong(nextIndex);
+    },
+
+    prevSong() {
+        let prevIndex = (this.state.currentIndex - 1 + this.state.currentPlaylist.length) % this.state.currentPlaylist.length;
+        this.loadSong(prevIndex);
+    },
+
+    togglePlay() {
+        if (this.state.isPlaying) this.engine.pause();
+        else this.engine.play();
+    },
+
+    syncStorage() {
+        localStorage.setItem('sensei_favs', JSON.stringify(this.state.favorites));
+        localStorage.setItem('sensei_downloads', JSON.stringify(this.state.downloads));
+    },
+
+    loadLastState() {
+        this.engine.load(this.state.currentPlaylist[0]);
+    },
+
+    render() {
+        // Aquí llamaríamos a la actualización de la UI Vanilla o React
+        updateVanillaUI(); 
+    }
+};
+
+// --- 3. UI Sync (Vanilla + React Bridge) ---
+function updateVanillaUI() {
+    const current = App.state.currentPlaylist[App.state.currentIndex];
+    if (!current) return;
+
+    // Mini Player
+    document.getElementById('mini-title').innerText = current.title;
+    document.getElementById('mini-artist').innerText = current.artist;
+    document.getElementById('mini-cover').src = current.cover;
+
+    // Full Player
+    document.getElementById('fp-title').innerText = current.title;
+    document.getElementById('fp-artist').innerText = current.artist;
+    document.getElementById('fp-cover').src = current.cover;
+    document.getElementById('fp-bg').style.backgroundImage = `url('${current.cover}')`;
+
+    // Botones
+    const playIcons = document.querySelectorAll('#play-pause i, #fp-play-pause i');
+    playIcons.forEach(icon => {
+        icon.className = App.state.isPlaying ? 'fas fa-pause' : 'fas fa-play';
+    });
+
+    // Letras
+    if (App.state.showLyrics) {
+        const lyricsText = document.getElementById('lyrics-text-full');
+        lyricsText.innerText = letrasData[current.src] || "Letra no disponible.";
+    }
+}
+
+// Inicializar App
+document.addEventListener('DOMContentLoaded', () => {
+    App.init();
+    
+    // Matrix BG
+    initMatrix();
+});
+
+// Re-vincular eventos a los IDs existentes en index.html
+document.getElementById('play-pause').onclick = () => App.togglePlay();
+document.getElementById('fp-play-pause').onclick = () => App.togglePlay();
+document.getElementById('next').onclick = () => App.nextSong();
+document.getElementById('fp-next').onclick = () => App.nextSong();
+document.getElementById('prev').onclick = () => App.prevSong();
+document.getElementById('fp-prev').onclick = () => App.prevSong();
+
+// --- 4. React Components (The "Advanced" Part) ---
+const PlaylistComponent = () => {
+    const [searchTerm, setSearchTerm] = React.useState("");
+    
+    const filteredSongs = App.state.songs.filter(s => 
+        s.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
+        s.artist.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return React.createElement('div', { className: 'playlist-advanced' },
+        React.createElement('input', {
+            type: 'text',
+            placeholder: 'Buscar música...',
+            className: 'search-advanced',
+            onChange: (e) => setSearchTerm(e.target.value)
+        }),
+        React.createElement('div', { className: 'song-grid' },
+            filteredSongs.map((song, i) => 
+                React.createElement('div', { 
+                    key: song.src,
+                    className: `song-item ${App.state.currentIndex === i ? 'active' : ''}`,
+                    onClick: () => {
+                        App.setState({ currentPlaylist: filteredSongs });
+                        App.loadSong(i);
+                        App.engine.play();
+                    }
+                },
+                    React.createElement('img', { src: song.cover }),
+                    React.createElement('div', null, 
+                        React.createElement('h4', null, song.title),
+                        React.createElement('p', null, song.artist)
+                    )
+                )
+            )
+        )
+    );
+};
+
+// --- Matrix BG Logic ---
+function initMatrix() {
+    const canvas = document.createElement('canvas');
+    const ctx = canvas.getContext('2d');
+    const container = document.getElementById('matrix-bg');
+    if (!container) return;
+    container.appendChild(canvas);
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    const letters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    const fontSize = 10;
+    const columns = canvas.width / fontSize;
+    const drops = Array(Math.floor(columns)).fill(1);
+    setInterval(() => {
+        ctx.fillStyle = "rgba(0, 0, 0, 0.05)";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "#00ccff";
+        ctx.font = fontSize + "px arial";
+        drops.forEach((y, i) => {
+            const text = letters[Math.floor(Math.random() * letters.length)];
+            ctx.fillText(text, i * fontSize, y * fontSize);
+            if (y * fontSize > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            drops[i]++;
+        });
+    }, 33);
+}
