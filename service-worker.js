@@ -1,4 +1,4 @@
-const CACHE_NAME = 'sensei-v49'; // Versión 49 - Fixed paths and extensions for broken tracks
+const CACHE_NAME = 'sensei-v50'; // Versión 50 - Background play and robust caching Manila
 const urlsToCacheEssential = [
   './',
   './index.html',
@@ -35,7 +35,7 @@ self.addEventListener('install', event => {
   self.skipWaiting(); 
   event.waitUntil(
     caches.open(CACHE_NAME).then(cache => {
-      console.log('Cache v36 abierta. Iniciando cacheo esencial...');
+      console.log('Cache v50 abierta. Iniciando cacheo esencial...');
       return Promise.all([
         cache.addAll(urlsToCacheEssential),
         cache.addAll(urlsToCacheImages)
@@ -65,8 +65,6 @@ self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
   // OPTIMIZACIÓN CRÍTICA PARA AUDIO: PASSTHROUGH DIRECTO PARA STREAMING
-  // Si es un archivo .mp3, dejamos que el navegador lo maneje directamente por red
-  // para aprovechar el motor de streaming nativo, EXCEPTO si el usuario decidió descargarlo (vía IndexedDB en script.js)
   if (url.pathname.endsWith('.mp3')) {
     // Si hay un rango pedido (streaming), devolvemos fetch directo (lo más rápido)
     if (event.request.headers.get('range')) {
@@ -79,6 +77,14 @@ self.addEventListener('fetch', event => {
       caches.match(event.request).then(response => {
         return response || fetch(event.request);
       })
+    );
+    return;
+  }
+
+  // Estrategia Network First para archivos críticos, Stale-While-Revalidate para el resto
+  if (url.pathname.includes('script.js') || url.pathname.includes('index.html')) {
+    event.respondWith(
+        fetch(event.request).catch(() => caches.match(event.request))
     );
     return;
   }
