@@ -15,10 +15,11 @@ class AudioEngine {
         this.audio.addEventListener('ended', () => {
             if (App.state.isRepeatOne) {
                 this.audio.currentTime = 0;
-                this.play();
+                this.audio.play().catch(e => console.log("Replay failed", e));
             } else {
-                // Al terminar, pasamos a la siguiente canción y forzamos el play
-                setTimeout(() => App.nextSong(true), 100);
+                // Al terminar, pasamos a la siguiente canción INMEDIATAMENTE
+                // El retraso puede causar que el navegador bloquee el inicio del siguiente audio en segundo plano
+                App.nextSong(true);
             }
         });
 
@@ -26,12 +27,21 @@ class AudioEngine {
             App.setState({ isPlaying: true });
             this.requestWakeLock();
             this.updateMediaSession('playing');
+            
+            // Iniciar intervalo de actualización de posición para mantener vivo el proceso en móviles
+            if (this.positionInterval) clearInterval(this.positionInterval);
+            this.positionInterval = setInterval(() => this.updatePositionState(), 1000);
         });
 
         this.audio.addEventListener('pause', () => {
             App.setState({ isPlaying: false });
             this.releaseWakeLock();
             this.updateMediaSession('paused');
+            
+            if (this.positionInterval) {
+                clearInterval(this.positionInterval);
+                this.positionInterval = null;
+            }
         });
 
         this.audio.addEventListener('timeupdate', () => {
@@ -89,18 +99,48 @@ class AudioEngine {
                 title: song.title,
                 artist: song.artist,
                 album: 'SENSEI PWA',
-                artwork: [{ src: coverUrl, sizes: '512x512', type: 'image/png' }]
+                artwork: [
+                    { src: coverUrl, sizes: '96x96',   type: 'image/png' },
+                    { src: coverUrl, sizes: '128x128', type: 'image/png' },
+                    { src: coverUrl, sizes: '192x192', type: 'image/png' },
+                    { src: coverUrl, sizes: '256x256', type: 'image/png' },
+                    { src: coverUrl, sizes: '384x384', type: 'image/png' },
+                    { src: coverUrl, sizes: '512x512', type: 'image/png' },
+                ]
             });
+            this.updatePositionState();
+        }
+    }
+
+    updatePositionState() {
+        if ('mediaSession' in navigator && 'setPositionState' in navigator.mediaSession) {
+            const duration = this.audio.duration;
+            const currentTime = this.audio.currentTime;
+            if (!isNaN(duration) && duration > 0) {
+                navigator.mediaSession.setPositionState({
+                    duration: duration,
+                    playbackRate: this.audio.playbackRate,
+                    position: currentTime
+                });
+            }
         }
     }
 
     updateMediaSession(state) {
-        if ('mediaSession' in navigator) navigator.mediaSession.playbackState = state;
+        if ('mediaSession' in navigator) {
+            navigator.mediaSession.playbackState = state;
+            this.updatePositionState();
+        }
     }
 
     async requestWakeLock() {
         if ('wakeLock' in navigator && !this.wakeLock) {
-            try { this.wakeLock = await navigator.wakeLock.request('screen'); } catch (e) {}
+            try { 
+                this.wakeLock = await navigator.wakeLock.request('screen'); 
+                this.wakeLock.addEventListener('release', () => {
+                    this.wakeLock = null;
+                });
+            } catch (e) {}
         }
     }
 
@@ -556,6 +596,13 @@ const PlaylistComponent = (props) => {
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
     initMatrix();
+});
+
+// Re-adquirir Wake Lock cuando la app vuelve a estar visible (si se estaba reproduciendo)
+document.addEventListener('visibilitychange', async () => {
+    if (document.visibilityState === 'visible' && App.state.isPlaying) {
+        if (App.engine) App.engine.requestWakeLock();
+    }
 });
 
 // Matrix Logic (Simplificada)
