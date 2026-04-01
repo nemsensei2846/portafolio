@@ -1,4 +1,4 @@
-/**
+﻿/**
  * SENSEI_AUDIO_PLAYER - MODERN APP LOGIC
  */
 
@@ -135,10 +135,13 @@ const fpProgressFill = document.getElementById('fp-progress-fill');
 const fpProgressBar = document.getElementById('fp-progress-bar');
 const fpCurrentTime = document.getElementById('fp-current-time');
 const fpDuration = document.getElementById('fp-duration');
+const toggleLyricsBtn = document.getElementById('toggle-lyrics-btn');
+const lyricsBtnText = document.getElementById('lyrics-btn-text');
 
 let isPlaying = false;
 let isRepeatOne = false;
 let isShuffle = false;
+let showLyrics = false;
 let favorites = JSON.parse(localStorage.getItem('sensei_favs')) || [];
 
 // Datos de las canciones (102 Pistas Sincronizadas)
@@ -2073,6 +2076,38 @@ document.querySelectorAll('.nav-item').forEach(item => {
     });
 });
 
+// --- Lyrics Functions ---
+function toggleLyrics() {
+    showLyrics = !showLyrics;
+    const lyricsStatic = document.getElementById('lyrics-static');
+    const fullPlayer = document.querySelector('.full-player');
+
+    if (showLyrics) {
+        lyricsStatic.classList.remove('hidden');
+        if (toggleLyricsBtn) toggleLyricsBtn.classList.add('active-lyrics');
+        if (lyricsBtnText) lyricsBtnText.innerText = "OCULTAR LETRA";
+        fullPlayer.classList.add('with-lyrics');
+        renderStaticLyrics();
+    } else {
+        lyricsStatic.classList.add('hidden');
+        if (toggleLyricsBtn) toggleLyricsBtn.classList.remove('active-lyrics');
+        if (lyricsBtnText) lyricsBtnText.innerText = "VER LETRA";
+        fullPlayer.classList.remove('with-lyrics');
+    }
+}
+
+function renderStaticLyrics() {
+    const lyricsTextFull = document.getElementById('lyrics-text-full');
+    const currentSong = songs[songIndex];
+    // Usamos letrasData del archivo letras.js
+    const lyric = letrasData[currentSong.src];
+    lyricsTextFull.innerText = lyric || "Letra no disponible para esta canción.";
+}
+
+if (toggleLyricsBtn) {
+    toggleLyricsBtn.addEventListener('click', toggleLyrics);
+}
+
 function switchSection(section) {
     // UI Update
     document.querySelectorAll('.nav-item').forEach(n => {
@@ -2181,6 +2216,9 @@ async function loadSong(song) {
     fpBg.style.backgroundImage = `url('${song.cover}')`;
     fpCover.onerror = () => fpCover.src = '../logo_sensei.jpg';
     
+    // Si las letras están visibles, las actualizamos
+    if (showLyrics) renderStaticLyrics();
+
     // Optimización de carga: Solo resetear si es una canción diferente
     if (audio.dataset.currentSrc === song.src) return;
 
