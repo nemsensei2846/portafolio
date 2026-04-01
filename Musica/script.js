@@ -140,6 +140,11 @@ const App = {
     init() {
         this.engine = new AudioEngine();
         
+        // Limpiar y validar favoritos guardados
+        const savedFavs = JSON.parse(localStorage.getItem('sensei_favs')) || [];
+        this.state.favorites = this.cleanSongArray(savedFavs);
+        localStorage.setItem('sensei_favs', JSON.stringify(this.state.favorites));
+
         // Verificar si las canciones están cargadas
         if (this.state.songs.length === 0 && typeof songs !== 'undefined') {
             this.state.songs = songs;
@@ -152,6 +157,18 @@ const App = {
         this.setupEvents();
         this.renderReact();
         this.renderVanilla();
+    },
+
+    // Utilidad para limpiar arrays de canciones de datos corruptos
+    cleanSongArray(arr) {
+        if (!Array.isArray(arr)) return [];
+        return arr.filter(song => 
+            song && 
+            typeof song === 'object' && 
+            song.src && 
+            song.title && 
+            song.artist
+        );
     },
 
     setupEvents() {
@@ -472,14 +489,18 @@ const PlaylistComponent = (props) => {
 
     let baseSongs = currentSection === 'favorites' ? favorites : (currentSection === 'home' ? songs : []);
     
+    // --- LIMPIEZA DE SEGURIDAD ---
+    // Asegurarnos de que baseSongs sea un array válido y no contenga nulos
+    baseSongs = (baseSongs || []).filter(s => s && s.title && s.artist);
+    
     // Filtrar por género si hay uno seleccionado
     if (currentGenre && currentSection === 'home') {
         baseSongs = baseSongs.filter(s => s.genre && s.genre.toUpperCase() === currentGenre.toUpperCase());
     }
     
-    const filteredSongs = (baseSongs || []).filter(s => 
-        s.title.toLowerCase().includes(searchTerm.toLowerCase()) || 
-        s.artist.toLowerCase().includes(searchTerm.toLowerCase())
+    const filteredSongs = baseSongs.filter(s => 
+        (s.title || "").toLowerCase().includes(searchTerm.toLowerCase()) || 
+        (s.artist || "").toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return React.createElement('div', { className: 'playlist-advanced' },
