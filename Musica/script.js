@@ -13,12 +13,13 @@ class AudioEngine {
 
     setupListeners() {
         this.audio.addEventListener('ended', () => {
+            console.log("Canción terminada. Intentando pasar a la siguiente...");
             if (App.state.isRepeatOne) {
                 this.audio.currentTime = 0;
-                this.audio.play().catch(e => console.log("Replay failed", e));
+                this.play().catch(e => console.log("Replay failed", e));
             } else {
-                // Al terminar, pasamos a la siguiente canción INMEDIATAMENTE
-                // El retraso puede causar que el navegador bloquee el inicio del siguiente audio en segundo plano
+                // Forzar el cambio a la siguiente canción de forma sincrónica
+                // No usar setTimeout aquí para no romper la cadena de reproducción en segundo plano
                 App.nextSong(true);
             }
         });
@@ -61,30 +62,42 @@ class AudioEngine {
         });
 
         this.audio.onerror = () => {
-            console.error("Error de audio, saltando...");
-            setTimeout(() => App.nextSong(), 500);
+            console.error("Error de audio crítico, saltando a la siguiente...");
+            // Intentar saltar tras un pequeño delay si falla en el cargado
+            setTimeout(() => App.nextSong(true), 300);
         };
 
         if ('mediaSession' in navigator) {
             navigator.mediaSession.setActionHandler('play', () => this.play());
             navigator.mediaSession.setActionHandler('pause', () => this.pause());
+            // IMPORTANTE: Asegurarnos de que el handler de MediaSession use forcePlay=true
             navigator.mediaSession.setActionHandler('nexttrack', () => App.nextSong(true));
             navigator.mediaSession.setActionHandler('previoustrack', () => App.prevSong(true));
         }
     }
 
-    async load(song) {
+    load(song) {
         if (!song) return;
+        // Solo cambiamos el SRC y llamamos a load() si es necesario
+        // En algunos móviles, llamar a load() explícitamente ayuda a resetear el buffer
         this.audio.src = song.src;
-        this.audio.load();
+        this.audio.load(); 
         this.updateMediaMetadata(song);
     }
 
     async play() {
         try {
-            await this.audio.play();
+            const playPromise = this.audio.play();
+            if (playPromise !== undefined) {
+                await playPromise;
+                console.log("Reproducción iniciada correctamente.");
+            }
         } catch (err) {
-            console.warn("Play bloqueado:", err);
+            console.warn("Play bloqueado por el navegador (Autoplay):", err);
+            // Si falla, intentamos de nuevo en un segundo si seguimos en estado 'isPlaying'
+            if (App.state.isPlaying) {
+                setTimeout(() => this.play(), 1000);
+            }
         }
     }
 
