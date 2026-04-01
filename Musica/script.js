@@ -3,6 +3,33 @@
  */
 
 let userName = localStorage.getItem('sensei_user_name') || 'Usuario Sensei';
+let wakeLock = null;
+
+// Función para prevenir que el teléfono se suspenda
+const requestWakeLock = async () => {
+    try {
+        if ('wakeLock' in navigator) {
+            wakeLock = await navigator.wakeLock.request('screen');
+            console.log('Wake Lock activado: La pantalla no se apagará');
+        }
+    } catch (err) {
+        console.error(`${err.name}, ${err.message}`);
+    }
+};
+
+const releaseWakeLock = () => {
+    if (wakeLock !== null) {
+        wakeLock.release();
+        wakeLock = null;
+    }
+};
+
+// Re-activar si la visibilidad cambia (vuelve del bloqueo)
+document.addEventListener('visibilitychange', async () => {
+    if (wakeLock !== null && document.visibilityState === 'visible') {
+        await requestWakeLock();
+    }
+});
 
 // --- Initialization ---
 document.addEventListener('DOMContentLoaded', () => {
@@ -2222,7 +2249,10 @@ async function loadSong(song) {
     if (showLyrics) renderStaticLyrics();
 
     // Optimización de carga: Solo resetear si es una canción diferente
-    if (audio.dataset.currentSrc === song.src) return;
+    if (audio.dataset.currentSrc === song.src) {
+        updateMediaSession(song);
+        return;
+    }
 
     audio.pause();
     audio.dataset.currentSrc = song.src;
@@ -2236,33 +2266,49 @@ async function loadSong(song) {
     if (isPlaying) {
         playSong();
     }
+
+    // Fallback: Si el audio falla, pasar a la siguiente
+    audio.onerror = () => {
+        console.error("Error cargando canción, pasando a la siguiente...");
+        nextSong();
+    };
     
     preloadNextSong();
+    updateMediaSession(song);
+}
 
+function updateMediaSession(song) {
     if ('mediaSession' in navigator) {
+        // Asegurar que la URL del cover sea absoluta para mejor compatibilidad en móviles
+        const coverUrl = song.cover.startsWith('http') ? song.cover : window.location.origin + '/' + song.cover;
+        
         navigator.mediaSession.metadata = new MediaMetadata({
             title: song.title,
             artist: song.artist,
+            album: 'SENSEI MUSIC',
             artwork: [
-                { src: song.cover, sizes: '96x96', type: 'image/png' },
-                { src: song.cover, sizes: '128x128', type: 'image/png' },
-                { src: song.cover, sizes: '192x192', type: 'image/png' },
-                { src: song.cover, sizes: '256x256', type: 'image/png' },
-                { src: song.cover, sizes: '384x384', type: 'image/png' },
-                { src: song.cover, sizes: '512x512', type: 'image/png' },
+                { src: coverUrl, sizes: '96x96', type: 'image/png' },
+                { src: coverUrl, sizes: '128x128', type: 'image/png' },
+                { src: coverUrl, sizes: '192x192', type: 'image/png' },
+                { src: coverUrl, sizes: '256x256', type: 'image/png' },
+                { src: coverUrl, sizes: '384x384', type: 'image/png' },
+                { src: coverUrl, sizes: '512x512', type: 'image/png' },
             ]
         });
         
-        // Registrar acciones del sistema
-        navigator.mediaSession.setActionHandler('play', playSong);
-        navigator.mediaSession.setActionHandler('pause', pauseSong);
-        navigator.mediaSession.setActionHandler('previoustrack', prevSong);
-        navigator.mediaSession.setActionHandler('nexttrack', nextSong);
+        // Registrar acciones del sistema para bloqueo/segundo plano
+        navigator.mediaSession.setActionHandler('play', () => playSong());
+        navigator.mediaSession.setActionHandler('pause', () => pauseSong());
+        navigator.mediaSession.setActionHandler('previoustrack', () => prevSong());
+        navigator.mediaSession.setActionHandler('nexttrack', () => nextSong());
         
-        // Soporte para buscar (opcional)
+        // Soporte para buscar desde la pantalla de bloqueo
         navigator.mediaSession.setActionHandler('seekto', (details) => {
             if (details.seekTime) audio.currentTime = details.seekTime;
         });
+
+        // Sincronizar estado de reproducción inmediatamente
+        navigator.mediaSession.playbackState = isPlaying ? 'playing' : 'paused';
     }
 }
 
@@ -2284,23 +2330,23 @@ function preloadNextSong() {
 }
 
 function playSong() {
-    isPlaying = true;
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
     fpPlayPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    
+    // Activar Wake Lock para evitar suspensión
+    requestWakeLock();
     
     // REPRODUCCIÓN ROBUSTA
     const playPromise = audio.play();
     if (playPromise !== undefined) {
         playPromise.then(_ => {
-            if ('mediaSession' in navigator) {
-                navigator.mediaSession.playbackState = 'playing';
-            }
+            // El listener de 'play' se encarga del estado
         }).catch(error => {
             console.log("Error al reproducir:", error);
             // En móviles, a veces el primer play debe ser manual
-            isPlaying = false;
             playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
             fpPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            releaseWakeLock();
         });
     }
 
@@ -2309,16 +2355,14 @@ function playSong() {
 }
 
 function pauseSong() {
-    isPlaying = false;
     playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     fpPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
     audio.pause();
     
+    // Liberar Wake Lock
+    releaseWakeLock();
+    
     gsap.fromTo(fpPlayPauseBtn, { scale: 1.2 }, { scale: 1, duration: 0.2, ease: "power2.out" });
-
-    if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'paused';
-    }
 }
 
 function nextSong() {
@@ -2534,6 +2578,20 @@ function formatTime(seconds) {
     const sec = Math.floor(seconds % 60);
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
 }
+
+audio.addEventListener('play', () => {
+    isPlaying = true;
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'playing';
+    }
+});
+
+audio.addEventListener('pause', () => {
+    isPlaying = false;
+    if ('mediaSession' in navigator) {
+        navigator.mediaSession.playbackState = 'paused';
+    }
+});
 
 audio.addEventListener('ended', () => {
     if (isRepeatOne) {
