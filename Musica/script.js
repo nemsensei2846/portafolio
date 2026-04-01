@@ -1,4 +1,4 @@
-﻿/**
+/**
  * SENSEI_AUDIO_PLAYER - MODERN APP LOGIC
  */
 
@@ -1972,6 +1972,7 @@ let songIndex = 0;
 let downloads = JSON.parse(localStorage.getItem('sensei_downloads')) || [];
 let originalSongs = [...songs]; // Guardar el orden original para cuando se desactive shuffle
 let currentSongs = [...songs];
+let currentPlaylist = [...songs]; // Playlist activa para reproducción continua
 
 // --- Core UI Functions ---
 
@@ -2019,8 +2020,8 @@ function renderGrid(songList, container) {
         `;
         
         card.addEventListener('click', () => {
-            const originalIndex = songs.findIndex(s => s.src === song.src);
-            songIndex = originalIndex;
+            currentPlaylist = [...songList]; // Actualizar la playlist activa a las canciones de este grid
+            songIndex = index; // El índice es relativo a esta lista
             playSongWithAnimation(card);
         });
         
@@ -2030,7 +2031,7 @@ function renderGrid(songList, container) {
 
 function playSongWithAnimation(card) {
     gsap.to(card, { scale: 0.9, duration: 0.1, yoyo: true, repeat: 1 });
-    loadSong(songs[songIndex]);
+    loadSong(currentPlaylist[songIndex]);
     playSong();
 }
 
@@ -2204,6 +2205,7 @@ if (miniPlayerInfo) {
 closeFullPlayerBtn.addEventListener('click', closeFullPlayer);
 
 async function loadSong(song) {
+    if (!song) return;
     miniTitle.innerText = song.title;
     miniArtist.innerText = song.artist;
     miniCover.src = song.cover;
@@ -2228,10 +2230,11 @@ async function loadSong(song) {
     // Solo cargamos directamente desde red o caché del Service Worker
     audio.src = song.src;
     audio.preload = "auto";
+    audio.load(); // Aseguramos la carga del buffer
     
-    // REPRODUCCIÓN INMEDIATA: No esperar a load() si ya se llamó a play()
+    // REPRODUCCIÓN INMEDIATA
     if (isPlaying) {
-        audio.play().catch(e => console.log("Auto-play bloqueado por el navegador"));
+        playSong();
     }
     
     preloadNextSong();
@@ -2264,8 +2267,9 @@ async function loadSong(song) {
 }
 
 function preloadNextSong() {
-    const nextIndex = (songIndex + 1) % songs.length;
-    const nextSong = songs[nextIndex];
+    if (currentPlaylist.length === 0) return;
+    const nextIndex = (songIndex + 1) % currentPlaylist.length;
+    const nextSong = currentPlaylist[nextIndex];
     
     // Usamos una etiqueta link prefetch para el siguiente audio
     let prefetchLink = document.getElementById('next-song-prefetch');
@@ -2284,20 +2288,24 @@ function playSong() {
     playPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
     fpPlayPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
     
-    // Reproducción directa
+    // REPRODUCCIÓN ROBUSTA
     const playPromise = audio.play();
     if (playPromise !== undefined) {
-        playPromise.catch(error => {
+        playPromise.then(_ => {
+            if ('mediaSession' in navigator) {
+                navigator.mediaSession.playbackState = 'playing';
+            }
+        }).catch(error => {
             console.log("Error al reproducir:", error);
+            // En móviles, a veces el primer play debe ser manual
+            isPlaying = false;
+            playPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+            fpPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
         });
     }
 
     gsap.to('#mini-player', { y: 0, opacity: 1, duration: 0.3 });
     gsap.fromTo(fpPlayPauseBtn, { scale: 0.8 }, { scale: 1, duration: 0.2, ease: "back.out(2)" });
-
-    if ('mediaSession' in navigator) {
-        navigator.mediaSession.playbackState = 'playing';
-    }
 }
 
 function pauseSong() {
@@ -2314,14 +2322,14 @@ function pauseSong() {
 }
 
 function nextSong() {
-    songIndex = (songIndex + 1) % songs.length;
-    loadSong(songs[songIndex]);
+    songIndex = (songIndex + 1) % currentPlaylist.length;
+    loadSong(currentPlaylist[songIndex]);
     if (isPlaying) playSong();
 }
 
 function prevSong() {
-    songIndex = (songIndex - 1 + songs.length) % songs.length;
-    loadSong(songs[songIndex]);
+    songIndex = (songIndex - 1 + currentPlaylist.length) % currentPlaylist.length;
+    loadSong(currentPlaylist[songIndex]);
     if (isPlaying) playSong();
 }
 
@@ -2349,9 +2357,9 @@ function toggleShuffle() {
     fpShuffleBtn.classList.toggle('active-repeat', isShuffle); // Usamos la misma clase de brillo
     
     if (isShuffle) {
-        // Mezclar canciones manteniendo la actual en su posición si es posible
-        const currentSong = songs[songIndex];
-        let remainingSongs = songs.filter((_, i) => i !== songIndex);
+        // Mezclar canciones de la PLAYLIST ACTUAL
+        const currentSong = currentPlaylist[songIndex];
+        let remainingSongs = currentPlaylist.filter((_, i) => i !== songIndex);
         
         // Fisher-Yates shuffle
         for (let i = remainingSongs.length - 1; i > 0; i--) {
@@ -2359,16 +2367,22 @@ function toggleShuffle() {
             [remainingSongs[i], remainingSongs[j]] = [remainingSongs[j], remainingSongs[i]];
         }
         
-        // Re-ensamblar: canción actual primero, luego el resto mezclado
-        // Esto evita que la música se detenga o salte bruscamente
+        // Re-ensamblar
         const shuffled = [currentSong, ...remainingSongs];
-        songs.splice(0, songs.length, ...shuffled);
+        currentPlaylist = shuffled;
         songIndex = 0;
     } else {
-        // Restaurar orden original
-        const currentSong = songs[songIndex];
-        songs.splice(0, songs.length, ...originalSongs);
-        songIndex = songs.findIndex(s => s.src === currentSong.src);
+        // Restaurar orden original de la playlist actual
+        // Para simplificar, si se desactiva shuffle, volvemos al orden general o de categoría
+        const currentSong = currentPlaylist[songIndex];
+        
+        // Determinamos qué lista original restaurar
+        const genre = document.getElementById('genre-filter').value;
+        const baseList = genre === 'All' ? [...originalSongs] : originalSongs.filter(s => s.genre === genre);
+        
+        currentPlaylist = baseList;
+        songIndex = currentPlaylist.findIndex(s => s.src === currentSong.src);
+        if (songIndex === -1) songIndex = 0;
     }
 }
 
@@ -2482,11 +2496,9 @@ function renderDownloads() {
             `;
             
             card.addEventListener('click', () => {
-                const originalIndex = songs.findIndex(s => s.src === song.src);
-                if (originalIndex !== -1) {
-                    songIndex = originalIndex;
-                    playSongWithAnimation(card);
-                }
+                currentPlaylist = [...downloads];
+                songIndex = index;
+                playSongWithAnimation(card);
             });
             
             downloadsGrid.appendChild(card);
@@ -2528,7 +2540,10 @@ audio.addEventListener('ended', () => {
         audio.currentTime = 0;
         playSong();
     } else {
-        nextSong();
+        // En móviles, a veces necesitamos un pequeño delay para que el siguiente track cargue bien
+        setTimeout(() => {
+            nextSong();
+        }, 100);
     }
 });
 
