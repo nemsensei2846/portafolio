@@ -87,7 +87,33 @@ self.addEventListener('fetch', event => {
   );
 });
 
-// Mantener el Service Worker activo para reproducción en segundo plano
+// Mantener el Service Worker activo y manejar mensajes
 self.addEventListener('message', event => {
-  if (event.data === 'skipWaiting') self.skipWaiting();
+  if (event.data === 'skipWaiting') {
+    self.skipWaiting();
+  }
+  
+  // Lógica para cachear canciones favoritas individualmente
+  if (event.data && event.data.type === 'CACHE_SONG') {
+    const songUrl = event.data.url;
+    event.waitUntil(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.add(songUrl).then(() => {
+          console.log('SW: Canción guardada en cache offline:', songUrl);
+        });
+      })
+    );
+  }
+
+  // Lógica para eliminar de cache si se quita de favoritos (opcional)
+  if (event.data && event.data.type === 'REMOVE_SONG') {
+    const songUrl = event.data.url;
+    event.waitUntil(
+      caches.open(CACHE_NAME).then(cache => {
+        return cache.delete(songUrl).then(() => {
+          console.log('SW: Canción eliminada de cache offline:', songUrl);
+        });
+      })
+    );
+  }
 });
