@@ -7,6 +7,13 @@ const songs = [
         cover: "https://images.squarespace-cdn.com/content/v1/58eef9c2f7e0abff4db78dc9/1535770144822-40AU0TG93OBZNWYYE3OQ/Screen+Shot+2018-08-31+at+7.47.38+PM.png?format=750w"
     },
     {
+        title: "Una Noche En Medellín",
+        artist: "Cris MJ",
+        genre: "Regueton",
+        src: "tracks/Cris MJ - Una Noche En Medellín (LetraLyrics).mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcStulP-Rvd4QAyQTb1UobrvPBvIGnherscEgw&s"
+    },
+    {
         title: "PA TI",
         artist: "6ix9ine ft. Yailin",
         genre: "Regueton",
