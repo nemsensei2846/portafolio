@@ -21,6 +21,34 @@ const songs = [
         cover: "https://i1.sndcdn.com/artworks-000200598950-szqjd2-t500x500.jpg"
     },
     {
+        title: "Vamo a Bailotear",
+        artist: "Cris MJ",
+        genre: "Regueton",
+        src: "tracks/Cris MJ - Vamo a Bailotear (Visualizer) Apocalipsis.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2739f3e9b1bad89497bfc24c5ba"
+    },
+    {
+        title: "SI NO ES CONTIGO",
+        artist: "Cris MJ",
+        genre: "Regueton",
+        src: "tracks/Cris MJ - SI NO ES CONTIGO (Video Oficial).mp3",
+        cover: "https://i.ytimg.com/vi/vNQjKyEMJxk/maxresdefault.jpg"
+    },
+    {
+        title: "SI NO ES CONTIGO REMIX",
+        artist: "Cris MJ, Kali Uchis, JHAYCO",
+        genre: "Regueton",
+        src: "tracks/Cris MJ, Kali Uchis, JHAYCO - SI NO ES CONTIGO REMIX.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRYYJMf4q-QDsozgKEdQWD-LXD3myNxZvN0QA&s"
+    },
+    {
+        title: "Gata Only",
+        artist: "Cris MJ ft FloyyMenor",
+        genre: "Regueton",
+        src: "tracks/FloyyMenor, Cris MJ - Gata Only.mp3",
+        cover: "https://i.ytimg.com/vi/UWn9RdueB7E/maxresdefault.jpg"
+    },
+    {
         title: "A LA ANTIGUITA",
         artist: "Calibre 50",
         genre: "Vallenato",
@@ -236,6 +264,20 @@ const songs = [
         genre: "Romantica",
         src: "tracks/Hasta la Raíz - Natalia Lafourcade   LETRA.mp3",
         cover: "https://images.genius.com/5e53b7463b9983373c956d77959b6711.600x600x1.png"
+    },
+    {
+        title: "Amor Prohibido",
+        artist: "Selena",
+        genre: "Romantica",
+        src: "categoria/Selena - Amor Prohibido.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2730990f85ec999f7b2f71458c0"
+    },
+    {
+        title: "Bandido",
+        artist: "Ana Bárbara",
+        genre: "Romantica",
+        src: "categoria/Ana Bárbara - Bandido (Official Video).mp3",
+        cover: "https://i.ytimg.com/vi/cq6QE5-PWwQ/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLDUTQ_m8EA19KrBTgSVJ-sUF7izuw"
     },
     {
         title: "FANTASMAS",
@@ -1272,6 +1314,13 @@ const songs = [
         genre: "Pasillo",
         src: "categoria/PASILLLOS/AQUELLA TARDE - GERARDO MORAN - 13.mp3",
         cover: "../logo%20SENSEI.png"
+    },
+    {
+        title: "NIÑA",
+        artist: "El Cholito",
+        genre: "Otros",
+        src: "tracks/(EL CHOLITO) LA MUSICA ,by NIÑA.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrR0nst_SVWzTdZ3dL4JZpO_VzXVaoFQNNw&s"
     },
     {
         title: "ENTREGA FINAL",
