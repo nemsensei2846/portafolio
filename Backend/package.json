@@ -1,0 +1,12 @@
+{
+  "name": "sensei-music-backend",
+  "version": "1.0.0",
+  "description": "Backend para SENSEI MUSIC PWA",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2"
+  }
+}
