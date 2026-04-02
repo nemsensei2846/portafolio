@@ -206,10 +206,30 @@ const App = {
 
         if (this.state.songs.length > 0) {
             this.engine.load(this.state.currentPlaylist[0]);
+            // --- NUEVO: Cachear TODAS las canciones al iniciar ---
+            this.cacheAllSongs();
         }
         this.setupEvents();
         this.renderReact();
         this.renderVanilla();
+    },
+
+    cacheAllSongs() {
+        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
+            // Verificar si ya hemos cacheado en esta versión para no saturar el navegador
+            const lastCacheVersion = localStorage.getItem('sensei_cache_v');
+            const currentVersion = 'v53'; // Sincronizado con CACHE_NAME en service-worker.js
+
+            if (lastCacheVersion !== currentVersion) {
+                const songUrls = this.state.songs.map(song => song.src);
+                console.log("PWA: Solicitando cache de TODAS las canciones...");
+                navigator.serviceWorker.controller.postMessage({
+                    type: 'CACHE_ALL_SONGS',
+                    urls: songUrls
+                });
+                localStorage.setItem('sensei_cache_v', currentVersion);
+            }
+        }
     },
 
     // Utilidad para limpiar arrays de canciones de datos corruptos
