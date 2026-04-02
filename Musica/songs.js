@@ -826,6 +826,13 @@ const songs = [
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
     },
     {
+        title: "En Vida",
+        artist: "Segundo Rosero",
+        genre: "Balada",
+        src: "categoria/Balada/Segundo Rosero - En Vida.mp3",
+        cover: "https://i.ytimg.com/vi/EnYWG3r3QBY/maxresdefault.jpg"
+    },
+    {
         title: "SOLO AMAME",
         artist: "Los Inquietos del vallenato",
         genre: "Vallenato",
@@ -915,6 +922,13 @@ const songs = [
         genre: "Vallenato",
         src: "tracks/Y No Fuiste Mía - Los Comandantes Del Vallenato.mp3",
         cover: "https://i.scdn.co/image/ab67616d0000b273e208462dfd422f5c0458300a"
+    },
+    {
+        title: "El Conejito",
+        artist: "Los Conquistadores",
+        genre: "Otros",
+        src: "categoria/Los Conquistadores - El Conejito (Video Oficial).mp3",
+        cover: "https://i.ytimg.com/vi/Lpmd2yA_uyo/hq720.jpg?sqp=-oaymwEhCK4FEIIDSFryq4qpAxMIARUAAAAAGAElAADIQj0AgKJD&rs=AOn4CLCTOv6pP81MMGPlU1A1v4q9sX59QA"
     },
     {
         title: "FERNANDEZ 13",
