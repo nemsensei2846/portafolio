@@ -959,67 +959,95 @@ const songs = [
         cover: "../logo%20SENSEI.png"
     },
     {
+        title: "Nunca pense llorar",
+        artist: "ROSSY WAR",
+        genre: "Cumbia",
+        src: "categoria/ROSSY WAR, Nunca pense llorar (Tito Mauri).mp3",
+        cover: "https://i.ytimg.com/vi/5QT__kYjCJU/sddefault.jpg?v=60beae65"
+    },
+    {
+        title: "MI JOVEN PROFESOR DE AMOR",
+        artist: "TIERRA CANELA",
+        genre: "Cumbia",
+        src: "categoria/TIERRA CANELA - MI JOVEN PROFESOR DE AMOR.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b2738e389611a2504b95250efbd3"
+    },
+    {
+        title: "Y Siempre",
+        artist: "Karolina Con K y La Orquesta La Inmensa",
+        genre: "Cumbia",
+        src: "categoria/Y Siempre - Karolina Con K y La Orquesta La Inmensa.mp3",
+        cover: "https://i.ytimg.com/vi/lbSJCpzIQfg/maxresdefault.jpg"
+    },
+    {
+        title: "El Camaleón",
+        artist: "Widinson",
+        genre: "Cumbia",
+        src: "categoria/Widinson - El Camaleón.mp3",
+        cover: "https://i.ytimg.com/vi/vd89-vtP2iY/maxresdefault.jpg"
+    },
+    {
         title: "FERNANDEZ 15 (Pista)",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/15 Pista 15.wma",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 15",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/15. fernandez.mp3",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 17",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/17 Pista 17.wma",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 18",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/18. fernandez.mp3",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 19",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/19 Pista 19.wma",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 21 (Pista)",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/21 Pista 21.wma",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 21",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/21. fernandez.mp3",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "FERNANDEZ 22",
         artist: "Vicente Fernandez",
         genre: "Ranchera",
         src: "categoria/ALEJANDRO Y VICENTE FERNANDEZ/22 Pista 22.wma",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://yt3.googleusercontent.com/6wic42kN_2DcrHTVMEUbWI0_ZWd39rvWDB-Je1mBwLy9gQRLis_4SbhHv7mMMQ1l0jxgrVHqzg=s900-c-k-c0x00ffffff-no-rj"
     },
     {
         title: "EL CONTRAGOLPE",
         artist: "Alci Acosta",
         genre: "Bolero",
         src: "categoria/ALCI ACOSTA/EL CONTRAGOLPE.mp3",
-        cover: "../logo%20SENSEI.png"
+        cover: "https://i.ytimg.com/vi/zR84hNFexkg/maxresdefault.jpg"
     },
     {
         title: "LA COPA ROTA",
