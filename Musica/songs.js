@@ -49,6 +49,27 @@ const songs = [
         cover: "https://i.ytimg.com/vi/UWn9RdueB7E/maxresdefault.jpg"
     },
     {
+        title: "La Asesina",
+        artist: "Zacarías Ferreira",
+        genre: "Bachata",
+        src: "categoria/Zacarías Ferreira - La Asesina (Vídeo Oficial).mp3",
+        cover: "https://i1.sndcdn.com/artworks-000213741937-tw4xu2-t500x500.jpg"
+    },
+    {
+        title: "Sentada en un Bar",
+        artist: "cecy narvaez",
+        genre: "Otros",
+        src: "categoria/Sentada en un Bar - @CECYNARVAEZ (Video Oficial).mp3",
+        cover: "https://i.ytimg.com/vi/gmp8hTsGs-0/maxresdefault.jpg"
+    },
+    {
+        title: "He sentido amor",
+        artist: "Jaime Enrique Aymara",
+        genre: "Cumbia",
+        src: "categoria/Jaime Enrique Aymara He sentido amor DTV byBryan.mp3",
+        cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTYzETh_KisQq36ux5ABcF_u9LqQRP_u8qn0w&s"
+    },
+    {
         title: "A LA ANTIGUITA",
         artist: "Calibre 50",
         genre: "Vallenato",
@@ -61,6 +82,13 @@ const songs = [
         genre: "70 and 80",
         src: "tracks/ABBA - Gimme! Gimme! Gimme! (A Man After Midnight).mp3",
         cover: "https://m.media-amazon.com/images/M/MV5BNzg4ZDE2NDAtMTA4Ni00NzUyLTk3NjUtZWU2ZTVkZWI0OTgwXkEyXkFqcGc@._V1_QL75_UY190_CR74,0,190,190_.jpg"
+    },
+    {
+        title: "Se fue",
+        artist: "laura pausini",
+        genre: "Balada",
+        src: "categoria/Se fué.mp3",
+        cover: "https://pbs.twimg.com/media/Em5Vg0aXYAsmGiy.jpg"
     },
     {
         title: "Faded",
@@ -96,6 +124,13 @@ const songs = [
         genre: "Bachata",
         src: "tracks/Aventura - Ella y Yo (ft. Don Omar).mp3",
         cover: "https://i.scdn.co/image/ab67616d0000b2736bb920cebbe9cd79eccaf0e6"
+    },
+    {
+        title: "Procura",
+        artist: "chichi peralta",
+        genre: "Otros",
+        src: "categoria/Procura.mp3",
+        cover: "https://i.scdn.co/image/ab67616d0000b273ee686ebada622d510f8660fb"
     },
     {
         title: "Atrapado en Dos Amores",
@@ -152,6 +187,13 @@ const songs = [
         genre: "Regueton",
         src: "tracks/Becky G, Paulo Londra - Cuando Te Besé (Official Video).mp3",
         cover: "https://media1.giphy.com/media/v1.Y2lkPTc5MGI3NjExM2VxYmQxaXRud2JsYWs4bGMzaWRwZGQ1NTI4bW5xMTc0a2tyeTQzMSZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/IMOTcqOtaEkXiBonLU/giphy.gif"
+    },
+    {
+        title: "NI QUE VALIERAS TANTO",
+        artist: "MARIA DE LOS ANGELES",
+        genre: "Cumbia",
+        src: "categoria/MARIA DE LOS ANGELES - NI QUE VALIERAS TANTO 2015.mp3",
+        cover: "https://i.ytimg.com/vi/VwEW4sPxJ9s/hqdefault.jpg"
     },
     {
         title: "JUST THE WAY YOU ARE",
