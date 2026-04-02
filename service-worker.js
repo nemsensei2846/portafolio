@@ -93,13 +93,20 @@ self.addEventListener('message', event => {
     self.skipWaiting();
   }
   
-  // Lógica para cachear canciones favoritas individualmente
-  if (event.data && event.data.type === 'CACHE_SONG') {
-    const songUrl = event.data.url;
+  // Lógica para cachear canciones favoritas individualmente o por lotes
+  if (event.data && (event.data.type === 'CACHE_SONG' || event.data.type === 'CACHE_ALL_SONGS')) {
+    const urlsToCache = event.data.type === 'CACHE_ALL_SONGS' ? event.data.urls : [event.data.url];
+    
     event.waitUntil(
       caches.open(CACHE_NAME).then(cache => {
-        return cache.add(songUrl).then(() => {
-          console.log('SW: Canción guardada en cache offline:', songUrl);
+        return Promise.all(
+          urlsToCache.map(url => {
+            return cache.add(url).catch(err => {
+              console.warn(`SW: Error al cachear canción: ${url}`, err);
+            });
+          })
+        ).then(() => {
+          console.log(`SW: ${urlsToCache.length} canciones guardadas en cache offline.`);
         });
       })
     );
