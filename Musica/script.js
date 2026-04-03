@@ -1,6 +1,6 @@
 /**
  * SENSEI_AUDIO_PLAYER - ADVANCED PWA ENGINE (React Hybrid)
- * Versión 51 - React Integration + Background Audio Fix
+ * Versión 55 - React Integration + Background Audio Fix
  */
 
 // --- 1. Audio Engine (Core Playback Logic) ---
@@ -218,7 +218,7 @@ const App = {
         if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
             // Verificar si ya hemos cacheado en esta versión para no saturar el navegador
             const lastCacheVersion = localStorage.getItem('sensei_cache_v');
-            const currentVersion = 'v53'; // Sincronizado con CACHE_NAME en service-worker.js
+            const currentVersion = 'v55'; // Sincronizado con CACHE_NAME en service-worker.js
 
             if (lastCacheVersion !== currentVersion) {
                 const songUrls = this.state.songs.map(song => song.src);
