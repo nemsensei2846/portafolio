@@ -1,125 +1,175 @@
-const CACHE_NAME = 'sensei-music-v53';
+const CACHE_NAME = 'sensei-music-v55';
+
 const ESSENTIAL_ASSETS = [
-  './',
-  './index.html',
-  './manifest.json',
-  './logo SENSEI.png',
-  './Musica/index.html',
-  './Musica/script.js',
-  './Musica/style.css',
-  './Musica/letras.js',
-  './Musica/songs.js',
-  './Musica/vip.png',
-  'https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css',
-  'https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js',
-  'https://unpkg.com/aos@2.3.1/dist/aos.css',
-  'https://unpkg.com/aos@2.3.1/dist/aos.js'
+  '/portafolio/',
+  '/portafolio/index.html',
+  '/portafolio/manifest.json',
+  '/portafolio/logo SENSEI.png',
+
+  '/portafolio/Musica/index.html',
+  '/portafolio/Musica/script.js',
+  '/portafolio/Musica/style.css',
+  '/portafolio/Musica/letras.js',
+  '/portafolio/Musica/songs.js',
+  '/portafolio/Musica/vip.png',
+
+  // 🎵 AGREGA TODAS TUS CANCIONES AQUÍ (OBLIGATORIO)
+  '/portafolio/Musica/tracks/el-cholito.mp3',
+  '/portafolio/Musica/tracks/bebe-anuel.mp3',
+  '/portafolio/Musica/tracks/pati.mp3',
+  '/portafolio/Musica/tracks/antiguita.mp3',
+  '/portafolio/Musica/tracks/faded.mp3',
+
+  // 🔥 OPCIONAL (SI DESCARGAS LIBRERÍAS EN LOCAL)
+  // '/portafolio/libs/fontawesome.css',
+  // '/portafolio/libs/gsap.js',
+  // '/portafolio/libs/aos.css',
+  // '/portafolio/libs/aos.js'
 ];
 
-// Instalación: Cachear recursos esenciales
+
+// 🔧 INSTALAR
 self.addEventListener('install', event => {
+  console.log('SW: Instalando v55');
+
   event.waitUntil(
-    caches.open(CACHE_NAME).then(cache => {
-      console.log('SW: Instalando nueva versión v53');
-      return cache.addAll(ESSENTIAL_ASSETS);
-    })
+    caches.open(CACHE_NAME)
+      .then(cache => {
+        return cache.addAll(ESSENTIAL_ASSETS);
+      })
+      .catch(err => console.error('Error cacheando:', err))
   );
-  // Forzar que el nuevo SW se active inmediatamente
+
   self.skipWaiting();
 });
 
-// Activación: Limpiar caches antiguas e inmediatamente tomar el control
+
+// 🔧 ACTIVAR
 self.addEventListener('activate', event => {
+  console.log('SW: Activado');
+
   event.waitUntil(
     caches.keys().then(keys => {
-      return Promise.all(keys.map(key => {
-        if (key !== CACHE_NAME) {
-          console.log('SW: Eliminando cache antigua', key);
-          return caches.delete(key);
-        }
-      }));
+      return Promise.all(
+        keys.map(key => {
+          if (key !== CACHE_NAME) {
+            console.log('SW: Eliminando cache antigua:', key);
+            return caches.delete(key);
+          }
+        })
+      );
     })
   );
-  // Tomar el control de todas las pestañas abiertas inmediatamente
+
   self.clients.claim();
 });
 
-// Estrategia de Fetch Avanzada (Network First para asegurar actualizaciones)
+
+// 🔧 FETCH (OFFLINE INTELIGENTE)
 self.addEventListener('fetch', event => {
   const url = new URL(event.request.url);
 
-  // Manejo especial para AUDIO (.mp3) - Cache First con soporte para Range
+  // 🎵 AUDIO → CACHE FIRST (CLAVE PARA OFFLINE)
   if (url.pathname.endsWith('.mp3')) {
     event.respondWith(
-      caches.match(event.request).then(cachedResponse => {
-        if (cachedResponse) return cachedResponse;
+      caches.match(event.request).then(response => {
+        if (response) return response;
+
         return fetch(event.request).then(networkResponse => {
+          if (!networkResponse || networkResponse.status !== 200) return networkResponse;
+
+          const clone = networkResponse.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, clone);
+          });
+
           return networkResponse;
-        }).catch(() => new Response('Audio no disponible offline', { status: 503 }));
+        }).catch(() => {
+          return new Response('Audio no disponible offline', { status: 503 });
+        });
       })
     );
     return;
   }
 
-  // Network First para Scripts, Estilos y HTML (Para que las actualizaciones sean instantáneas)
-  if (url.pathname.endsWith('.js') || url.pathname.endsWith('.css') || url.pathname.endsWith('.html') || url.pathname.endsWith('.json')) {
+  // 📄 HTML, CSS, JS → NETWORK FIRST
+  if (
+    url.pathname.endsWith('.js') ||
+    url.pathname.endsWith('.css') ||
+    url.pathname.endsWith('.html') ||
+    url.pathname.endsWith('.json')
+  ) {
     event.respondWith(
-      fetch(event.request).then(response => {
-        if (!response || response.status !== 200) return response;
-        const clonedResponse = response.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clonedResponse));
-        return response;
-      }).catch(() => caches.match(event.request))
+      fetch(event.request)
+        .then(response => {
+          if (!response || response.status !== 200) return response;
+
+          const clone = response.clone();
+          caches.open(CACHE_NAME).then(cache => {
+            cache.put(event.request, clone);
+          });
+
+          return response;
+        })
+        .catch(() => caches.match(event.request))
     );
     return;
   }
 
-  // Cache First para imágenes y fuentes
+  // 🖼️ IMÁGENES → CACHE FIRST
   event.respondWith(
     caches.match(event.request).then(response => {
-      return response || fetch(event.request).then(networkResponse => {
+      if (response) return response;
+
+      return fetch(event.request).then(networkResponse => {
         if (!networkResponse || networkResponse.status !== 200) return networkResponse;
-        const clonedResponse = networkResponse.clone();
-        caches.open(CACHE_NAME).then(cache => cache.put(event.request, clonedResponse));
+
+        const clone = networkResponse.clone();
+        caches.open(CACHE_NAME).then(cache => {
+          cache.put(event.request, clone);
+        });
+
         return networkResponse;
       });
     })
   );
 });
 
-// Mantener el Service Worker activo y manejar mensajes
+
+// 🔥 MENSAJES (DESCARGAR MÚSICA)
 self.addEventListener('message', event => {
+
   if (event.data === 'skipWaiting') {
     self.skipWaiting();
   }
-  
-  // Lógica para cachear canciones favoritas individualmente o por lotes
+
+  // 🎵 DESCARGAR UNA O TODAS LAS CANCIONES
   if (event.data && (event.data.type === 'CACHE_SONG' || event.data.type === 'CACHE_ALL_SONGS')) {
-    const urlsToCache = event.data.type === 'CACHE_ALL_SONGS' ? event.data.urls : [event.data.url];
-    
+
+    const urls = event.data.type === 'CACHE_ALL_SONGS'
+      ? event.data.urls
+      : [event.data.url];
+
     event.waitUntil(
       caches.open(CACHE_NAME).then(cache => {
         return Promise.all(
-          urlsToCache.map(url => {
-            return cache.add(url).catch(err => {
-              console.warn(`SW: Error al cachear canción: ${url}`, err);
-            });
-          })
+          urls.map(url =>
+            cache.add(url).catch(err =>
+              console.warn('Error cacheando canción:', url, err)
+            )
+          )
         ).then(() => {
-          console.log(`SW: ${urlsToCache.length} canciones guardadas en cache offline.`);
+          console.log('SW: Canciones guardadas offline 🔥');
         });
       })
     );
   }
 
-  // Lógica para eliminar de cache si se quita de favoritos (opcional)
+  // ❌ ELIMINAR CANCIÓN
   if (event.data && event.data.type === 'REMOVE_SONG') {
-    const songUrl = event.data.url;
     event.waitUntil(
       caches.open(CACHE_NAME).then(cache => {
-        return cache.delete(songUrl).then(() => {
-          console.log('SW: Canción eliminada de cache offline:', songUrl);
-        });
+        return cache.delete(event.data.url);
       })
     );
   }
