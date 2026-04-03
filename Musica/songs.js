@@ -3,7 +3,7 @@ const songs = [
         title: "BEBE",
         artist: "6ix9ine Ft. Anuel AA",
         genre: "Regueton",
-        src: "tracks/6ix9ine - BEBE ft. Anuel AA.mp3",
+        src: "tracks/bebe-anuel.mp3",
         cover: "https://images.squarespace-cdn.com/content/v1/58eef9c2f7e0abff4db78dc9/1535770144822-40AU0TG93OBZNWYYE3OQ/Screen+Shot+2018-08-31+at+7.47.38+PM.png?format=750w"
     },
     {
@@ -17,7 +17,7 @@ const songs = [
         title: "PA TI",
         artist: "6ix9ine ft. Yailin",
         genre: "Regueton",
-        src: "tracks/6ix9ine - Pa Ti (feat. Yailin La Más Viral) (Official Music Video).mp3",
+        src: "tracks/pati.mp3",
         cover: "https://i1.sndcdn.com/artworks-000200598950-szqjd2-t500x500.jpg"
     },
     {
@@ -94,7 +94,7 @@ const songs = [
         title: "Faded",
         artist: "Alan Walker",
         genre: "Electronica",
-        src: "tracks/Alan Walker - Faded.mp3",
+        src: "tracks/faded.mp3",
         cover: "https://static.wikia.nocookie.net/electropedia/images/3/36/Faded_Alan_Walker_%28logo%29.jpg/revision/latest?cb=20170513171308&path-prefix=es"
     },
     {
@@ -1403,7 +1403,7 @@ const songs = [
         title: "NIÑA",
         artist: "El Cholito",
         genre: "Otros",
-        src: "tracks/(EL CHOLITO) LA MUSICA ,by NIÑA.mp3",
+        src: "tracks/el-cholito.mp3",
         cover: "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRQrR0nst_SVWzTdZ3dL4JZpO_VzXVaoFQNNw&s"
     },
     {
