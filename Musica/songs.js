@@ -24,7 +24,7 @@ const songs = [
         title: "Vamo a Bailotear",
         artist: "Cris MJ",
         genre: "Regueton",
-        src: "tracks/Cris MJ - Vamo a Bailotear (Visualizer) Apocalipsis.mp3",
+        src: "tracks/baioletar.mp3",
         cover: "https://i.scdn.co/image/ab67616d0000b2739f3e9b1bad89497bfc24c5ba"
     },
     {
