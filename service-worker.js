@@ -152,14 +152,23 @@ async function handleMp3(event) {
     if (!range) return cached;
 
     let buffer = mp3BufferCache.get(keyUrl)?.buffer;
-    if (!buffer) {
-      buffer = await cached.arrayBuffer();
-      mp3BufferCache.set(keyUrl, { buffer, ts: Date.now() });
-      // Limpiar buffers viejos (máximo 2)
-      if (mp3BufferCache.size > MAX_MP3_BUFFERS) {
-        const oldestKey = [...mp3BufferCache.entries()].sort((a, b) => a[1].ts - b[1].ts)[0]?.[0];
-        if (oldestKey) mp3BufferCache.delete(oldestKey);
+    try {
+      if (!buffer) {
+        // IMPORTANTE: si el response es "opaque" (cross-origin sin CORS),
+        // algunos navegadores no permiten leer el body para hacer slicing.
+        // En ese caso hacemos fallback devolviendo el cached completo (200).
+        buffer = await cached.arrayBuffer();
+        mp3BufferCache.set(keyUrl, { buffer, ts: Date.now() });
+        // Limpiar buffers viejos (máximo 2)
+        if (mp3BufferCache.size > MAX_MP3_BUFFERS) {
+          const oldestKey = [...mp3BufferCache.entries()].sort((a, b) => a[1].ts - b[1].ts)[0]?.[0];
+          if (oldestKey) mp3BufferCache.delete(oldestKey);
+        }
       }
+    } catch (e) {
+      // Fallback: devolver el archivo completo cacheado (sin 206).
+      // Esto evita que se quede "mudo" cuando el navegador pidió Range.
+      return cached;
     }
     const size = buffer.byteLength;
     const parts = range.replace(/bytes=/, '').split('-');
@@ -276,7 +285,18 @@ async function broadcast(message) {
 
 async function cacheOneSong(url) {
   const cache = await caches.open(CACHE_NAME);
-  const req = new Request(url, { cache: 'reload' });
+  // Si los mp3 vienen de otro dominio (ej. GitHub Pages),
+  // puede fallar por CORS. Usamos no-cors para que al menos se pueda cachear como "opaque".
+  let req;
+  try {
+    const u = new URL(url, self.location.href);
+    const sameOrigin = u.origin === self.location.origin;
+    req = sameOrigin
+      ? new Request(u.href, { cache: 'reload' })
+      : new Request(u.href, { cache: 'reload', mode: 'no-cors' });
+  } catch (e) {
+    req = new Request(url, { cache: 'reload', mode: 'no-cors' });
+  }
 
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
