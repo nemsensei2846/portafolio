@@ -33,6 +33,11 @@ const SafeStorage = {
 class AudioEngine {
     constructor() {
         this.audio = document.getElementById('audio-player');
+        // Mejor compatibilidad móvil/iOS
+        try {
+            this.audio.preload = 'auto';
+            this.audio.playsInline = true;
+        } catch (e) {}
         this.wakeLock = null;
         this.setupListeners();
     }
@@ -605,6 +610,8 @@ const App = {
         const openContextMenu = () => {
             if (!fpContextMenu) return;
             fpContextMenu.classList.remove('hidden');
+            fpContextMenu.style.zIndex = '30000';
+            fpContextMenu.style.position = 'fixed';
 
             // Posicionar el menú cerca del botón (mejor en móviles/PWA)
             try {
@@ -626,9 +633,10 @@ const App = {
                     fpContextMenu.style.left = `${left}px`;
                     fpContextMenu.style.top = `${top}px`;
                     fpContextMenu.style.right = 'auto';
-                    fpContextMenu.style.visibility = 'visible';
                 }
             } catch (e) {}
+            // Asegurar visibilidad aunque falle el cálculo
+            fpContextMenu.style.visibility = 'visible';
 
             // Actualizar texto/icono del favorito
             try {
@@ -638,8 +646,12 @@ const App = {
                     const sp = menuFavBtn.querySelector('span');
                     const ic = menuFavBtn.querySelector('i');
                     if (sp) sp.innerText = isFav ? 'Quitar de Favoritos' : 'Añadir a Favoritos';
+                    else menuFavBtn.textContent = isFav ? 'Quitar de Favoritos' : 'Añadir a Favoritos';
                     if (ic) ic.className = isFav ? 'fas fa-heart' : 'far fa-heart';
                 }
+                // Asegurar textos visibles (por si el HTML fue modificado o el span no existe)
+                menuDownloadBtn?.querySelector?.('span')?.textContent && (menuDownloadBtn.querySelector('span').textContent = 'Descargar Música');
+                menuQueueBtn?.querySelector?.('span')?.textContent && (menuQueueBtn.querySelector('span').textContent = 'Añadir a Cola');
             } catch (e) {}
         };
 
@@ -1114,6 +1126,14 @@ const App = {
     loadSong(index, forcePlay = false) {
         const song = this.state.currentPlaylist[index];
         if (!song) return;
+
+        // Si estamos OFFLINE, solo reproducir si la canción está realmente guardada
+        if (!navigator.onLine && !this.isSongAvailableOffline(song)) {
+            this.showToast("ESA CANCIÓN NO ESTÁ OFFLINE");
+            if (forcePlay) return this.nextSong(true);
+            return;
+        }
+
         this.setState({ currentIndex: index });
         this.engine.load(song);
         this.pushHistory(song);
@@ -1122,6 +1142,22 @@ const App = {
             this.setState({ isPlaying: true });
             this.engine.play();
         }
+
+        // Watchdog: si se queda “atrancado”, reintentar play y si falla, pasar a la siguiente
+        clearTimeout(this._playWatchdog);
+        this._playWatchdog = setTimeout(() => {
+            try {
+                if (this.state.isPlaying && this.engine?.audio?.paused) {
+                    this.engine.play().catch(() => {});
+                    setTimeout(() => {
+                        if (this.state.isPlaying && this.engine?.audio?.paused) {
+                            this.showToast("SALTANDO... (CARGA LENTA)");
+                            this.nextSong(true);
+                        }
+                    }, 1800);
+                }
+            } catch (e) {}
+        }, 4500);
     },
 
     isSongAvailableOffline(song) {
