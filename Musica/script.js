@@ -1,7 +1,33 @@
 /**
  * SENSEI_AUDIO_PLAYER - ADVANCED PWA ENGINE (React Hybrid)
- * Versión 55 - React Integration + Background Audio Fix
+ * Versión 69 - UI + Perfil/Playlists + Offline + fixes móviles
  */
+
+console.log("SENSEI MUSIC: script cargado (tabs/favoritos/perfil) v69");
+
+// En file:// algunos navegadores bloquean localStorage (SecurityError) y eso rompe toda la app.
+// Usamos un wrapper seguro para que la UI (tabs/favoritos/perfil) no se caiga.
+const SafeStorage = {
+    get(key) {
+        try { return localStorage.getItem(key); } catch (e) { return null; }
+    },
+    set(key, value) {
+        try { localStorage.setItem(key, value); return true; } catch (e) { return false; }
+    },
+    getJSON(key, fallback) {
+        try {
+            const raw = this.get(key);
+            if (!raw) return fallback;
+            const parsed = JSON.parse(raw);
+            return parsed ?? fallback;
+        } catch (e) {
+            return fallback;
+        }
+    },
+    setJSON(key, value) {
+        try { return this.set(key, JSON.stringify(value)); } catch (e) { return false; }
+    }
+};
 
 // --- 1. Audio Engine (Core Playback Logic) ---
 class AudioEngine {
@@ -24,10 +50,29 @@ class AudioEngine {
             }
         });
 
+        // En móviles a veces el audio entra en "waiting/stalled" y parece que se queda mudo.
+        // Esto intenta reanudar si seguimos en modo reproducción.
+        const tryResume = () => {
+            if (App.state.isPlaying) {
+                setTimeout(() => {
+                    // Reintentar play sin cambiar de canción
+                    this.play().catch(() => {});
+                }, 700);
+            }
+        };
+        this.audio.addEventListener('waiting', tryResume);
+        this.audio.addEventListener('stalled', tryResume);
+
         this.audio.addEventListener('play', () => {
             App.setState({ isPlaying: true });
             this.requestWakeLock();
             this.updateMediaSession('playing');
+
+            // Pre-cache inteligente (no debe competir con el buffer inicial)
+            // Esto mejora el "delay" en la siguiente canción y en replays.
+            if (typeof App.maybePrecacheAroundCurrent === 'function') {
+                App.maybePrecacheAroundCurrent();
+            }
             
             // Iniciar intervalo de actualización de posición para mantener vivo el proceso en móviles
             if (this.positionInterval) clearInterval(this.positionInterval);
@@ -182,7 +227,18 @@ const App = {
         isRepeatOne: false,
         isShuffle: false,
         showLyrics: false,
-        favorites: JSON.parse(localStorage.getItem('sensei_favs')) || [],
+        favorites: SafeStorage.getJSON('sensei_favs', []),
+        downloads: SafeStorage.getJSON('sensei_downloads', []), // Nueva lista de descargas
+        queue: SafeStorage.getJSON('sensei_queue', []), // Cola de reproducción
+        history: SafeStorage.getJSON('sensei_history', []), // Historial (últimas reproducidas)
+        playlists: SafeStorage.getJSON('sensei_playlists', []), // Playlists personalizadas
+        profileTab: SafeStorage.get('sensei_profile_tab') || 'downloads', // downloads | playlists | history
+        activePlaylistId: SafeStorage.get('sensei_active_playlist') || null,
+        user: null, // Firebase user (si hay sesión)
+        authReady: false,
+        pendingDownloads: {}, // Descargas en progreso: { [url]: song }
+        offlineStatus: {}, // Resultado de verificación offline: { [url]: true/false }
+        bulkDownload: { active: false, done: 0, total: 0 }, // Descarga TODO (progreso)
         currentSection: 'home', // Nueva sección activa
         currentGenre: null,
         showGenres: false
@@ -192,11 +248,32 @@ const App = {
 
     init() {
         this.engine = new AudioEngine();
+        this.state.pendingDownloads = {};
+        this.state.offlineStatus = {};
+        this.state.bulkDownload = { active: false, done: 0, total: 0 };
         
         // Limpiar y validar favoritos guardados
-        const savedFavs = JSON.parse(localStorage.getItem('sensei_favs')) || [];
+        const savedFavs = SafeStorage.getJSON('sensei_favs', []);
         this.state.favorites = this.cleanSongArray(savedFavs);
-        localStorage.setItem('sensei_favs', JSON.stringify(this.state.favorites));
+        SafeStorage.setJSON('sensei_favs', this.state.favorites);
+
+        // Limpiar y validar descargas guardadas (para que "Perfil" siempre renderice bien)
+        const savedDownloads = SafeStorage.getJSON('sensei_downloads', []);
+        this.state.downloads = this.cleanSongArray(savedDownloads);
+        SafeStorage.setJSON('sensei_downloads', this.state.downloads);
+
+        // Limpiar y validar cola e historial
+        const savedQueue = SafeStorage.getJSON('sensei_queue', []);
+        this.state.queue = this.cleanSongArray(savedQueue);
+        SafeStorage.setJSON('sensei_queue', this.state.queue);
+
+        const savedHistory = SafeStorage.getJSON('sensei_history', []);
+        this.state.history = this.cleanSongArray(savedHistory);
+        SafeStorage.setJSON('sensei_history', this.state.history);
+
+        // Playlists personalizadas
+        this.state.playlists = this.cleanPlaylists(SafeStorage.getJSON('sensei_playlists', []));
+        SafeStorage.setJSON('sensei_playlists', this.state.playlists);
 
         // Verificar si las canciones están cargadas
         if (this.state.songs.length === 0 && typeof songs !== 'undefined') {
@@ -206,30 +283,269 @@ const App = {
 
         if (this.state.songs.length > 0) {
             this.engine.load(this.state.currentPlaylist[0]);
-            // --- NUEVO: Cachear TODAS las canciones al iniciar ---
-            this.cacheAllSongs();
+            // Cache offline: NO lo iniciamos agresivamente mientras el usuario reproduce,
+            // porque en móviles eso causa cortes/mudos por saturación.
+            this.scheduleCacheAllSongs();
         }
         this.setupEvents();
         this.renderReact();
         this.renderVanilla();
+
+        // Vincular Perfil con Login/Register (Firebase)
+        this.initAuth();
+    },
+
+    cleanPlaylists(arr) {
+        if (!Array.isArray(arr)) return [];
+        return arr
+            .filter(p => p && typeof p === 'object' && p.id && p.name)
+            .map(p => ({
+                id: String(p.id),
+                name: String(p.name).slice(0, 40),
+                tracks: Array.isArray(p.tracks) ? p.tracks.filter(Boolean).map(String) : []
+            }));
+    },
+
+    setProfileTab(tab) {
+        const allowed = ['downloads', 'playlists', 'history'];
+        const value = allowed.includes(tab) ? tab : 'downloads';
+        this.setState({ profileTab: value, activePlaylistId: null });
+        SafeStorage.set('sensei_profile_tab', value);
+        SafeStorage.set('sensei_active_playlist', '');
+    },
+
+    openPlaylist(id) {
+        const pid = String(id || '').trim();
+        const value = pid ? pid : null;
+        this.setState({ activePlaylistId: value, profileTab: 'playlists' });
+        SafeStorage.set('sensei_active_playlist', value || '');
+        SafeStorage.set('sensei_profile_tab', 'playlists');
+    },
+
+    createPlaylist(name) {
+        const trimmed = (name || '').trim();
+        if (!trimmed) return;
+        const id = `pl_${Date.now()}`;
+        const playlists = [...(this.state.playlists || []), { id, name: trimmed.slice(0, 40), tracks: [] }];
+        this.setState({ playlists, profileTab: 'playlists', activePlaylistId: id });
+        SafeStorage.setJSON('sensei_playlists', playlists);
+        SafeStorage.set('sensei_active_playlist', id);
+        SafeStorage.set('sensei_profile_tab', 'playlists');
+        this.scheduleUserSync();
+        this.showToast("PLAYLIST CREADA");
+    },
+
+    deletePlaylist(id) {
+        const pid = String(id || '');
+        const playlists = (this.state.playlists || []).filter(p => p.id !== pid);
+        const nextActive = this.state.activePlaylistId === pid ? null : this.state.activePlaylistId;
+        this.setState({ playlists, activePlaylistId: nextActive });
+        SafeStorage.setJSON('sensei_playlists', playlists);
+        if (!nextActive) SafeStorage.set('sensei_active_playlist', '');
+        this.scheduleUserSync();
+    },
+
+    addSongToPlaylist(song, playlistId) {
+        if (!song || !song.src) return;
+        const pid = String(playlistId || this.state.activePlaylistId || '');
+        if (!pid) return;
+        const playlists = (this.state.playlists || []).map(p => {
+            if (p.id !== pid) return p;
+            const tracks = Array.isArray(p.tracks) ? [...p.tracks] : [];
+            if (!tracks.includes(song.src)) tracks.push(song.src);
+            return { ...p, tracks };
+        });
+        this.setState({ playlists });
+        SafeStorage.setJSON('sensei_playlists', playlists);
+        this.scheduleUserSync();
+        this.showToast("AÑADIDO A PLAYLIST");
+    },
+
+    removeSongFromPlaylist(src, playlistId) {
+        const pid = String(playlistId || this.state.activePlaylistId || '');
+        if (!pid || !src) return;
+        const playlists = (this.state.playlists || []).map(p => {
+            if (p.id !== pid) return p;
+            const tracks = (p.tracks || []).filter(s => s !== src);
+            return { ...p, tracks };
+        });
+        this.setState({ playlists });
+        SafeStorage.setJSON('sensei_playlists', playlists);
+        this.scheduleUserSync();
+    },
+
+    initAuth() {
+        const updateFromBridge = async (user) => {
+            this.setState({ user: user || null, authReady: true });
+            try {
+                const bridge = window.SenseiAuthBridge;
+                if (user && bridge?.loadUserData) {
+                    const data = await bridge.loadUserData(user.uid);
+                    const music = data?.music || null;
+                    if (music) {
+                        const dict = new Map((this.state.songs || []).map(s => [s.src, s]));
+                        const mapBySrc = (srcs) =>
+                            (Array.isArray(srcs) ? srcs : []).map(src => dict.get(src)).filter(Boolean);
+
+                        const newFavs = mapBySrc(music.favorites || []);
+                        const newDownloads = mapBySrc(music.downloads || []);
+                        const newQueue = mapBySrc(music.queue || []);
+                        const newHistory = mapBySrc(music.history || []);
+                        const newPlaylists = this.cleanPlaylists(music.playlists || []);
+
+                        this.setState({
+                            favorites: newFavs,
+                            downloads: newDownloads,
+                            queue: newQueue,
+                            history: newHistory,
+                            playlists: newPlaylists
+                        });
+
+                        SafeStorage.setJSON('sensei_favs', newFavs);
+                        SafeStorage.setJSON('sensei_downloads', newDownloads);
+                        SafeStorage.setJSON('sensei_queue', newQueue);
+                        SafeStorage.setJSON('sensei_history', newHistory);
+                        SafeStorage.setJSON('sensei_playlists', newPlaylists);
+                    }
+                }
+            } catch (e) {}
+        };
+
+        window.addEventListener('sensei-auth-changed', (evt) => updateFromBridge(evt?.detail || null));
+
+        if (window.SenseiAuthBridge) {
+            updateFromBridge(window.SenseiAuthBridge.user || null);
+        } else {
+            this.setState({ authReady: false });
+        }
+    },
+
+    scheduleUserSync() {
+        const bridge = window.SenseiAuthBridge;
+        const user = this.state.user;
+        if (!user || !bridge?.saveUserMusicData) return;
+
+        if (this._syncTimer) clearTimeout(this._syncTimer);
+        this._syncTimer = setTimeout(async () => {
+            try {
+                const payload = {
+                    favorites: (this.state.favorites || []).map(s => s.src),
+                    downloads: (this.state.downloads || []).map(s => s.src),
+                    queue: (this.state.queue || []).map(s => s.src),
+                    history: (this.state.history || []).map(s => s.src),
+                    playlists: (this.state.playlists || []).map(p => ({ id: p.id, name: p.name, tracks: p.tracks || [] }))
+                };
+                await bridge.saveUserMusicData(user.uid, payload);
+            } catch (e) {}
+        }, 900);
+    },
+
+    // Convertir rutas relativas ("tracks/..") a URL absoluta real ("/Musica/tracks/..")
+    // Esto es CLAVE para que el Service Worker cachee bien las canciones.
+    toAbsUrl(url) {
+        try {
+            return new URL(url, window.location.href).href;
+        } catch (e) {
+            return url;
+        }
+    },
+
+    // Enviar mensajes al SW incluso en la primera carga (cuando aún no hay controller)
+    async postToSW(message) {
+        if (!('serviceWorker' in navigator)) return false;
+        try {
+            const reg = await navigator.serviceWorker.ready;
+            const sw = reg.active || reg.waiting || reg.installing;
+            if (sw) {
+                sw.postMessage(message);
+                return true;
+            }
+        } catch (e) {}
+        return false;
+    },
+
+    scheduleCacheAllSongs() {
+        // Esperar a que el SW esté listo y el render inicial termine.
+        // Además, si el usuario está reproduciendo, reprogramamos (evita cortes).
+        setTimeout(() => this.cacheAllSongs(), 2000);
     },
 
     cacheAllSongs() {
-        if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-            // Verificar si ya hemos cacheado en esta versión para no saturar el navegador
-            const lastCacheVersion = localStorage.getItem('sensei_cache_v');
-            const currentVersion = 'v55'; // Sincronizado con CACHE_NAME en service-worker.js
+        // Verificar si ya hemos cacheado en esta versión para no saturar el navegador
+        const lastCacheVersion = SafeStorage.get('sensei_cache_v');
+        const currentVersion = 'v69'; // Debe coincidir con CACHE_NAME del service-worker.js
 
-            if (lastCacheVersion !== currentVersion) {
-                const songUrls = this.state.songs.map(song => song.src);
-                console.log("PWA: Solicitando cache de TODAS las canciones...");
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'CACHE_ALL_SONGS',
-                    urls: songUrls
-                });
-                localStorage.setItem('sensei_cache_v', currentVersion);
-            }
+        if (lastCacheVersion === currentVersion) return;
+        if (!this.state.songs || this.state.songs.length === 0) return;
+        if (!navigator.onLine) return; // para cachear necesitas red al menos una vez
+
+        // Si el usuario está escuchando, esperamos y lo intentamos luego (reduce cortes).
+        if (this.state.isPlaying) {
+            setTimeout(() => this.cacheAllSongs(), 5000);
+            return;
         }
+
+        const songUrls = this.state.songs.map(song => this.toAbsUrl(song.src));
+        console.log("PWA: Solicitando cache de TODAS las canciones...", songUrls.length);
+
+        // UI de progreso (NO marcamos como Descargadas hasta que el SW confirme finalización)
+        this.setState({ bulkDownload: { active: true, done: 0, total: songUrls.length } });
+        this.showBulkDownloadModal();
+        this.updateBulkDownloadModal(0, songUrls.length);
+        this.showToast("DESCARGANDO TODO... (NO CIERRES LA APP)");
+
+        this.postToSW({
+            type: 'CACHE_ALL_SONGS',
+            urls: songUrls
+        });
+    },
+
+    showBulkDownloadModal() {
+        if (document.getElementById('bulk-dl-modal')) return;
+        const modal = document.createElement('div');
+        modal.id = 'bulk-dl-modal';
+        modal.className = 'bulk-dl-modal';
+        modal.innerHTML = `
+          <div class="bulk-dl-card">
+            <div class="bulk-dl-title">DESCARGANDO TODO</div>
+            <div class="bulk-dl-sub" id="bulk-dl-sub">Preparando...</div>
+            <div class="bulk-dl-bar"><div class="bulk-dl-bar-fill" id="bulk-dl-bar-fill"></div></div>
+            <div class="bulk-dl-actions">
+              <button class="bulk-dl-btn" id="bulk-dl-hide">OCULTAR</button>
+            </div>
+            <div class="bulk-dl-tip">
+              Consejo: en iPhone/Android no bloquees la pantalla mientras descarga.
+            </div>
+          </div>
+        `;
+        document.body.appendChild(modal);
+        modal.querySelector('#bulk-dl-hide')?.addEventListener('click', () => {
+            modal.classList.add('hidden');
+        });
+    },
+
+    updateBulkDownloadModal(done, total) {
+        const sub = document.getElementById('bulk-dl-sub');
+        const fill = document.getElementById('bulk-dl-bar-fill');
+        if (!sub || !fill) return;
+        const t = Math.max(0, Number(total || 0));
+        const d = Math.max(0, Math.min(Number(done || 0), t || 0));
+        const pct = t ? Math.round((d / t) * 100) : 0;
+        sub.textContent = `Progreso: ${d}/${t} (${pct}%)`;
+        fill.style.width = `${pct}%`;
+    },
+
+    finishBulkDownloadModal(ok = true) {
+        const modal = document.getElementById('bulk-dl-modal');
+        const sub = document.getElementById('bulk-dl-sub');
+        const fill = document.getElementById('bulk-dl-bar-fill');
+        if (!modal || !sub || !fill) return;
+        modal.classList.remove('hidden');
+        sub.textContent = ok ? 'OFFLINE LISTO ✅' : 'No se pudo completar ❌';
+        fill.style.width = ok ? '100%' : fill.style.width;
+        setTimeout(() => {
+            try { modal.remove(); } catch (e) {}
+        }, 2500);
     },
 
     // Utilidad para limpiar arrays de canciones de datos corruptos
@@ -245,7 +561,7 @@ const App = {
     },
 
     setupEvents() {
-        // Eventos Mini Player
+        // ... (Mini Player events)
         const playPauseBtn = document.getElementById('play-pause');
         const nextBtn = document.getElementById('next');
         const prevMiniBtn = document.getElementById('prev-mini');
@@ -264,10 +580,152 @@ const App = {
         const fpRepeatBtn = document.getElementById('repeat');
         const fpLyricsBtn = document.getElementById('toggle-lyrics-btn');
         const fpFavBtn = document.getElementById('fav-btn-full');
+        const fpMenuBtn = document.getElementById('fp-menu-btn');
+        const fpContextMenu = document.getElementById('fp-context-menu');
+        const menuFavBtn = document.getElementById('menu-fav-btn');
+        const menuDownloadBtn = document.getElementById('menu-download-btn');
+        const menuQueueBtn = document.getElementById('menu-queue-btn');
+        const downloadBtnFull = document.getElementById('download-btn-full');
 
         if (fpPlayPauseBtn) fpPlayPauseBtn.onclick = () => this.togglePlay();
         if (fpNextBtn) fpNextBtn.onclick = () => this.nextSong();
         if (fpPrevBtn) fpPrevBtn.onclick = () => this.prevSong();
+
+        // Menú de 3 puntos (Contextual)
+        if (fpMenuBtn) {
+            fpMenuBtn.onclick = (e) => {
+                e.stopPropagation();
+                fpContextMenu.classList.toggle('hidden');
+                
+                // Actualizar texto del botón favorito en el menú
+                const current = this.state.currentPlaylist[this.state.currentIndex];
+                const isFav = this.state.favorites.some(s => s.src === current.src);
+                menuFavBtn.querySelector('span').innerText = isFav ? 'Quitar de Favoritos' : 'Añadir a Favoritos';
+                menuFavBtn.querySelector('i').className = isFav ? 'fas fa-heart' : 'far fa-heart';
+            };
+        }
+
+        if (menuFavBtn) {
+            menuFavBtn.onclick = () => {
+                this.toggleFavorite();
+                fpContextMenu.classList.add('hidden');
+            };
+        }
+
+        // Cola: añadir la canción actual para reproducirla "después" o como siguiente
+        if (menuQueueBtn) {
+            menuQueueBtn.onclick = () => {
+                const current = this.state.currentPlaylist[this.state.currentIndex];
+                if (current) {
+                    // playNext=true -> quedará como la próxima canción al terminar esta
+                    this.addToQueue(current, { playNext: true });
+                    this.showToast("AÑADIDO A COLA");
+                }
+                fpContextMenu.classList.add('hidden');
+            };
+        }
+
+        if (menuDownloadBtn) {
+            menuDownloadBtn.onclick = () => {
+                const current = this.state.currentPlaylist[this.state.currentIndex];
+                if (current) {
+                    this.downloadCurrentSong(current);
+                }
+                fpContextMenu.classList.add('hidden');
+            };
+        }
+
+        // Botón de descarga directo (en el player, tipo Spotify)
+        if (downloadBtnFull) {
+            downloadBtnFull.onclick = (e) => {
+                e.preventDefault();
+                const current = this.state.currentPlaylist[this.state.currentIndex];
+                if (current) this.downloadCurrentSong(current);
+            };
+        }
+
+        // Cerrar menú al hacer clic en cualquier parte
+        document.addEventListener('click', () => {
+            if (fpContextMenu) fpContextMenu.classList.add('hidden');
+        });
+
+        // SW Message Listener (para feedback de descarga)
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.addEventListener('message', (event) => {
+                if (event.data.type === 'DOWNLOAD_COMPLETE') {
+                    const ok = !!event.data.ok;
+                    const url = event.data.url;
+                    // Solo marcar como "descargada" cuando el SW confirme que cacheó OK (para offline real)
+                    if (ok && url && this.state.pendingDownloads && this.state.pendingDownloads[url]) {
+                        const song = this.state.pendingDownloads[url];
+                        const pending = { ...this.state.pendingDownloads };
+                        delete pending[url];
+
+                        let newDownloads = [...(this.state.downloads || [])];
+                        if (!newDownloads.some(s => s.src === song.src)) newDownloads.push({ ...song });
+                        this.setState({ downloads: newDownloads, pendingDownloads: pending });
+                        SafeStorage.setJSON('sensei_downloads', newDownloads);
+                        this.scheduleUserSync();
+                        this.showToast("DESCARGA COMPLETA (OFFLINE)");
+                    } else if (!ok && url) {
+                        const pending = { ...(this.state.pendingDownloads || {}) };
+                        delete pending[url];
+                        this.setState({ pendingDownloads: pending });
+                        this.showToast("NO SE PUDO DESCARGAR");
+                    } else {
+                        // fallback
+                        this.showToast(ok ? "DESCARGA COMPLETA" : "NO SE PUDO DESCARGAR");
+                    }
+                }
+                if (event.data.type === 'CACHE_PROGRESS') {
+                    const done = Number(event.data.done || 0);
+                    const total = Number(event.data.total || 0);
+                    this.setState({ bulkDownload: { active: true, done, total } });
+                    this.updateBulkDownloadModal(done, total);
+                }
+                if (event.data.type === 'CACHE_ALL_COMPLETE') {
+                    // Finalizó el proceso del SW (pero puede haber fallos por espacio/conexión).
+                    // Verificamos de verdad qué quedó en cache y SOLO esas marcamos como Descargadas.
+                    (async () => {
+                        try {
+                            const urls = (this.state.songs || []).map(s => this.toAbsUrl(s.src)).filter(Boolean);
+                            const res = await this.verifyOfflineDownloadsLocal(urls);
+                            const cachedSet = new Set((res.cached || []).map(String));
+                            const downloaded = this.cleanSongArray(this.state.songs).filter(s => cachedSet.has(this.toAbsUrl(s.src)));
+
+                            this.setState({
+                                downloads: downloaded,
+                                bulkDownload: { active: false, done: downloaded.length, total: urls.length }
+                            });
+                            SafeStorage.setJSON('sensei_downloads', downloaded);
+                            SafeStorage.set('sensei_cache_v', 'v69');
+                            this.scheduleUserSync();
+
+                            // Guardar status para evitar “mudos” al pasar de canción offline
+                            const map = {};
+                            downloaded.forEach(s => { map[this.toAbsUrl(s.src)] = true; });
+                            this.setState({ offlineStatus: map });
+
+                            const ok = downloaded.length === urls.length && urls.length > 0;
+                            this.finishBulkDownloadModal(ok);
+                            this.showToast(ok
+                                ? "OFFLINE LISTO ✅ (MODO AVIÓN OK)"
+                                : `DESCARGA PARCIAL: ${downloaded.length}/${urls.length}`
+                            );
+                        } catch (e) {
+                            this.finishBulkDownloadModal(false);
+                            this.showToast("NO SE PUDO COMPLETAR OFFLINE");
+                        }
+                    })();
+                }
+
+                if (event.data.type === 'CHECK_CACHED_RESULT') {
+                    const cached = Array.isArray(event.data.cached) ? event.data.cached : [];
+                    const total = Number(event.data.total || 0);
+                    this.handleVerifyResult(cached, total);
+                }
+            });
+        }
         
         if (fpShuffleBtn) fpShuffleBtn.onclick = () => {
             const isShuffle = !this.state.isShuffle;
@@ -303,7 +761,9 @@ const App = {
 
         if (genreToggle) {
             genreToggle.onclick = () => {
-                this.setState({ showGenres: !this.state.showGenres });
+                // Mensaje VIP (el usuario pidió una ventana al tocar el ícono)
+                // Nota: dejamos las categorías accesibles desde el botón de búsqueda (lupa).
+                alert("Usted es Miembro VIP");
             };
         }
 
@@ -345,13 +805,40 @@ const App = {
         });
 
         // Navegación Inferior (Barra de Menú)
-        const navItems = document.querySelectorAll('.nav-item');
-        navItems.forEach(item => {
-            item.onclick = () => {
-                const section = item.getAttribute('data-section');
-                this.setState({ currentSection: section });
+        // Más robusto: delegación de eventos en el contenedor (evita fallos en móviles y dobles handlers).
+        const nav = document.querySelector('.app-nav');
+        if (nav) {
+            const findNavItem = (target) => {
+                // Fallback compatible (por si "closest" falla en algún navegador)
+                let el = target;
+                while (el && el !== nav) {
+                    if (el.classList && el.classList.contains('nav-item')) return el;
+                    el = el.parentNode;
+                }
+                return null;
             };
-        });
+            const navHandler = (e) => {
+                const btn = (e.target && e.target.closest) ? e.target.closest('.nav-item') : findNavItem(e.target);
+                if (!btn) return;
+                e.preventDefault();
+                const section = btn.getAttribute('data-section') || 'home';
+                this.setState({ currentSection: section });
+
+                const main = document.querySelector('.app-main');
+                if (main) main.scrollTo({ top: 0, behavior: 'smooth' });
+
+                // (Quitado) No mostrar mensaje al cambiar de pestaña
+            };
+
+            // Limpiar handlers anteriores por si existían
+            nav.onclick = null;
+            nav.onpointerup = null;
+            nav.ontouchend = null;
+
+            nav.addEventListener('pointerup', navHandler, { passive: false });
+            nav.addEventListener('click', navHandler, { passive: false });
+            nav.addEventListener('touchend', navHandler, { passive: false });
+        }
 
         // Progress Seek
         const fpProgress = document.getElementById('fp-progress-container');
@@ -364,35 +851,36 @@ const App = {
     toggleFavorite() {
         const currentSong = this.state.currentPlaylist[this.state.currentIndex];
         if (!currentSong) return;
+        this.toggleFavoriteSong(currentSong);
+    },
 
-        let newFavs = [...this.state.favorites];
-        const index = newFavs.findIndex(s => s.src === currentSong.src);
+    isFavoriteSong(song) {
+        return !!this.state.favorites?.some(s => s?.src === song?.src);
+    },
+
+    // Favoritos por canción (para botones dentro de la cuadrícula)
+    toggleFavoriteSong(song) {
+        if (!song) return;
+        let newFavs = [...(this.state.favorites || [])];
+        const index = newFavs.findIndex(s => s.src === song.src);
 
         if (index > -1) {
-            newFavs.splice(index, 1); // Quitar de favoritos
-            // Notificar al SW para que considere si quiere borrar el cache (opcional)
-            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'REMOVE_SONG',
-                    url: currentSong.src
-                });
-            }
+            newFavs.splice(index, 1);
+            this.postToSW({ type: 'REMOVE_SONG', url: this.toAbsUrl(song.src) });
         } else {
-            // Asegurarnos de guardar el objeto completo de la canción
-            newFavs.push({...currentSong}); 
-            
-            // --- NUEVO: Guardar físicamente en el PWA (Cache Offline) ---
-            if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-                console.log("PWA: Solicitando guardado offline de:", currentSong.title);
-                navigator.serviceWorker.controller.postMessage({
-                    type: 'CACHE_SONG',
-                    url: currentSong.src
-                });
-            }
+            newFavs.push({ ...song });
+            // Opcional: también guardar físicamente offline si el usuario quiere
+            this.postToSW({ type: 'CACHE_SONG', url: this.toAbsUrl(song.src) });
         }
 
         this.setState({ favorites: newFavs });
-        localStorage.setItem('sensei_favs', JSON.stringify(newFavs));
+        SafeStorage.setJSON('sensei_favs', newFavs);
+        this.showToast(index > -1 ? "QUITADO DE FAVORITOS" : "AÑADIDO A FAVORITOS");
+        this.scheduleUserSync();
+    },
+
+    isDownloadedSong(song) {
+        return !!this.state.downloads?.some(s => s?.src === song?.src);
     },
 
     setState(newState) {
@@ -402,11 +890,167 @@ const App = {
         this.renderVanilla();
     },
 
+    showToast(message) {
+        let container = document.querySelector('.toast-container');
+        if (!container) {
+            container = document.createElement('div');
+            container.className = 'toast-container';
+            document.body.appendChild(container);
+        }
+        
+        const toast = document.createElement('div');
+        toast.className = 'toast';
+        toast.innerText = message;
+        container.appendChild(toast);
+        
+        setTimeout(() => toast.remove(), 3000);
+    },
+
+    // Descargar y guardar en "Perfil" (Descargadas)
+    downloadCurrentSong(song) {
+        if (!song) return;
+        const absUrl = this.toAbsUrl(song.src);
+
+        // Marcar como "en progreso" y SOLO agregar a Descargadas cuando el SW confirme (DOWNLOAD_COMPLETE ok)
+        const pending = { ...(this.state.pendingDownloads || {}) };
+        pending[absUrl] = { ...song };
+        this.setState({ pendingDownloads: pending });
+        this.showToast("DESCARGANDO PARA OFFLINE...");
+
+        this.postToSW({ type: 'CACHE_SONG', url: absUrl });
+    },
+
+    // Verificar si las descargas realmente están guardadas offline (Cache Storage via SW)
+    verifyOfflineDownloads() {
+        const urls = (this.state.downloads || []).map(s => this.toAbsUrl(s.src)).filter(Boolean);
+        if (!urls.length) {
+            this.showToast("NO HAY DESCARGAS");
+            return;
+        }
+        const modeLabel = navigator.onLine ? "ONLINE" : "OFFLINE";
+        this.showToast(`VERIFICANDO ${modeLabel}...`);
+
+        // Token para evitar respuestas viejas
+        this._verifyToken = (this._verifyToken || 0) + 1;
+        const token = this._verifyToken;
+        this._verifyHandled = false;
+
+        // 1) Intentar vía Service Worker (rápido)
+        this.postToSW({ type: 'CHECK_CACHED_URLS', urls, token });
+
+        // 2) Fallback: si el SW no responde (por caché viejo / no control / etc.),
+        // hacemos verificación directa desde CacheStorage en la página.
+        clearTimeout(this._verifyTimer);
+        this._verifyTimer = setTimeout(async () => {
+            if (this._verifyHandled || token !== this._verifyToken) return;
+            try {
+                const result = await this.verifyOfflineDownloadsLocal(urls);
+                if (token !== this._verifyToken) return;
+                this.handleVerifyResult(result.cached || [], result.total || urls.length);
+            } catch (e) {
+                if (token !== this._verifyToken) return;
+                this.showToast("NO SE PUDO VERIFICAR");
+            }
+        }, 2500);
+    },
+
+    async verifyOfflineDownloadsLocal(urls) {
+        if (!('caches' in window)) return { cached: [], total: urls.length, error: true };
+        const keys = await caches.keys();
+        const candidates = keys.filter(k => k.startsWith('sensei-music-'));
+        const cacheName = candidates.sort().slice(-1)[0];
+        if (!cacheName) return { cached: [], total: urls.length, error: true };
+
+        const cache = await caches.open(cacheName);
+        const cached = [];
+        for (const u of urls) {
+            try {
+                const req = new Request(u, { method: 'GET' });
+                const hit = await cache.match(req);
+                if (hit) cached.push(u);
+            } catch (e) {}
+        }
+        return { cached, total: urls.length };
+    },
+
+    handleVerifyResult(cachedUrls, total) {
+        this._verifyHandled = true;
+        clearTimeout(this._verifyTimer);
+
+        const cached = Array.isArray(cachedUrls) ? cachedUrls : [];
+        const map = {};
+        cached.forEach(u => { map[u] = true; });
+        this.setState({ offlineStatus: map });
+
+        const label = navigator.onLine ? "VERIFICADO ONLINE" : "VERIFICADO OFFLINE";
+        this.showToast(`${label}: ${cached.length}/${Math.max(0, total || 0)}`);
+    },
+
+    // Cachear en segundo plano SIN marcar como "Descargada" (mejora velocidad sin llenar Perfil)
+    cacheSongSilently(song, delayMs = 0) {
+        if (!song) return;
+        if (!navigator.onLine) return;
+
+        // Evitar descargas si el usuario activó "ahorro de datos"
+        const conn = navigator.connection;
+        if (conn && conn.saveData) return;
+
+        setTimeout(() => {
+            this.postToSW({
+                type: 'CACHE_SONG',
+                url: this.toAbsUrl(song.src)
+            });
+        }, Math.max(0, delayMs));
+    },
+
+    // Estrategia: al iniciar play, cachear la actual y la siguiente con retardo,
+    // para que el "siguiente" track sea más rápido (Android/iOS).
+    maybePrecacheAroundCurrent() {
+        try {
+            const current = this.state.currentPlaylist?.[this.state.currentIndex];
+            if (!current) return;
+
+            // Cachear la actual luego de 4s (no compite con el buffer inicial)
+            this.cacheSongSilently(current, 4000);
+
+            // Cachear la siguiente luego de 8s (mejora "next")
+            const nextIndex = (this.state.currentIndex + 1) % (this.state.currentPlaylist?.length || 1);
+            const next = this.state.currentPlaylist?.[nextIndex];
+            if (next) this.cacheSongSilently(next, 8000);
+        } catch (e) {}
+    },
+
+    // Cola de reproducción (tipo Spotify)
+    addToQueue(song, { playNext = false } = {}) {
+        if (!song) return;
+        let q = [...this.state.queue];
+        // Evitar duplicados
+        q = q.filter(s => s.src !== song.src);
+        if (playNext) q.unshift({ ...song });
+        else q.push({ ...song });
+        this.setState({ queue: q });
+        SafeStorage.setJSON('sensei_queue', q);
+        this.scheduleUserSync();
+    },
+
+    // Guardar historial (últimas 50)
+    pushHistory(song) {
+        if (!song) return;
+        let h = [...this.state.history];
+        h = h.filter(s => s.src !== song.src);
+        h.unshift({ ...song });
+        if (h.length > 50) h = h.slice(0, 50);
+        this.setState({ history: h });
+        SafeStorage.setJSON('sensei_history', h);
+        this.scheduleUserSync();
+    },
+
     loadSong(index, forcePlay = false) {
         const song = this.state.currentPlaylist[index];
         if (!song) return;
         this.setState({ currentIndex: index });
         this.engine.load(song);
+        this.pushHistory(song);
         // Si ya estaba sonando o forzamos el play (por el evento 'ended')
         if (this.state.isPlaying || forcePlay) {
             this.setState({ isPlaying: true });
@@ -414,9 +1058,52 @@ const App = {
         }
     },
 
+    isSongAvailableOffline(song) {
+        if (!song) return false;
+        // Si hay internet, no importa
+        if (navigator.onLine) return true;
+        const url = this.toAbsUrl(song.src);
+        return !!(this.state.offlineStatus && this.state.offlineStatus[url]);
+    },
+
     nextSong(forcePlay = false) {
-        let nextIndex = (this.state.currentIndex + 1) % this.state.currentPlaylist.length;
-        this.loadSong(nextIndex, forcePlay);
+        // 1) Si hay cola, reproducir lo de la cola primero
+        if (this.state.queue && this.state.queue.length > 0) {
+            const q = [...this.state.queue];
+            const next = q.shift();
+            this.setState({ queue: q });
+            SafeStorage.setJSON('sensei_queue', q);
+
+            // Si estamos offline y esa canción no está descargada, la saltamos
+            if (!this.isSongAvailableOffline(next)) {
+                this.showToast("ESA CANCIÓN NO ESTÁ OFFLINE");
+                return this.nextSong(forcePlay);
+            }
+
+            this.engine.load(next);
+            this.pushHistory(next);
+            if (this.state.isPlaying || forcePlay) {
+                this.setState({ isPlaying: true });
+                this.engine.play();
+            }
+            return;
+        }
+
+        // 2) Si no hay cola, seguir la playlist normal
+        const len = this.state.currentPlaylist.length;
+        if (!len) return;
+        let tries = 0;
+        let nextIndex = (this.state.currentIndex + 1) % len;
+        while (tries < len) {
+            const candidate = this.state.currentPlaylist[nextIndex];
+            if (this.isSongAvailableOffline(candidate)) {
+                this.loadSong(nextIndex, forcePlay);
+                return;
+            }
+            tries += 1;
+            nextIndex = (nextIndex + 1) % len;
+        }
+        this.showToast("NO HAY MÁS MÚSICA OFFLINE");
     },
 
     prevSong(forcePlay = false) {
@@ -426,8 +1113,20 @@ const App = {
             this.engine.audio.currentTime = 0;
             if (this.state.isPlaying) this.engine.play();
         } else {
-            let prevIndex = (this.state.currentIndex - 1 + this.state.currentPlaylist.length) % this.state.currentPlaylist.length;
-            this.loadSong(prevIndex, forcePlay);
+            const len = this.state.currentPlaylist.length;
+            if (!len) return;
+            let tries = 0;
+            let prevIndex = (this.state.currentIndex - 1 + len) % len;
+            while (tries < len) {
+                const candidate = this.state.currentPlaylist[prevIndex];
+                if (this.isSongAvailableOffline(candidate)) {
+                    this.loadSong(prevIndex, forcePlay);
+                    return;
+                }
+                tries += 1;
+                prevIndex = (prevIndex - 1 + len) % len;
+            }
+            this.showToast("NO HAY MÁS MÚSICA OFFLINE");
         }
     },
 
@@ -454,6 +1153,15 @@ const App = {
                 this.reactRoot.render(React.createElement(PlaylistComponent, { 
                     currentSection: this.state.currentSection,
                     favorites: this.state.favorites,
+                    downloads: this.state.downloads, // Pasar descargas al componente
+                    history: this.state.history,
+                    queue: this.state.queue,
+                    playlists: this.state.playlists,
+                    profileTab: this.state.profileTab,
+                    activePlaylistId: this.state.activePlaylistId,
+                    user: this.state.user,
+                    authReady: this.state.authReady,
+                    offlineStatus: this.state.offlineStatus,
                     songs: this.state.songs,
                     currentIndex: this.state.currentIndex,
                     currentPlaylist: this.state.currentPlaylist,
@@ -556,34 +1264,180 @@ const App = {
 // --- 3. React Component ---
 const PlaylistComponent = (props) => {
     const [searchTerm, setSearchTerm] = React.useState("");
-    
-    // Usar props en lugar de estado interno hackeado
-    const { currentSection, favorites, songs, currentIndex, currentPlaylist, currentGenre } = props;
+    const [playlistName, setPlaylistName] = React.useState("");
 
-    let baseSongs = currentSection === 'favorites' ? favorites : (currentSection === 'home' ? songs : []);
-    
-    // --- LIMPIEZA DE SEGURIDAD ---
-    // Asegurarnos de que baseSongs sea un array válido y no contenga nulos
+    const {
+        currentSection,
+        favorites,
+        downloads,
+        history,
+        playlists,
+        profileTab,
+        activePlaylistId,
+        user,
+        authReady,
+        offlineStatus,
+        songs,
+        currentIndex,
+        currentPlaylist,
+        currentGenre
+    } = props;
+
+    const dict = React.useMemo(() => new Map((songs || []).map(s => [s.src, s])), [songs]);
+
+    // El usuario pidió quitar Login/Register del Perfil.
+    // Dejamos el Perfil solo para Descargadas / Playlists / Historial.
+    const profileAuthCard = () => null;
+
+    // Determinar lista a mostrar
+    let baseSongs = [];
+    let headerTitle = 'Descubrir';
+    let isListView = false;
+
+    if (currentSection === 'favorites') {
+        baseSongs = favorites;
+        headerTitle = 'Mis Favoritos';
+    } else if (currentSection === 'profile') {
+        isListView = true;
+        headerTitle =
+            profileTab === 'history' ? 'Historial' :
+            profileTab === 'playlists' ? 'Mis Playlists' :
+            'Música Descargada';
+
+        if (profileTab === 'downloads') baseSongs = downloads;
+        else if (profileTab === 'history') baseSongs = history;
+        else if (profileTab === 'playlists') {
+            if (activePlaylistId) {
+                const pl = (playlists || []).find(p => p.id === activePlaylistId);
+                const tracks = pl?.tracks || [];
+                baseSongs = tracks.map(src => dict.get(src)).filter(Boolean);
+            } else {
+                baseSongs = [];
+            }
+        }
+    } else {
+        baseSongs = songs;
+        headerTitle = currentGenre ? `Género: ${currentGenre}` : 'Descubrir';
+    }
+
     baseSongs = (baseSongs || []).filter(s => s && s.title && s.artist);
-    
-    // Filtrar por género si hay uno seleccionado
+
     if (currentGenre && currentSection === 'home') {
         baseSongs = baseSongs.filter(s => s.genre && s.genre.toUpperCase() === currentGenre.toUpperCase());
     }
-    
-    const filteredSongs = baseSongs.filter(s => 
-        (s.title || "").toLowerCase().includes(searchTerm.toLowerCase()) || 
+
+    const filteredSongs = baseSongs.filter(s =>
+        (s.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
         (s.artist || "").toLowerCase().includes(searchTerm.toLowerCase())
     );
 
+    const profileTabs = () => {
+        if (currentSection !== 'profile') return null;
+        return React.createElement('div', { className: 'profile-tabs' },
+            React.createElement('button', {
+                className: `profile-tab ${profileTab === 'downloads' ? 'active' : ''}`,
+                onClick: () => App.setProfileTab('downloads')
+            }, 'DESCARGADAS'),
+            React.createElement('button', {
+                className: `profile-tab ${profileTab === 'playlists' ? 'active' : ''}`,
+                onClick: () => App.setProfileTab('playlists')
+            }, 'PLAYLISTS'),
+            React.createElement('button', {
+                className: `profile-tab ${profileTab === 'history' ? 'active' : ''}`,
+                onClick: () => App.setProfileTab('history')
+            }, 'HISTORIAL')
+        );
+    };
+
+    const playlistsPanel = () => {
+        if (currentSection !== 'profile' || profileTab !== 'playlists') return null;
+
+        // Vista: lista de playlists
+        if (!activePlaylistId) {
+            return React.createElement('div', { className: 'pl-panel' },
+                React.createElement('div', { className: 'pl-create' },
+                    React.createElement('input', {
+                        className: 'pl-input',
+                        value: playlistName,
+                        placeholder: 'Nombre de playlist...',
+                        onChange: (e) => setPlaylistName(e.target.value)
+                    }),
+                    React.createElement('button', {
+                        className: 'pl-btn',
+                        onClick: () => {
+                            App.createPlaylist(playlistName);
+                            setPlaylistName("");
+                        }
+                    }, 'CREAR')
+                ),
+                React.createElement('div', { className: 'pl-list' },
+                    (playlists || []).length ? (playlists || []).map(p =>
+                        React.createElement('div', { key: p.id, className: 'pl-item' },
+                            React.createElement('button', {
+                                className: 'pl-open',
+                                onClick: () => App.openPlaylist(p.id)
+                            }, `${p.name} (${(p.tracks || []).length})`),
+                            React.createElement('button', {
+                                className: 'pl-del',
+                                title: 'Eliminar',
+                                onClick: () => App.deletePlaylist(p.id)
+                            }, '✕')
+                        )
+                    ) : React.createElement('div', { className: 'no-results' }, 'Crea tu primera playlist.')
+                )
+            );
+        }
+
+        // Vista: playlist abierta
+        const pl = (playlists || []).find(p => p.id === activePlaylistId);
+        return React.createElement('div', { className: 'pl-panel' },
+            React.createElement('div', { className: 'pl-header' },
+                React.createElement('button', { className: 'pl-back', onClick: () => App.openPlaylist('') }, '←'),
+                React.createElement('div', { className: 'pl-title' }, pl?.name || 'Playlist'),
+                React.createElement('button', {
+                    className: 'pl-btn',
+                    onClick: () => {
+                        const current = currentPlaylist?.[currentIndex];
+                        if (current) App.addSongToPlaylist(current, activePlaylistId);
+                    }
+                }, 'AÑADIR ACTUAL')
+            ),
+            React.createElement('div', { className: 'pl-sub' }, 'Tip: también puedes añadir desde Inicio tocando el menú (3 puntos)'),
+        );
+    };
+
     return React.createElement('div', { className: 'playlist-advanced' },
         React.createElement('div', { className: 'playlist-header' },
-            React.createElement('h2', null, 
-                currentSection === 'favorites' ? 'Mis Favoritos' : 
-                currentSection === 'profile' ? 'Mi Perfil' : 
-                (currentGenre ? `Género: ${currentGenre}` : 'Descubrir')
+            React.createElement('div', { className: 'playlist-header-row' },
+                React.createElement('h2', null,
+                    headerTitle === 'Descubrir'
+                        ? React.createElement('span', { className: 'title-accent' }, 'DESCUBRIR')
+                        : headerTitle
+                ),
+                currentSection === 'profile' && profileTab === 'downloads'
+                    ? React.createElement('div', { className: 'header-actions-row' },
+                        React.createElement('button', {
+                            className: 'btn-ghost',
+                            onClick: () => {
+                                try {
+                                    App.showToast("INICIANDO DESCARGA OFFLINE...");
+                                    App.cacheAllSongs();
+                                } catch (e) {}
+                            }
+                        }, 'DESCARGAR TODO'),
+                        React.createElement('button', {
+                            className: 'btn-ghost',
+                            onClick: () => {
+                                try { App.verifyOfflineDownloads(); } catch (e) {}
+                            }
+                        }, 'VERIFICAR OFFLINE')
+                    )
+                    : null
             ),
-            currentSection !== 'profile' && React.createElement('input', {
+            profileAuthCard(),
+            profileTabs(),
+            playlistsPanel(),
+            React.createElement('input', {
                 type: 'text',
                 placeholder: 'Buscar música...',
                 className: 'search-advanced',
@@ -591,17 +1445,95 @@ const PlaylistComponent = (props) => {
                 onChange: (e) => setSearchTerm(e.target.value)
             })
         ),
-        React.createElement('div', { className: 'song-grid' },
-            currentSection === 'profile' ? 
-            React.createElement('div', { className: 'profile-info' }, 
-                React.createElement('div', { className: 'no-results' }, 'Configuración y perfil de usuario (Próximamente)')
-            ) :
-            (filteredSongs.length > 0 ? 
-            filteredSongs.map((song, i) => {
+        React.createElement('div', {
+            className: (currentSection === 'profile' && profileTab === 'playlists')
+                ? 'pl-songs-wrapper'
+                : (isListView ? 'song-list' : 'song-grid')
+        },
+            // --- VISTA ESPECIAL: PLAYLISTS ---
+            (currentSection === 'profile' && profileTab === 'playlists') ? (() => {
+                // Resultados para añadir (busca en TODA la música, no solo dentro de la playlist)
+                const searchAll = (songs || []).filter(s =>
+                    (s?.title || "").toLowerCase().includes(searchTerm.toLowerCase()) ||
+                    (s?.artist || "").toLowerCase().includes(searchTerm.toLowerCase())
+                ).slice(0, 80);
+
+                const renderSongCard = (song, { listView = false, extraRemove = false } = {}) => {
+                    const isCurrent = currentPlaylist[currentIndex]?.src === song.src;
+                    return React.createElement('div', {
+                        key: song.src,
+                        className: `song-item ${isCurrent ? 'active' : ''} ${listView ? 'list-item' : ''}`,
+                        onClick: () => {
+                            App.setState({ currentPlaylist: listView ? (activePlaylistId ? filteredSongs : searchAll) : (activePlaylistId ? filteredSongs : searchAll) });
+                            const list = listView ? (activePlaylistId ? filteredSongs : searchAll) : (activePlaylistId ? filteredSongs : searchAll);
+                            const newIndex = list.findIndex(s => s.src === song.src);
+                            App.loadSong(newIndex);
+                            App.engine.play();
+                            openFullPlayer();
+                        }
+                    },
+                        React.createElement('img', {
+                            src: song.cover,
+                            className: listView ? 'mini-art' : '',
+                            loading: 'lazy',
+                            decoding: 'async',
+                            referrerPolicy: 'no-referrer',
+                            onError: (e) => { e.target.src = '../logo SENSEI.png'; }
+                        }),
+                        React.createElement('div', { className: 'song-actions' },
+                            // En vista de playlists solo mostramos acciones de playlist (sin corazón/descarga)
+                            React.createElement('button', {
+                                className: 'song-action-btn',
+                                title: activePlaylistId ? 'Añadir a esta playlist' : 'Abre una playlist primero',
+                                onClick: (e) => {
+                                    e.preventDefault(); e.stopPropagation();
+                                    if (!activePlaylistId) return App.showToast('Abre o crea una playlist');
+                                    App.addSongToPlaylist(song, activePlaylistId);
+                                }
+                            }, React.createElement('i', { className: 'fas fa-plus' })),
+                            extraRemove ? React.createElement('button', {
+                                className: 'song-action-btn',
+                                title: 'Quitar de esta playlist',
+                                onClick: (e) => { e.preventDefault(); e.stopPropagation(); App.removeSongFromPlaylist(song.src, activePlaylistId); }
+                            }, '✕') : null
+                        ),
+                        React.createElement('div', { className: listView ? 'song-info-list' : '' },
+                            React.createElement('h4', null, song.title),
+                            React.createElement('p', null, song.artist)
+                        )
+                    );
+                };
+
+                return React.createElement(React.Fragment, null,
+                    // Canciones dentro de la playlist (si hay playlist abierta)
+                    activePlaylistId ? React.createElement('div', { className: 'pl-section' },
+                        React.createElement('div', { className: 'section-title' }, 'EN ESTA PLAYLIST'),
+                        React.createElement('div', { className: 'song-list' },
+                            filteredSongs.length
+                                ? filteredSongs.map(s => renderSongCard(s, { listView: true, extraRemove: true }))
+                                : React.createElement('div', { className: 'no-results' }, 'Esta playlist está vacía. Busca abajo y añade canciones.')
+                        )
+                    ) : React.createElement('div', { className: 'no-results' }, 'Abre una playlist para ver sus canciones y poder guardar música.'),
+
+                    React.createElement('div', { className: 'pl-section' },
+                        React.createElement('div', { className: 'section-title' }, 'BUSCAR PARA AÑADIR'),
+                        (searchTerm || '').trim().length === 0
+                            ? React.createElement('div', { className: 'pl-sub' }, 'Escribe en “Buscar música…” para encontrar canciones y guardarlas en tu playlist.')
+                            : React.createElement('div', { className: 'song-grid' },
+                                searchAll.length
+                                    ? searchAll.map(s => renderSongCard(s, { listView: false, extraRemove: false }))
+                                    : React.createElement('div', { className: 'no-results' }, 'No se encontraron canciones.')
+                              )
+                    )
+                );
+            })()
+            :
+            // --- VISTA NORMAL (Inicio/Favoritos/Descargadas/Historial) ---
+            (filteredSongs.length > 0 ? filteredSongs.map((song) => {
                 const isCurrent = currentPlaylist[currentIndex]?.src === song.src;
-                return React.createElement('div', { 
+                return React.createElement('div', {
                     key: song.src,
-                    className: `song-item ${isCurrent ? 'active' : ''}`,
+                    className: `song-item ${isCurrent ? 'active' : ''} ${isListView ? 'list-item' : ''}`,
                     onClick: () => {
                         App.setState({ currentPlaylist: filteredSongs });
                         const newIndex = filteredSongs.findIndex(s => s.src === song.src);
@@ -610,16 +1542,24 @@ const PlaylistComponent = (props) => {
                         openFullPlayer();
                     }
                 },
-                    React.createElement('img', { 
-                        src: song.cover, 
+                    React.createElement('img', {
+                        src: song.cover,
+                        className: isListView ? 'mini-art' : '',
+                        loading: 'lazy',
+                        decoding: 'async',
+                        referrerPolicy: 'no-referrer',
                         onError: (e) => { e.target.src = '../logo SENSEI.png'; }
                     }),
-                    React.createElement('h4', null, song.title),
-                    React.createElement('p', null, song.artist)
+                    React.createElement('div', { className: isListView ? 'song-info-list' : '' },
+                        React.createElement('h4', null, song.title),
+                        React.createElement('p', null, song.artist)
+                    )
                 );
-            }) :
-            React.createElement('div', { className: 'no-results' }, 
-                currentSection === 'favorites' ? 'No tienes favoritos aún.' : 'No se encontraron canciones.'
+            }) : React.createElement('div', { className: 'no-results' },
+                currentSection === 'favorites' ? 'No tienes favoritos aún.' :
+                currentSection === 'profile' && profileTab === 'downloads' ? 'No tienes música descargada.' :
+                currentSection === 'profile' && profileTab === 'history' ? 'Tu historial está vacío.' :
+                'No se encontraron canciones.'
             ))
         )
     );
@@ -640,34 +1580,80 @@ document.addEventListener('visibilitychange', async () => {
 
 // Matrix Logic (Simplificada)
 function initMatrix() {
-    const container = document.getElementById('matrix-bg');
-    if (!container) return;
-    const canvas = document.createElement('canvas');
-    canvas.style.position = 'fixed';
-    canvas.style.top = '0';
-    canvas.style.left = '0';
-    canvas.style.zIndex = '-1';
-    canvas.style.opacity = '0.1';
-    container.appendChild(canvas);
-    const ctx = canvas.getContext('2d');
-    
-    const resize = () => {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
+    // Fondo estilo Spotify (por defecto): no renderizar Matrix para ahorrar batería/CPU.
+    // Si algún día quieres volver a Matrix: SafeStorage.set('sensei_bg','matrix')
+    const bgMode = (SafeStorage.get('sensei_bg') || 'spotify').toLowerCase();
+    if (bgMode !== 'matrix') {
+        // Si existían canvases de una versión anterior, los quitamos
+        try {
+            document.getElementById('matrix-canvas-main')?.remove();
+            document.getElementById('matrix-canvas-fp')?.remove();
+        } catch (e) {}
+        return;
+    }
+
+    const mainContainer = document.getElementById('matrix-bg');
+    if (!mainContainer) return;
+
+    // Evitar crear canvases duplicados si initMatrix se ejecuta más de una vez
+    const existingMain = document.getElementById('matrix-canvas-main');
+    const existingFP = document.getElementById('matrix-canvas-fp');
+    if (existingMain && existingFP) return;
+
+    const makeCanvas = (id, parent, position, zIndex, opacity) => {
+        const c = document.createElement('canvas');
+        c.id = id;
+        c.style.position = position;
+        c.style.inset = '0';
+        c.style.zIndex = String(zIndex);
+        c.style.opacity = String(opacity);
+        c.style.pointerEvents = 'none';
+        parent.appendChild(c);
+        return c;
     };
-    window.onresize = resize;
+
+    // Canvas general (detrás de todo)
+    const canvasMain = existingMain || makeCanvas('matrix-canvas-main', mainContainer, 'fixed', -1, 0.30);
+
+    // Canvas dentro del FULL PLAYER (para que se vea "aquí adentro")
+    const fullPlayer = document.getElementById('full-player');
+    const canvasFP = existingFP || (fullPlayer ? makeCanvas('matrix-canvas-fp', fullPlayer, 'absolute', -2, 0.26) : null);
+
+    const canvases = [canvasMain, canvasFP].filter(Boolean);
+    const ctxs = canvases.map(c => c.getContext('2d'));
+
+    const fontSize = 15;
+    let drops = [];
+
+    const resize = () => {
+        canvases.forEach(c => {
+            c.width = window.innerWidth;
+            c.height = window.innerHeight;
+        });
+        drops = Array(Math.floor(window.innerWidth / fontSize)).fill(1);
+    };
+    window.addEventListener('resize', resize);
     resize();
 
-    const drops = Array(Math.floor(canvas.width/15)).fill(1);
     setInterval(() => {
-        ctx.fillStyle = 'rgba(0,0,0,0.05)';
-        ctx.fillRect(0,0,canvas.width,canvas.height);
-        ctx.fillStyle = '#0f0';
-        ctx.font = "15px monospace";
+        ctxs.forEach((ctx) => {
+            // Fondo con menor "borrado" para que se vean más las columnas (como en tu captura)
+            ctx.fillStyle = 'rgba(0,0,0,0.045)';
+            ctx.fillRect(0, 0, window.innerWidth, window.innerHeight);
+
+            // Letras verdes con brillo
+            ctx.font = `${fontSize}px monospace`;
+            ctx.fillStyle = 'rgba(29, 185, 84, 0.85)';
+            ctx.shadowColor = 'rgba(29, 185, 84, 0.45)';
+            ctx.shadowBlur = 8;
+        });
+
         drops.forEach((y, i) => {
-            const text = String.fromCharCode(Math.random()*128);
-            ctx.fillText(text, i*15, y*15);
-            if(y*15 > canvas.height && Math.random() > 0.975) drops[i] = 0;
+            const text = String.fromCharCode(33 + Math.random() * 90);
+            const x = i * fontSize;
+            const yy = y * fontSize;
+            ctxs.forEach((ctx) => ctx.fillText(text, x, yy));
+            if (yy > window.innerHeight && Math.random() > 0.975) drops[i] = 0;
             drops[i]++;
         });
     }, 33);
@@ -692,7 +1678,9 @@ const handleSeek = (e, containerId) => {
 };
 
 function openFullPlayer() { 
-    document.getElementById('full-player').style.transform = 'translateX(-50%) translateY(0)';
+    const fp = document.getElementById('full-player');
+    fp.style.transform = 'translateY(0)';
+    fp.classList.add('is-open');
     // Agregar estado al historial para el botón atrás del teléfono
     if (!window.location.hash.includes('player')) {
         history.pushState({ player: 'open' }, '', '#player');
@@ -700,7 +1688,9 @@ function openFullPlayer() {
 }
 
 function closeFullPlayer() { 
-    document.getElementById('full-player').style.transform = 'translateX(-50%) translateY(100%)';
+    const fp = document.getElementById('full-player');
+    fp.style.transform = 'translateY(100%)';
+    fp.classList.remove('is-open');
     // Si cerramos manualmente y hay hash, retrocedemos en el historial
     if (window.location.hash === '#player') {
         history.back();
