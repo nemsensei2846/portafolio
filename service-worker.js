@@ -301,7 +301,9 @@ async function cacheOneSong(url) {
   for (let attempt = 1; attempt <= 2; attempt++) {
     try {
       const res = await fetch(req);
-      if (res && res.status === 200) {
+      // Para cross-origin con no-cors, la respuesta será "opaque" (status 0).
+      // Igual sirve para cache y reproducción, así que lo consideramos OK.
+      if (isOpaqueOk(res) && (res.status === 200 || res.type === 'opaque')) {
         try {
           await cache.put(req, res.clone());
           return true;
