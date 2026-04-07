@@ -125,7 +125,17 @@ class AudioEngine {
         if (!song) return;
         // Solo cambiamos el SRC y llamamos a load() si es necesario
         // En algunos móviles, llamar a load() explícitamente ayuda a resetear el buffer
-        this.audio.src = song.src;
+        // IMPORTANTE: muchos nombres de archivos tienen espacios/acentos/comas.
+        // Usar URL absoluta (ya codificada) evita que algunas canciones “no suenen” (404) en móviles/PWA.
+        let src = song.src;
+        try {
+            if (typeof App !== 'undefined' && App && typeof App.toAbsUrl === 'function') {
+                src = App.toAbsUrl(song.src);
+            } else {
+                src = new URL(song.src, window.location.href).href;
+            }
+        } catch (e) {}
+        this.audio.src = src;
         this.audio.load(); 
         this.updateMediaMetadata(song);
     }
