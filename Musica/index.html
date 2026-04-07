@@ -1,212 +1,266 @@
+<!--
+  Musica/index.html (con cache-busting y Auth)
+  - style.css?v=69, songs.js?v=69, letras.js?v=69, script.js?v=69
+  - Integra Firebase Auth: en Perfil mostrará Login/Register si no hay sesión
+-->
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>SENSEI MUSIC</title>
-    <link rel="manifest" href="../manifest.json">
-    <meta name="theme-color" content="#0d0208">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+  <meta name="referrer" content="no-referrer">
+  <title>SENSEI MUSIC</title>
+  <link rel="manifest" href="../manifest.json">
+  <meta name="theme-color" content="#0d0208">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.1/dist/aos.css">
+  <link rel="stylesheet" href="style.css?v=69">
 </head>
 <body class="sensei-audio">
-    <div class="scanlines"></div>
-    <div class="matrix-bg" id="matrix-bg"></div>
+  <div class="scanlines"></div>
+  <div class="matrix-bg" id="matrix-bg"></div>
 
-    <div class="app-wrapper">
-        <header class="app-header">
-            <div class="header-content">
-                <h1 class="logo-text">SENSEI<span class="music-glow">MUSIC</span></h1>
-                <div class="header-actions">
-                    <button id="battery-guide-btn" class="icon-btn" title="Guía Batería"><i class="fas fa-battery-full"></i></button>
-                    <button id="genre-toggle" class="icon-btn" style="font-size: 1.2rem;" title="Categorías">⚜️</button>
-                    <button id="search-toggle" class="icon-btn"><i class="fas fa-search"></i></button>
-                </div>
-            </div>
-        </header>
-
-        <!-- Menú de Categorías (Géneros) -->
-        <div id="genre-menu" class="genre-menu hidden">
-            <div class="genre-menu-content">
-                <div class="genre-header">
-                    <h3>Categorías</h3>
-                    <button id="close-genres" class="close-btn-mini"><i class="fas fa-times"></i></button>
-                </div>
-                <div class="genre-list">
-                    <button class="genre-item" data-genre="REGUETON">REGUETON</button>
-                    <button class="genre-item" data-genre="ROMANTICA">ROMANTICA</button>
-                    <button class="genre-item" data-genre="VALLENATO">VALLENATO</button>
-                    <button class="genre-item" data-genre="BACHATA">BACHATA</button>
-                    <button class="genre-item" data-genre="RANCHERA">RANCHERA</button>
-                    <button class="genre-item" data-genre="BALADA">BALADA</button>
-                    <button class="genre-item" data-genre="BOLERO">BOLERO</button>
-                    <button class="genre-item" data-genre="PASILLO">PASILLO</button>
-                    <button class="genre-item" data-genre="CUMBIA">CUMBIA</button>
-                    <button class="genre-item" data-genre="70 AND 80">70 AND 80</button>
-                    <button class="genre-item" data-genre="ELECTRONICA">ELECTRONICA</button>
-                    <button class="genre-item" data-genre="OTROS">OTROS</button>
-                    <button class="genre-item all-songs" data-genre="null">VER TODO</button>
-                </div>
-            </div>
+  <div class="app-wrapper">
+    <header class="app-header">
+      <div class="header-content">
+        <h1 class="logo-text">SENSEI<span class="music-glow">MUSIC</span></h1>
+        <div class="header-actions">
+          <button id="battery-guide-btn" class="icon-btn" title="Guía Batería"><i class="fas fa-battery-full"></i></button>
+          <button id="genre-toggle" class="icon-btn" style="font-size: 1.2rem;" title="VIP">⚜️</button>
+          <button id="search-toggle" class="icon-btn"><i class="fas fa-search"></i></button>
         </div>
+      </div>
+    </header>
 
-        <main class="app-main">
-            <!-- React Root for Advanced Playlist -->
-            <div id="react-root"></div>
-            
-            <!-- Legacy sections for compatibility -->
-            <div id="section-home" class="app-section active"></div>
-            <div id="section-favorites" class="app-section"></div>
-            <div id="section-profile" class="app-section"></div>
-        </main>
-
-        <!-- Mini Player -->
-        <div class="mini-player" id="mini-player">
-            <div class="progress-container-mini" id="progress-container-mini">
-                <div class="progress-bar-mini" id="progress-bar-mini"></div>
-            </div>
-            <div class="mini-player-content">
-                <div class="mini-info" onclick="openFullPlayer()" style="cursor: pointer;">
-                    <img src="../logo SENSEI.png" alt="Cover" id="mini-cover">
-                    <div class="mini-text">
-                        <h4 id="mini-title">Selecciona una canción</h4>
-                        <p id="mini-artist">Sensei Music Player</p>
-                    </div>
-                </div>
-                <div class="mini-controls">
-                    <button id="prev-mini" class="prev-btn-mini"><i class="fas fa-step-backward"></i></button>
-                    <button id="play-pause" class="play-btn-mini"><i class="fas fa-play"></i></button>
-                    <button id="next" class="next-btn-mini"><i class="fas fa-step-forward"></i></button>
-                </div>
-            </div>
+    <!-- Menú de Categorías (Géneros) -->
+    <div id="genre-menu" class="genre-menu hidden">
+      <div class="genre-menu-content">
+        <div class="genre-header">
+          <h3>Categorías</h3>
+          <button id="close-genres" class="close-btn-mini"><i class="fas fa-times"></i></button>
         </div>
-
-        <!-- Full Player Overlay -->
-        <div class="full-player" id="full-player">
-            <div class="fp-bg" id="fp-bg"></div>
-            <div class="fp-header">
-                <button onclick="closeFullPlayer()" class="close-btn"><i class="fas fa-chevron-down"></i></button>
-                <div class="fp-header-title">Reproduciendo ahora</div>
-                <button class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
-            </div>
-
-            <div class="fp-content">
-                <div class="fp-art-container">
-                    <img src="../logo SENSEI.png" alt="Cover" id="fp-cover" class="fp-cover">
-                    <div class="lyrics-overlay hidden" id="lyrics-static">
-                        <div class="lyrics-content">
-                            <pre id="lyrics-text-full">Cargando letra...</pre>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="fp-info">
-                    <h2 id="fp-title">Título de la canción</h2>
-                    <p id="fp-artist">Artista</p>
-                </div>
-
-                <div class="fp-controls-main">
-                    <div class="fp-progress-container" id="fp-progress-container">
-                        <div class="time-info">
-                            <span id="current-time">0:00</span>
-                            <span id="duration">0:00</span>
-                        </div>
-                        <div class="fp-progress-bar-bg">
-                            <div class="fp-progress-bar" id="fp-progress-bar"></div>
-                        </div>
-                    </div>
-
-                    <div class="fp-buttons">
-                        <button id="shuffle" class="icon-btn-fp"><i class="fas fa-random"></i></button>
-                        <button id="prev" class="icon-btn-fp main-ctrl"><i class="fas fa-step-backward"></i></button>
-                        <button id="fp-play-pause" class="play-btn-fp"><i class="fas fa-play"></i></button>
-                        <button id="fp-next" class="icon-btn-fp main-ctrl"><i class="fas fa-step-forward"></i></button>
-                        <button id="repeat" class="icon-btn-fp"><i class="fas fa-redo"></i></button>
-                    </div>
-                    
-                    <div class="fp-extra-actions">
-                        <button id="toggle-lyrics-btn" class="lyrics-btn">
-                            <i class="fas fa-quote-right"></i> <span id="lyrics-btn-text">VER LETRA</span>
-                        </button>
-                        <button id="fav-btn-full" class="fav-btn-fp"><i class="far fa-heart"></i></button>
-                    </div>
-                </div>
-            </div>
+        <div class="genre-list">
+          <button class="genre-item" data-genre="REGUETON">REGUETON</button>
+          <button class="genre-item" data-genre="ROMANTICA">ROMANTICA</button>
+          <button class="genre-item" data-genre="VALLENATO">VALLENATO</button>
+          <button class="genre-item" data-genre="BACHATA">BACHATA</button>
+          <button class="genre-item" data-genre="RANCHERA">RANCHERA</button>
+          <button class="genre-item" data-genre="BALADA">BALADA</button>
+          <button class="genre-item" data-genre="BOLERO">BOLERO</button>
+          <button class="genre-item" data-genre="PASILLO">PASILLO</button>
+          <button class="genre-item" data-genre="CUMBIA">CUMBIA</button>
+          <button class="genre-item" data-genre="70 AND 80">70 AND 80</button>
+          <button class="genre-item" data-genre="ELECTRONICA">ELECTRONICA</button>
+          <button class="genre-item" data-genre="OTROS">OTROS</button>
+          <button class="genre-item all-songs" data-genre="null">VER TODO</button>
         </div>
-
-        <nav class="app-nav">
-            <button class="nav-item active" data-section="home">
-                <i class="fas fa-home"></i>
-                <span>Inicio</span>
-            </button>
-            <button class="nav-item" data-section="favorites">
-                <i class="fas fa-heart"></i>
-                <span>Favoritos</span>
-            </button>
-            <button class="nav-item" data-section="profile">
-                <i class="fas fa-user"></i>
-                <span>Perfil</span>
-            </button>
-        </nav>
+      </div>
     </div>
 
-    <!-- Battery Guide Modal -->
-    <div id="battery-modal" class="modal hidden">
-        <div class="modal-content">
-            <h3>Optimizar Reproducción</h3>
-            <p>Para evitar que la música se detenga al bloquear el móvil:</p>
-            <ol>
-                <li>Mantén pulsada la App SENSEI</li>
-                <li>Toca en "Información de la aplicación"</li>
-                <li>Busca "Batería" o "Ahorro de energía"</li>
-                <li>Selecciona <strong>"Sin restricciones"</strong></li>
-            </ol>
-            <button onclick="closeBatteryModal()" class="close-modal-btn">Entendido</button>
+    <main class="app-main">
+      <div id="react-root"></div>
+      <div id="section-home" class="app-section active"></div>
+      <div id="section-favorites" class="app-section"></div>
+      <div id="section-profile" class="app-section"></div>
+    </main>
+
+    <!-- Mini Player -->
+    <div class="mini-player" id="mini-player">
+      <div class="progress-container-mini" id="progress-container-mini">
+        <div class="progress-bar-mini" id="progress-bar-mini"></div>
+      </div>
+      <div class="mini-player-content">
+        <div class="mini-info" onclick="openFullPlayer()" style="cursor: pointer;">
+          <img src="../logo SENSEI.png" alt="Cover" id="mini-cover">
+          <div class="mini-text">
+            <h4 id="mini-title">Selecciona una canción</h4>
+            <p id="mini-artist">Sensei Music Player</p>
+          </div>
         </div>
+        <div class="mini-controls">
+          <button id="prev-mini" class="prev-btn-mini"><i class="fas fa-step-backward"></i></button>
+          <button id="play-pause" class="play-btn-mini"><i class="fas fa-play"></i></button>
+          <button id="next" class="next-btn-mini"><i class="fas fa-step-forward"></i></button>
+        </div>
+      </div>
     </div>
 
-    <audio id="audio-player" preload="auto"></audio>
+    <!-- Full Player -->
+    <div class="full-player" id="full-player">
+      <div class="fp-bg" id="fp-bg"></div>
+      <div class="fp-header">
+        <button onclick="closeFullPlayer()" class="close-btn"><i class="fas fa-chevron-down"></i></button>
+        <div class="fp-header-title">Reproduciendo ahora</div>
+        <button id="fp-menu-btn" class="icon-btn"><i class="fas fa-ellipsis-v"></i></button>
+      </div>
 
-    <!-- Scripts -->
-    <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <script src="songs.js"></script>
-    <script src="letras.js"></script>
-    <script src="script.js"></script>
-    
-    <script>
-        // Registrar Service Worker
-        if ('serviceWorker' in navigator) {
-            window.addEventListener('load', () => {
-                navigator.serviceWorker.register('../service-worker.js')
-                .then(reg => {
-                    console.log('SW registrado v53');
-                    // Forzar actualización si hay un nuevo SW
-                    reg.onupdatefound = () => {
-                        const installingWorker = reg.installing;
-                        installingWorker.onstatechange = () => {
-                            if (installingWorker.state === 'installed' && navigator.serviceWorker.controller) {
-                                // Notificar al usuario o simplemente recargar
-                                console.log('Nueva versión disponible, recargando...');
-                                window.location.reload();
-                            }
-                        };
-                    };
-                })
-                .catch(err => console.log('SW error:', err));
-            });
-        }
+      <div id="fp-context-menu" class="context-menu hidden">
+        <button class="menu-item" id="menu-fav-btn">
+          <i class="fas fa-heart"></i> <span>Añadir a Favoritos</span>
+        </button>
+        <button class="menu-item" id="menu-queue-btn">
+          <i class="fas fa-list"></i> <span>Añadir a Cola</span>
+        </button>
+        <button class="menu-item" id="menu-download-btn">
+          <i class="fas fa-download"></i> <span>Descargar Música</span>
+        </button>
+      </div>
 
-        function closeBatteryModal() {
-            document.getElementById('battery-modal').classList.add('hidden');
+      <div class="fp-content">
+        <div class="fp-art-container">
+          <img src="../logo SENSEI.png" alt="Cover" id="fp-cover" class="fp-cover">
+          <div class="lyrics-overlay hidden" id="lyrics-static">
+            <div class="lyrics-content">
+              <pre id="lyrics-text-full">Cargando letra...</pre>
+            </div>
+          </div>
+        </div>
+
+        <div class="fp-info">
+          <h2 id="fp-title">Título de la canción</h2>
+          <p id="fp-artist">Artista</p>
+        </div>
+
+        <div class="fp-controls-main">
+          <div class="fp-progress-container" id="fp-progress-container">
+            <div class="time-info">
+              <span id="current-time">0:00</span>
+              <span id="duration">0:00</span>
+            </div>
+            <div class="fp-progress-bar-bg">
+              <div class="fp-progress-bar" id="fp-progress-bar"></div>
+            </div>
+          </div>
+
+          <div class="fp-buttons">
+            <button id="shuffle" class="icon-btn-fp"><i class="fas fa-random"></i></button>
+            <button id="prev" class="icon-btn-fp main-ctrl"><i class="fas fa-step-backward"></i></button>
+            <button id="fp-play-pause" class="play-btn-fp"><i class="fas fa-play"></i></button>
+            <button id="fp-next" class="icon-btn-fp main-ctrl"><i class="fas fa-step-forward"></i></button>
+            <button id="repeat" class="icon-btn-fp"><i class="fas fa-redo"></i></button>
+          </div>
+
+          <div class="fp-extra-actions">
+            <button id="toggle-lyrics-btn" class="lyrics-btn">
+              <i class="fas fa-quote-right"></i> <span id="lyrics-btn-text">VER LETRA</span>
+            </button>
+            <button id="download-btn-full" class="fav-btn-fp" title="Descargar">
+              <i class="fas fa-download"></i>
+            </button>
+            <button id="fav-btn-full" class="fav-btn-fp" title="Favorito"><i class="far fa-heart"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <nav class="app-nav">
+      <button class="nav-item active" data-section="home">
+        <i class="fas fa-home"></i>
+        <span>Inicio</span>
+      </button>
+      <button class="nav-item" data-section="favorites">
+        <i class="fas fa-heart"></i>
+        <span>Favoritos</span>
+      </button>
+      <button class="nav-item" data-section="profile">
+        <i class="fas fa-user"></i>
+        <span>Perfil</span>
+      </button>
+    </nav>
+  </div>
+
+  <!-- Battery Guide Modal -->
+  <div id="battery-modal" class="modal hidden">
+    <div class="modal-content">
+      <h3>Optimizar Reproducción</h3>
+      <p>Para evitar que la música se detenga al bloquear el móvil:</p>
+      <ol>
+        <li>Mantén pulsada la App SENSEI</li>
+        <li>Toca en "Información de la aplicación"</li>
+        <li>Busca "Batería" o "Ahorro de energía"</li>
+        <li>Selecciona <strong>"Sin restricciones"</strong></li>
+      </ol>
+      <button onclick="closeBatteryModal()" class="close-modal-btn">Entendido</button>
+    </div>
+  </div>
+
+  <audio id="audio-player" preload="auto"></audio>
+
+  <!-- Libs -->
+  <script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+  <script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+  <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+
+  <!-- App -->
+  <script src="songs.js?v=69"></script>
+  <script src="letras.js?v=69"></script>
+  <script src="script.js?v=69"></script>
+
+  <!-- Firebase Auth Bridge -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+    import { getAuth, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyCmWzM41w0hWvDS0Yq4l2xjwzs2U43OxgI",
+      authDomain: "sensei-bae7d.firebaseapp.com",
+      databaseURL: "https://sensei-bae7d-default-rtdb.firebaseio.com",
+      projectId: "sensei-bae7d",
+      storageBucket: "sensei-bae7d.firebasestorage.app",
+      messagingSenderId: "188633348597",
+      appId: "1:188633348597:web:d2ac93ec1e5bffa5af08bc",
+      measurementId: "G-WW3RFRWM1H"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const db = getFirestore(app);
+
+    window.SenseiAuthBridge = {
+      user: null,
+      async logout() { await signOut(auth); },
+      async loadUserData(uid) {
+        const snap = await getDoc(doc(db, "users", uid));
+        return snap.exists() ? snap.data() : null;
+      },
+      async saveUserMusicData(uid, payload) {
+        await setDoc(doc(db, "users", uid), { music: payload, lastSyncAt: serverTimestamp() }, { merge: true });
+        return true;
+      }
+    };
+
+    onAuthStateChanged(auth, (user) => {
+      window.SenseiAuthBridge.user = user ? {
+        uid: user.uid,
+        email: user.email || "",
+        displayName: user.displayName || "",
+        photoURL: user.photoURL || ""
+      } : null;
+      window.dispatchEvent(new CustomEvent("sensei-auth-changed", { detail: window.SenseiAuthBridge.user }));
+    });
+  </script>
+
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', async () => {
+        try {
+          const reg = await navigator.serviceWorker.register('../service-worker.js');
+          reg.update();
+        } catch (err) {
+          console.log('SW error:', err);
         }
-        
-        document.getElementById('battery-guide-btn').onclick = () => {
-            document.getElementById('battery-modal').classList.remove('hidden');
-        };
-    </script>
+      });
+    }
+
+    function closeBatteryModal() {
+      document.getElementById('battery-modal').classList.add('hidden');
+    }
+
+    document.getElementById('battery-guide-btn').onclick = () => {
+      document.getElementById('battery-modal').classList.remove('hidden');
+    };
+  </script>
 </body>
 </html>

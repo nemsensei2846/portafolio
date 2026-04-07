@@ -1960,3 +1960,21 @@ const songs = [
         cover: "../logo%20SENSEI.png"
     }
 ];
+
+// ✅ FIX COMPATIBILIDAD (Android/iPhone/PWA):
+// Si tus MP3 están alojados en GitHub Pages (otro dominio), las rutas relativas "tracks/..." fallan
+// cuando la PWA está en Netlify u otro host. Aquí normalizamos las URLs para que siempre apunten al lugar correcto.
+//
+// Cambia esta URL si mueves los audios a otro sitio.
+const AUDIO_BASE_URL = "https://nemsensei2846.github.io/portafolio/Musica/";
+
+try {
+    songs.forEach((s) => {
+        if (!s || !s.src) return;
+        // Si ya es absoluta, no tocar
+        if (/^https?:\/\//i.test(s.src)) return;
+        // Normalizar: quitar "/" inicial si existe
+        const clean = String(s.src).replace(/^\/+/, '');
+        s.src = AUDIO_BASE_URL + clean;
+    });
+} catch (e) {}
