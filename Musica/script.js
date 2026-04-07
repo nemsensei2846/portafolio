@@ -1635,6 +1635,17 @@ const PlaylistComponent = (props) => {
 document.addEventListener('DOMContentLoaded', () => {
     App.init();
     initMatrix();
+    // Si la app se carga directamente con #player, abrir el Full Player correctamente
+    if (window.location.hash === '#player') {
+        try { openFullPlayer(); } catch (e) {}
+    } else {
+        // Asegurar estado cerrado (especialmente después de cambios de CSS/transform)
+        const fp = document.getElementById('full-player');
+        if (fp) {
+            fp.style.transform = 'translateY(100%)';
+            fp.classList.remove('is-open');
+        }
+    }
 });
 
 // Re-adquirir Wake Lock cuando la app vuelve a estar visible (si se estaba reproduciendo)
@@ -1765,11 +1776,15 @@ function closeFullPlayer() {
 
 // Escuchar el botón atrás del teléfono
 window.addEventListener('popstate', (event) => {
+    const fp = document.getElementById('full-player');
+    if (!fp) return;
     if (window.location.hash !== '#player') {
         // Si ya no estamos en el hash del player, lo cerramos visualmente
-        document.getElementById('full-player').style.transform = 'translateX(-50%) translateY(100%)';
+        fp.style.transform = 'translateY(100%)';
+        fp.classList.remove('is-open');
     } else {
         // Si volvemos al hash (por ejemplo, recarga), lo abrimos
-        document.getElementById('full-player').style.transform = 'translateX(-50%) translateY(0)';
+        fp.style.transform = 'translateY(0)';
+        fp.classList.add('is-open');
     }
 });
