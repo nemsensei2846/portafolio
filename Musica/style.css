@@ -955,7 +955,7 @@ body.sensei-audio{
 
 /* Context menu */
 .context-menu{
-  position:absolute;
+  position: fixed; /* más confiable en móviles/PWA */
   top: 64px;
   right: 16px;
   background: rgba(20,22,34,.92);
@@ -965,6 +965,8 @@ body.sensei-audio{
   box-shadow: 0 18px 60px rgba(0,0,0,.6);
   min-width: 240px;
   z-index: 12000; /* asegurar que el texto no quede “tapado” */
+  transform-origin: top right;
+  animation: menuIn .16s ease-out;
 }
 .context-menu.hidden{ display:none; }
 .menu-item{
@@ -989,6 +991,11 @@ body.sensei-audio{
   font-size: .92rem;
   letter-spacing: .2px;
   text-shadow: 0 1px 0 rgba(0,0,0,.35);
+}
+
+@keyframes menuIn{
+  from{ opacity: 0; transform: translateY(-6px) scale(.98); }
+  to{ opacity: 1; transform: translateY(0) scale(1); }
 }
 
 /* Genre menu */

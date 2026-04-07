@@ -592,17 +592,70 @@ const App = {
         if (fpPrevBtn) fpPrevBtn.onclick = () => this.prevSong();
 
         // Menú de 3 puntos (Contextual)
+        const openContextMenu = () => {
+            if (!fpContextMenu) return;
+            fpContextMenu.classList.remove('hidden');
+
+            // Posicionar el menú cerca del botón (mejor en móviles/PWA)
+            try {
+                const rect = fpMenuBtn?.getBoundingClientRect?.();
+                if (rect) {
+                    // Primero medimos ancho/alto
+                    fpContextMenu.style.visibility = 'hidden';
+                    fpContextMenu.style.left = '0px';
+                    fpContextMenu.style.top = '0px';
+                    const w = fpContextMenu.offsetWidth || 240;
+                    const h = fpContextMenu.offsetHeight || 160;
+
+                    let left = Math.min(window.innerWidth - w - 12, rect.right - w);
+                    left = Math.max(12, left);
+                    let top = rect.bottom + 10;
+                    if (top + h > window.innerHeight - 12) top = rect.top - h - 10;
+                    top = Math.max(12, top);
+
+                    fpContextMenu.style.left = `${left}px`;
+                    fpContextMenu.style.top = `${top}px`;
+                    fpContextMenu.style.right = 'auto';
+                    fpContextMenu.style.visibility = 'visible';
+                }
+            } catch (e) {}
+
+            // Actualizar texto/icono del favorito
+            try {
+                const current = this.state.currentPlaylist?.[this.state.currentIndex];
+                if (current && menuFavBtn) {
+                    const isFav = this.state.favorites?.some(s => s.src === current.src);
+                    const sp = menuFavBtn.querySelector('span');
+                    const ic = menuFavBtn.querySelector('i');
+                    if (sp) sp.innerText = isFav ? 'Quitar de Favoritos' : 'Añadir a Favoritos';
+                    if (ic) ic.className = isFav ? 'fas fa-heart' : 'far fa-heart';
+                }
+            } catch (e) {}
+        };
+
+        const toggleContextMenu = () => {
+            if (!fpContextMenu) return;
+            if (fpContextMenu.classList.contains('hidden')) openContextMenu();
+            else fpContextMenu.classList.add('hidden');
+        };
+
         if (fpMenuBtn) {
-            fpMenuBtn.onclick = (e) => {
+            // En móviles, "pointerdown" + "click" puede disparar dos veces (abre y cierra al instante).
+            // Usamos un guard para que un tap normal funcione sin tener que dejar presionado.
+            let lastPointerDown = 0;
+
+            fpMenuBtn.addEventListener('pointerdown', (e) => {
+                lastPointerDown = Date.now();
                 e.stopPropagation();
-                fpContextMenu.classList.toggle('hidden');
-                
-                // Actualizar texto del botón favorito en el menú
-                const current = this.state.currentPlaylist[this.state.currentIndex];
-                const isFav = this.state.favorites.some(s => s.src === current.src);
-                menuFavBtn.querySelector('span').innerText = isFav ? 'Quitar de Favoritos' : 'Añadir a Favoritos';
-                menuFavBtn.querySelector('i').className = isFav ? 'fas fa-heart' : 'far fa-heart';
-            };
+                toggleContextMenu();
+            });
+
+            fpMenuBtn.addEventListener('click', (e) => {
+                // Si ya manejamos el tap por pointerdown, ignoramos este click (evita doble toggle)
+                if (Date.now() - lastPointerDown < 600) return;
+                e.stopPropagation();
+                toggleContextMenu();
+            });
         }
 
         if (menuFavBtn) {
@@ -644,9 +697,12 @@ const App = {
             };
         }
 
-        // Cerrar menú al hacer clic en cualquier parte
-        document.addEventListener('click', () => {
-            if (fpContextMenu) fpContextMenu.classList.add('hidden');
+        // Cerrar menú al tocar fuera (móvil/PC)
+        document.addEventListener('pointerdown', (e) => {
+            if (!fpContextMenu || fpContextMenu.classList.contains('hidden')) return;
+            const t = e.target;
+            if (fpContextMenu.contains(t) || fpMenuBtn?.contains?.(t)) return;
+            fpContextMenu.classList.add('hidden');
         });
 
         // SW Message Listener (para feedback de descarga)
