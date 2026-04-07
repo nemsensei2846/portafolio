@@ -298,13 +298,17 @@ const App = {
 
         if (this.state.songs.length > 0) {
             this.engine.load(this.state.currentPlaylist[0]);
-            // Cache offline: NO lo iniciamos agresivamente mientras el usuario reproduce,
-            // porque en móviles eso causa cortes/mudos por saturación.
-            this.scheduleCacheAllSongs();
+            // ✅ IMPORTANTE:
+            // Ya NO iniciamos "DESCARGAR TODO" automáticamente al entrar, porque en PWA móviles
+            // puede causar cortes, demoras y que el audio se quede mudo.
+            // La descarga completa queda SOLO bajo el botón "DESCARGAR TODO" en Perfil.
         }
         this.setupEvents();
         this.renderReact();
         this.renderVanilla();
+
+        // Si quedó abierto un modal viejo de "Descargar todo", lo cerramos.
+        try { document.getElementById('bulk-dl-modal')?.remove(); } catch (e) {}
 
         // Vincular Perfil con Login/Register (Firebase)
         this.initAuth();
